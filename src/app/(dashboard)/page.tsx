@@ -1,7 +1,7 @@
 function page() {
   return (
     <div>
-      Dashboard Main Page
+      Página principal
     </div>
   );
 }

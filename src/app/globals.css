@@ -4,7 +4,7 @@
   /* COLORS */
   --primary-color: #2d2d2d;
   --secondary-color: #2563eb;
-  --background: hsl(0, 100%, 100%);
+  --background-color: hsl(0, 100%, 100%);
   --foreground-color: hsl(228, 18%, 16%);
   --foreground-color-muted: hsl(220, 9%, 46%);
   --foreground-color-light: hsl(228, 8%, 56%);
@@ -18,7 +18,7 @@
   /* TYPOGRAPHY */
   --body-font: "Roboto", ui-sans-serif;
   --normal-font: .938rem;
-  --smaller-font: .75rem;
+  --smaller-font: .65rem;
   --tiny-font: .75rem;
 }
 
@@ -66,9 +66,9 @@
   --height-header: var(--header-height);
   --padding-sidebar: var(--sidebar-width);
   --padding-header: var(--header-height);
-  --font-size-normal: var(--normal-font);
-  --font-size-smaller: var(--smaller-font);
-  --font-size-tiny: var(--tiny-font);
+  --text-normal: var(--normal-font);
+  --text-smaller: var(--smaller-font);
+  --text-tiny: var(--tiny-font);
 }
 
 html {

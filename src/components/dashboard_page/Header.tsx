@@ -1,6 +1,6 @@
 "use client";
 
-// import { RiMenuFill } from "@remixicon/react";
+import { RiMenuFill } from "@remixicon/react";
 import Link from "next/link";
 
 export default function Header() {
@@ -15,8 +15,7 @@ export default function Header() {
           <div className="flex items-center justify-between gap-x-2">
             {/* <Account /> */}
             <button className="header_toggle text-foreground cursor-pointer" id="header-toggle">
-              {/* <RiMenuFill /> */}
-              Menu
+              <RiMenuFill />
             </button>
           </div>
 
