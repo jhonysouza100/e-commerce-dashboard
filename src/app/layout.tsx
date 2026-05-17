@@ -1,10 +1,10 @@
 import { Roboto } from "next/font/google";
 import "./globals.css";
 // import SessionWrapper from "@/providers/SessionWrapper";
-// import QueryWrapper from "@/providers/QueryWrapper";
+import QueryWrapper from "@/providers/QueryWrapper";
 // import { ThemeProvider } from "next-themes";
-// import { Toaster } from "sonner";
-// import { Suspense } from "react";
+import { Toaster } from "sonner";
+import { Suspense } from "react";
 // import Verify from "@/auth/Verify";
 
 const fontFamily = Roboto({
@@ -27,15 +27,15 @@ export default function RootLayout({
     >
       <body className={`${fontFamily.variable} antialiased text-normal bg-background text-foreground-muted [transition:background-color_.4s]`}>
         {/* <SessionWrapper> */}
-          {/* <QueryWrapper> */}
+          <QueryWrapper>
             {/* <Verify /> */}
             {/* <ThemeProvider> */}
-              {/* <Suspense> */}
+              <Suspense>
                 {children}
-              {/* </Suspense> */}
-              {/* <Toaster /> */}
+              </Suspense>
+              <Toaster />
             {/* </ThemeProvider> */}
-          {/* </QueryWrapper> */}
+          </QueryWrapper>
         {/* </SessionWrapper> */}
       </body>
     </html>
