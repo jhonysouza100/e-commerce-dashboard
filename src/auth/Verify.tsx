@@ -1,6 +1,6 @@
 "use client";
 
-import { useAuthContext } from "@/context/useAuthContext";
+import { useAuthContext } from "@/components/authentication_page/context/useAuthContext";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 

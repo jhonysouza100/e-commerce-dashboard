@@ -1,8 +1,8 @@
 "use client";
 
-import { LoginDto } from "@/common/dtos/login.dto";
-import { SessionInterface } from "@/common/interfaces/session.interface";
-import { verifyRequest, loginRequest } from "@/hooks/useAuthRequests";
+import { LoginDto } from "@/components/authentication_page/dto/login.dto";
+import { SessionInterface } from "@/components/authentication_page/interfaces/session.interface";
+import { verifyRequest, loginRequest } from "@/components/authentication_page/hooks/useAuthRequests";
 import { create } from "zustand";
 import { toast } from "sonner";
 import { createAuthTokenCookie, getTokenCookie, removeTokenCookie } from "@/utils/handleCookies";
