@@ -1,7 +1,7 @@
 "use client";
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import env from "@/common/env";
+import env from "@/utils/handleEnviroments";
 
 function SessionWrapper({children}: { children: React.ReactNode }) {
   
