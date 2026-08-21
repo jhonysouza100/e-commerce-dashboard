@@ -3,7 +3,7 @@
 import { cookies } from "next/headers";
 
 
-export async function createAuthTokenCookie(name: string, value: string): Promise<void> {
+export async function setSessionCookie(name: string, value: string): Promise<void> {
   const cookieStore = await cookies();
   
   cookieStore.set({
@@ -18,13 +18,13 @@ export async function createAuthTokenCookie(name: string, value: string): Promis
 }
 
 // Función para eliminar el token de las cookies (logout)
-export async function removeTokenCookie(cookieName: string): Promise<void> {
+export async function removeSessionCookie(cookieName: string): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.delete(`${cookieName}`);
 }
 
 // Función para obtener el token de las cookies (login)
-export async function getTokenCookie(cookieName: string): Promise<string | undefined> {
+export async function getSessionCookie(cookieName: string): Promise<string | undefined> {
   const cookieStore = await cookies();
   const tokenCookie = cookieStore.get(`${cookieName}`);
   return tokenCookie?.value;

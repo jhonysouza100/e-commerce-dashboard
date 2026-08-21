@@ -3,7 +3,7 @@
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import env from "@/utils/handleEnviroments";
 
-function SessionWrapper({children}: { children: React.ReactNode }) {
+function GoogleSessionWrapper({children}: { children: React.ReactNode }) {
   
   return (
     <GoogleOAuthProvider clientId={env.OAUTH_GOOGLE_CLIENT_ID}>
@@ -12,4 +12,4 @@ function SessionWrapper({children}: { children: React.ReactNode }) {
   );
 }
 
-export default SessionWrapper;
+export default GoogleSessionWrapper;

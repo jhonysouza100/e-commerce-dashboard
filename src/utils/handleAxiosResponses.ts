@@ -16,5 +16,9 @@ export interface ErrorResponse {
 
 export function handleAxiosError(error: ErrorResponse) {
   // console.log(error);
-  toast(error.response?.data.message || error.message);
+  toast.error(error.response?.data.message || error.message);
+}
+
+export function handleAxiosSuccess(message: string) {
+  toast.success(message);
 }

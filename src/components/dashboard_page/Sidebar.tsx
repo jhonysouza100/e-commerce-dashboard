@@ -4,15 +4,14 @@ import {
   RiHome3Fill,
   RiBox3Fill,
   RiTodoFill,
-  RiSettings3Fill,
   RiGroupFill,
+  RiLogoutBoxFill,
 } from "@remixicon/react";
-// import ThemeButton from "@/components/ui/ThemeButton";
 import Link from "next/link";
 import { useAuthContext } from "@/components/authentication_page/context/useAuthContext";
-// import LogoutButton from "@/components/auth/LogoutButton";
 import Avatar from "@/ui/Avatar";
 import { usePathname } from "next/navigation";
+import LogoutButton from "../authentication_page/LogoutButton";
 
 // Objeto con la configuración de los iconos y su información
 const menuItems = [
@@ -40,10 +39,11 @@ function Sidebar() {
 
   return (
     <aside
-      className="sidebar w-max fixed -left-[120%] top-0 bottom-0 z-50 bg-background shadow-md py-6 m-3 rounded-2xl [transition:left_.4s,_background-color_.4s,_width_.4s] lg:left-0 lg:w-[250px] lg:m-4"
+      className="sidebar w-max fixed -left-[120%] top-0 bottom-0 z-50 bg-background shadow-md py-6 m-3 rounded-2xl [transition:left_.4s,_background-color_.4s_ease-in-out,_width_.4s] lg:left-0 lg:w-[250px] lg:m-4"
       id="sidebar"
     >
       <div className="sidebar_container flex flex-col gap-y-12 h-full overflow-hidden">
+        {/* Sidebar User Profile */}
         {!session ? (
           <>
             <div className="user_profile_skeleton sidebar_user flex items-center mx-4 sm:p-4 gap-x-4 sm:shadow-xs rounded-md lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s]">
@@ -56,19 +56,19 @@ function Sidebar() {
           </>
         ) : (
           <>
-            <Link href={"/dashboard/profile"}
-              className="sidebar_user cursor-pointer mx-4 sm:p-4 grid justify-center grid-cols-[auto_1fr] overflow-hidden items-center gap-x-4 sm:shadow-xs rounded-md sm:justify-start sm:grid-cols-max2 lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s]"
+            <Link href={"/profile"}
+              className="sidebar_user cursor-pointer mx-4 sm:p-4 grid justify-center grid-cols-1 overflow-hidden items-center justify-items-center                                                gap-y-2 sm:shadow-xs rounded-md lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s]"
             >
               <Avatar
-                className="sidebar_img relative w-12 h-12 bg-primary text-background overflow-hidden grid justify-items-center items-center rounded-full"
+                className="sidebar_user-img relative w-12 h-12 bg-primary text-background overflow-hidden grid justify-items-center items-center rounded-full"
                 src={session?.picture}
                 alt={session?.name}
               >
                 {!session.picture && <i className="w-8 h-8">icon</i>}
               </Avatar>
-                <div className="sidebar_info hidden overflow-hidden sm:block lg:[transition:opacity_.4s]">
+                <div className="sidebar_user-info lg:[transition:opacity_.4s]">                                                                           
                 <h3
-                  className="text-normal text-foreground font-bold [transition:color_.4s] truncate"
+                  className="text-normal text-foreground font-bold [transition:color_.4s] max-w-min truncate"
                   title={session?.name}
                 >
                   {session?.name}
@@ -77,17 +77,17 @@ function Sidebar() {
                   className="hidden text-smaller sm:block text-clip text-wrap truncate"
                   title={session?.email}
                 >
-                  {session?.email}
+                  {/* {session?.email} */}
                 </span>
                 </div>
             </Link>
           </>
         )}
-
+        {/* Sidebar Content */}
         <nav className="sidebar_content flex flex-col gap-y-12 overflow-y-auto overflow-x-hidden">
           {menuItems.map((el, first) => (
             <div key={el.section}>
-              <h3 className="sidebar_title px-2 mx-auto w-max text-tiny font-semibold mb-6 sm:mx-0 sm:pl-8 sm:pr-0 lg:pr-1 lg:[transition:padding_.4s]">
+              <h3 className="sidebar_title w-[90px] sm:w-[150px] text-tiny text-center font-semibold mb-6 lg:[transition:width_.4s]">
                 {el.section}
               </h3>
               <div className="sidebar_list justify-center grid gap-y-6 sm:justify-start">
@@ -108,12 +108,17 @@ function Sidebar() {
             </div>
           ))}
         </nav>
-
+        {/* Sidebar Actions */}
         <div className="sidebar_actions justify-center grid gap-y-6 mt-auto sm:justify-start">
           {/* Theme button */}
-          {/* Logout button */}
+          <LogoutButton
+            containerClass="sidebar_link relative grid grid-cols-[max-content] sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-primary [transition:color_.4s,_opacity_.4s] hover:text-primary"
+            contentClass="font-semibold text-normal lg:[transition:opacity_.4s] hidden sm:block"
+            icon={<RiLogoutBoxFill />} 
+            />
         </div>
       </div>
+
     </aside>
   );
 }

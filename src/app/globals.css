@@ -16,7 +16,6 @@
   /* LINEAR GRADIENT */
   --gradient: linear-gradient(180deg,rgba(37, 99, 235, 1) 0%, rgba(147, 197, 253, 1) 100%);
   /* TYPOGRAPHY */
-  --body-font: "Roboto", ui-sans-serif;
   --normal-font: .938rem;
   --smaller-font: .65rem;
   --tiny-font: .75rem;
@@ -35,6 +34,7 @@
 }
 
 @theme inline {
+  --font-sans: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
   --color-primary: var(--primary-color);
   --color-background: var(--background-color);
   --color-foreground: var(--foreground-color);
@@ -148,7 +148,7 @@ input, select, textarea, input:focus, select:focus, textarea:focus {
   display: none;
 }
 #session_chk:checked ~ .session_signup {
-  transform: translateY(-500px);
+  transform: translateY(-320px);
 }
 #session_chk:checked ~ .session_signup label {
   transform: scale(1);
@@ -258,10 +258,17 @@ tbody tr.hide td img {
     box-shadow: none;
     margin-inline: 0;
   }
+  .sidebar_user-info {
+    opacity: 1;
+    transition: all .4s;
+  }
+  .show-sidebar .sidebar_user .sidebar_user-info {
+    opacity: 0;
+    user-select: none;
+    pointer-events: none;
+  }
   .show-sidebar .sidebar_title {
     width: 90px;
-    text-align: center;
-    padding-left: 0;
   }
   .show-sidebar .sidebar_info,
   .show-sidebar .sidebar_link span {

@@ -4,19 +4,19 @@ import { useAuthContext } from "@/components/authentication_page/context/useAuth
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
-function Verify() {
+function SessionInitializer() {
   const { verify } = useAuthContext();
   const pathname = usePathname();
   
-  // Verificar autenticación al cargar
+  // Iicializar/restaurar la sesión a partir de la cookie al cambiar de ruta.
   useEffect(() => {
-    const checkAuth = async () => {
+    const initializeSession = async () => {
       await verify("user-token"); 
     };
-    checkAuth();
+    initializeSession();
   }, [verify, pathname]);
 
   return null;
 }
 
-export default Verify;
+export default SessionInitializer;
