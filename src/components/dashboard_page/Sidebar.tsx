@@ -39,7 +39,7 @@ function Sidebar() {
 
   return (
     <aside
-      className="sidebar w-max fixed -left-[120%] top-0 bottom-0 z-50 bg-background shadow-md py-6 m-3 rounded-2xl [transition:left_.4s,_background-color_.4s_ease-in-out,_width_.4s] lg:left-0 lg:w-[250px] lg:m-4"
+      className="sidebar w-max fixed -left-[120%] top-0 bottom-0 z-50 bg-background shadow-md py-6 m-3 rounded-2xl [transition:left_.4s,_background-color_.4s_ease-in-out,_width_.4s] lg:left-0 lg:w-sidebar lg:m-4"
       id="sidebar"
     >
       <div className="sidebar_container flex flex-col gap-y-12 h-full overflow-hidden">
@@ -57,7 +57,7 @@ function Sidebar() {
         ) : (
           <>
             <Link href={"/profile"}
-              className="sidebar_user cursor-pointer mx-4 sm:p-4 grid justify-center grid-cols-1 overflow-hidden items-center justify-items-center                                                gap-y-2 sm:shadow-xs rounded-md lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s]"
+              className="sidebar_user cursor-pointer mx-4 sm:p-4 grid justify-center sm:grid-cols-max2 lg:gap-x-2 overflow-hidden items-center justify-items-center sm:shadow-sm rounded-md lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s,column-gap_.4s]"
             >
               <Avatar
                 className="sidebar_user-img relative w-12 h-12 bg-primary text-background overflow-hidden grid justify-items-center items-center rounded-full"
@@ -66,9 +66,9 @@ function Sidebar() {
               >
                 {!session.picture && <i className="w-8 h-8">icon</i>}
               </Avatar>
-                <div className="sidebar_user-info lg:[transition:opacity_.4s]">                                                                           
+                <div className="sidebar_user-info lg:[transition:all_.4s]">                                                                           
                 <h3
-                  className="text-normal text-foreground font-bold [transition:color_.4s] max-w-min truncate"
+                  className="text-normal text-foreground font-bold hidden sm:block [transition:color_.4s] max-w-min truncate"
                   title={session?.name}
                 >
                   {session?.name}
@@ -95,7 +95,7 @@ function Sidebar() {
                   <Link
                     key={index}
                     href={`${item.href}`}
-                    className={`${pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/dashboard") ? "active-link" : first}  sidebar_link relative grid-cols-[max-content] grid sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer [transition:color_.4s,_opacity_.4s] hover:text-primary`}
+                    className={`${pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/dashboard") ? "active-link" : first} sidebar_link relative grid-cols-[max-content] grid sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer [transition:color_.4s,_opacity_.4s] hover:text-primary`}
                   >
                     {/* <Link key={index} href={`${item.href}`} className={`${first === 0 && index === 0 ? 'active-link' : ''} sidebar_link gap-x-4 relative grid items-center sm:grid-cols-max2 pl-8 [transition:color_.4s,_opacity_.4s] grid-cols-[max-content] px-8 hover:text-primary`}> */}
                     <item.icon className="w-5 h-5" />
