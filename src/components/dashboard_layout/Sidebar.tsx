@@ -6,12 +6,12 @@ import {
   RiTodoFill,
   RiGroupFill,
   RiLogoutBoxFill,
+  RiArrowLeftWideLine,
 } from "@remixicon/react";
 import Link from "next/link";
-import { useAuthContext } from "@/components/authentication_page/context/useAuthContext";
-import Avatar from "@/ui/Avatar";
 import { usePathname } from "next/navigation";
-import LogoutButton from "../authentication_page/LogoutButton";
+import LogoutButton from "../session/LogoutButton";
+import UserCard from "../session/UserCard";
 
 // Objeto con la configuración de los iconos y su información
 const menuItems = [
@@ -33,8 +33,6 @@ const menuItems = [
 ];
 
 function Sidebar() {
-  const { session } = useAuthContext();
-
   const pathname = usePathname();
 
   return (
@@ -44,50 +42,14 @@ function Sidebar() {
     >
       <div className="sidebar_container flex flex-col gap-y-12 h-full overflow-hidden">
         {/* Sidebar User Profile */}
-        {!session ? (
-          <>
-            <div className="user_profile_skeleton sidebar_user flex items-center mx-4 sm:p-4 gap-x-4 sm:shadow-xs rounded-md lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s]">
-              <div className="user_picture_skeleton w-12 h-12 bg-gray-300 animate-pulse rounded-full aspect-square"></div>
-              <div className="user_data_skeleton flex flex-col gap-2 flex-1">
-                <div className="w-3/4 h-4 bg-gray-300 animate-pulse rounded"></div>
-                <div className="w-1/2 h-3 bg-gray-300 animate-pulse rounded"></div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <Link href={"/profile"}
-              className="sidebar_user cursor-pointer mx-4 sm:p-4 grid justify-center sm:grid-cols-max2 lg:gap-x-2 overflow-hidden items-center justify-items-center sm:shadow-sm rounded-md lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s,column-gap_.4s]"
-            >
-              <Avatar
-                className="sidebar_user-img relative w-12 h-12 bg-primary text-background overflow-hidden grid justify-items-center items-center rounded-full"
-                src={session?.picture}
-                alt={session?.name}
-              >
-                {!session.picture && <i className="w-8 h-8">icon</i>}
-              </Avatar>
-                <div className="sidebar_user-info lg:[transition:all_.4s]">                                                                           
-                <h3
-                  className="text-normal text-foreground font-bold hidden sm:block [transition:color_.4s] max-w-min truncate"
-                  title={session?.name}
-                >
-                  {session?.name}
-                </h3>
-                <span
-                  className="hidden text-smaller sm:block text-clip text-wrap truncate"
-                  title={session?.email}
-                >
-                  {/* {session?.email} */}
-                </span>
-                </div>
-            </Link>
-          </>
-        )}
+        <div className="block lg:hidden overflow-hidden">
+          <UserCard />
+        </div>
         {/* Sidebar Content */}
         <nav className="sidebar_content flex flex-col gap-y-12 overflow-y-auto overflow-x-hidden">
           {menuItems.map((el, first) => (
             <div key={el.section}>
-              <h3 className="sidebar_title w-[90px] sm:w-[150px] text-tiny text-center font-semibold mb-6 lg:[transition:width_.4s]">
+              <h3 className="sidebar_title w-full sm:w-[150px] text-tiny text-center font-semibold mb-6 lg:[transition:width_.4s]">
                 {el.section}
               </h3>
               <div className="sidebar_list justify-center grid gap-y-6 sm:justify-start">
@@ -119,8 +81,13 @@ function Sidebar() {
         </div>
       </div>
 
+      <div className="sidebar-append items-center justify-center hidden lg:flex">
+        <button className="header_toggle text-foreground cursor-pointer" id="header-toggle-desktop" title="Crtl + D">
+          <RiArrowLeftWideLine className="rotate-0 [transition:all_.6s_ease-in-out]" id="toggle-icon-desktop"/>
+        </button>
+      </div>
     </aside>
   );
 }
 
-export default Sidebar;
+export default Sidebar; 

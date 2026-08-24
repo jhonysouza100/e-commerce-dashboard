@@ -1,9 +1,9 @@
 "use client";
 
-import AccountModalSession from "@/components/authentication_page/AccountModalSession";
+import LoginContainer from "@/components/login_page/LoginContainer";
 
 function LoginPage() {
-  return ( <AccountModalSession /> );
+  return ( <LoginContainer /> );
 }
 
 export default LoginPage;

@@ -1,8 +1,8 @@
 "use client";
 
-import { LoginDto } from "@/components/authentication_page/dto/login.dto";
-import { SessionInterface } from "@/components/authentication_page/interfaces/session.interface";
-import { verifyRequest, loginRequest, logoutRequest } from "@/components/authentication_page/hooks/useAuthRequests";
+import { LoginDto } from "@/components/session/dto/login.dto";
+import { SessionInterface } from "@/components/session/interfaces/session.interface";
+import { verifyRequest, loginRequest, logoutRequest } from "@/components/session/hooks/useAuthRequests";
 import { create } from "zustand";
 
 interface AuthContextType {

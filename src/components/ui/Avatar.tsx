@@ -12,13 +12,13 @@ interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({ className, children, src, alt, size = 'medium' }) => {
   const sizes = {
-    small: 'h-8 w-8',
-    medium: 'h-12 w-12',
-    large: 'h-16 w-16',
+    small: 'h-10 w-10 min-h-10 min-w-10',
+    medium: 'h-12 w-12 min-w-12 min-h-12',
+    large: 'h-16 w-16 min-h-16 min-w-16',
   };
 
   return (
-    <div className={`${sizes[size]} inline-flex items-center justify-center aspect-square rounded-full overflow-hidden ${className || ''}`}>
+    <div className={`${sizes[size]} grid justify-items-center items-center justify-center aspect-square rounded-full overflow-hidden ${className || ''}`}>
       {children ? (children) :
      (src && src?.length !== 0) ? (
         <Image

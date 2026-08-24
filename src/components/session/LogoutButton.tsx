@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "./context/useAuthContext"; 
 import { useRouter } from "next/navigation";
+import { SESSION_COOKIE } from "@/const/constants";
 
 function LogoutButton({
   contentClass,
@@ -26,13 +27,14 @@ function LogoutButton({
   return (
     <button
       className={`${containerClass || ""}`}
+      title="Cerrar sesión"
       type="button"
       aria-label="Logout"
-      onClick={() => signOutMutation.mutate("user-token")}
+      onClick={() => signOutMutation.mutate(SESSION_COOKIE)}
     >
       {icon}
       <span className={`${contentClass || ""}`}>
-        Logout
+        LogOut
       </span>
     </button>
   );

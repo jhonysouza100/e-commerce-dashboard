@@ -12,7 +12,7 @@ interface MenuContextState {
   setTabValue: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-export const useAccountMenuContext = create<MenuContextState>((set) => ({
+export const useLoginContainerContext = create<MenuContextState>((set) => ({
   openDrawer: false,
   openModal: false,
   anchorEl: null,

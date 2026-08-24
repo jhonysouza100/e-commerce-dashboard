@@ -14,11 +14,11 @@ export interface ErrorResponse {
   }
 }
 
-export function handleAxiosError(error: ErrorResponse) {
+export function handleAxiosErrorResponse(error: ErrorResponse) {
   // console.log(error);
   toast.error(error.response?.data.message || error.message);
 }
 
-export function handleAxiosSuccess(message: string) {
+export function handleAxiosSuccessResponse(message: string) {
   toast.success(message);
 }

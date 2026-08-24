@@ -4,7 +4,7 @@ import QueryWrapper from "@/providers/QueryWrapper";
 import { Toaster } from "sonner";
 import { Suspense } from "react";
 import GoogleSessionWrapper from "@/providers/GoogleSessionWrapper";
-import SessionInitializer from "@/auth/SessionInitializer";
+import SessionInitializer from "@/providers/SessionInitializer";
 
 export default function RootLayout({
   children,

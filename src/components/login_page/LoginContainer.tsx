@@ -2,15 +2,15 @@
 
 import { useEffect } from "react";
 import LoginForm from "./LoginForm";
-import { useAccountMenuContext } from "./accountMenuContext";
+import { useLoginContainerContext } from "./context/useLoginContainerContext";
 import RegisterForm from "./RegsiterForm";
 // import { useAuthContext } from "@/components/auth/context/authContext";
 // import Link from "next/link";
 // import { RiAddLargeFill } from "@remixicon/react";
 // import { RiCloseLine } from "@remixicon/react";
 
-function AccountModalSession() {
-  const { openModal, handleOpenModal } = useAccountMenuContext();
+function LoginContainer() {
+  const { openModal, handleOpenModal } = useLoginContainerContext();
   // const { isLogued } = useAuthContext();
   
   
@@ -19,10 +19,10 @@ function AccountModalSession() {
     //   handleOpenModal(false);
     // }
     
-    const sessionModal = document.getElementById('session_modal');
+    const sessionModal = document.getElementById('login_container');
     sessionModal?.classList.toggle('right-0', Boolean(openModal));
 
-    const close = document.getElementById('session_modal_close');
+    const close = document.getElementById('login_container_close');
     close?.addEventListener('click',() => handleOpenModal(false));
 
     return () => {
@@ -32,10 +32,10 @@ function AccountModalSession() {
   }, [openModal]);
 
   return (
-    // <div className="session_modal fixed -right-full top-0 flex justify-center items-center min-h-screen w-full bg-background transition-all duration-300" id="session_modal">
-    <div className="session_modal flex justify-center items-center h-[calc(100vh_-_1rem)] w-full bg-background transition-all duration-300" id="session_modal">
-      <div className="session_container relative bg-background w-[350px] h-[500px] overflow-hidden rounded-lg shadow-lg">
-        {/* <div className="session_modal_close text-foreground-light cursor-pointer inline-flex absolute right-2 top-2" id="session_modal_close"><RiCloseLine /></div> */}
+    // <div className="login_container fixed -right-full top-0 flex justify-center items-center min-h-screen w-full bg-background transition-all duration-300" id="login_container">
+    <div className="login_container flex justify-center items-center h-[calc(100vh_-_1rem)] w-full bg-background transition-all duration-300" id="login_container">
+      <div className="relative bg-background w-[350px] h-[500px] overflow-hidden rounded-lg shadow-lg">
+        {/* <div className="login_container_close text-foreground-light cursor-pointer inline-flex absolute right-2 top-2" id="login_container_close"><RiCloseLine /></div> */}
         {/* <Link href={'/register'} className="text-foreground cursor-pointer inline-flex absolute right-4 top-4">
           <RiAddLargeFill />
         </Link> */}
@@ -47,4 +47,4 @@ function AccountModalSession() {
   );
 }
 
-export default AccountModalSession;
+export default LoginContainer;

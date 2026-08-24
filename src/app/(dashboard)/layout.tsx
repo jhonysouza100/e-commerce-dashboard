@@ -1,6 +1,6 @@
-import DashboardDOMHydratation from "@/components/dashboard_page/DashboardDOMHydratation";
-import Header from "@/components/dashboard_page/Header";
-import Sidebar from "@/components/dashboard_page/Sidebar";
+import DashboardDOMHydratation from "@/components/dashboard_layout/DashboardDOMHydratation";
+import Header from "@/components/dashboard_layout/Header";
+import Sidebar from "@/components/dashboard_layout/Sidebar";
 
 export default function DashboardLayout({
   children,

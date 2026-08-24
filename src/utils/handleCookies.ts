@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 
-
 export async function setSessionCookie(name: string, value: string): Promise<void> {
   const cookieStore = await cookies();
   

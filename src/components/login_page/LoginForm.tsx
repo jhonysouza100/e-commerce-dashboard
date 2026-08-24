@@ -2,8 +2,9 @@
 
 import { RiAdminLine, RiLoader2Fill, RiLockLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
-import { useAuthContext } from "./context/useAuthContext";
-import { LoginDto } from "./dto/login.dto";
+import { useAuthContext } from "../session/context/useAuthContext";
+import { LoginDto } from "../session/dto/login.dto";
+import { SESSION_COOKIE } from "@/const/constants";
 
 function LoginForm() {
   const { login, isLoading } = useAuthContext();
@@ -18,7 +19,7 @@ function LoginForm() {
       password: formData.get('password') as string,
     };
 
-    await login(credential, "user-token");
+    await login(credential, SESSION_COOKIE);
 
     const redirect = new URLSearchParams(window.location.search).get("redirect");
     if (redirect) {
@@ -53,10 +54,11 @@ function LoginForm() {
         </div>
         
         <button type="submit"
+          title="Iniciar sesión"
           disabled={isLoading}
           className="w-3/5 h-10 mx-auto my-3 block justify-center text-white bg-black text-[1em] font-bold mt-5 rounded-md cursor-pointer transition-all duration-200 ease-in hover:bg-blue-800 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
         >
-          {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "Login"}
+          {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "LogIn"}
         </button>
       </form>
     </div>

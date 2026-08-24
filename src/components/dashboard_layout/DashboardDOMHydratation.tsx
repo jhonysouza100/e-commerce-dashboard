@@ -5,6 +5,7 @@ import { useEffect } from "react";
 export default function DashboardDOMHydratation() {
   useEffect(() => {
     const toggle = document.getElementById("header-toggle") as HTMLElement;
+    const toggleDesktop = document.getElementById("header-toggle-desktop") as HTMLElement;
     const sidebar = document.getElementById("sidebar") as HTMLElement;
     const header = document.getElementById("header") as HTMLElement;
     const main = document.getElementById("dashboard-layout") as HTMLElement;
@@ -46,11 +47,13 @@ export default function DashboardDOMHydratation() {
 
     sidebarLink.forEach((el) => el?.addEventListener("click", linkColor));
     toggle?.addEventListener("click", showSideBar);
+    toggleDesktop?.addEventListener("click", showSideBar);
     document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       sidebarLink.forEach((el) => el.removeEventListener("click", linkColor));
       toggle?.removeEventListener("click", showSideBar);
+      toggleDesktop?.removeEventListener("click", showSideBar);
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);

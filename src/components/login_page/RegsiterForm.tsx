@@ -1,12 +1,11 @@
 "use client";
 
-import { RiAdminLine, RiLockLine, RiMailAddLine, RiUserReceivedLine } from "@remixicon/react";
+import { RiLoader2Fill, RiMailAddLine, RiUserReceivedLine } from "@remixicon/react";
 import { toast } from "sonner";
 
-// import { useAccountMenuContext } from "@/components/account/context/accountMenuContext";
 
 function RegisterForm() {
-  // const { handleOpenModal } = useAccountMenuContext();
+  const isLoading = false;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -46,8 +45,12 @@ function RegisterForm() {
         </div>
 
         <button type="submit"
+          disabled={isLoading}
+          title="Crear Cuenta"
           className="w-3/5 h-10 mx-auto my-3 block justify-center text-foreground bg-background text-[1em] font-bold mt-5 rounded-md cursor-pointer transition-all duration-200 ease-in  hover:bg-blue-800 hover:text-background disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
-        >Registrar</button>
+        >
+          {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "SignUp"}
+        </button>
       </form>
     </div>
   );

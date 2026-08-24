@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
+import { SESSION_COOKIE } from "@/const/constants"
 
 const LOGIN_ROUTE = "/login"
-const AUTH_COOKIE = "user-token"
+const AUTH_COOKIE = SESSION_COOKIE
 
 export default function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl
