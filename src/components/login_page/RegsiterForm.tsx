@@ -2,6 +2,7 @@
 
 import { RiLoader2Fill, RiMailAddLine, RiUserReceivedLine } from "@remixicon/react";
 import { toast } from "sonner";
+import Button from "@/ui/Button";
 
 
 function RegisterForm() {
@@ -21,7 +22,7 @@ function RegisterForm() {
   }
 
   return (
-    <div className="session_signup h-[460px] bg-black rounded-[60%_/_10%] -translate-y-[180px] transition-all duration-1000 ease-in-out">
+    <div className="session_signup h-[460px] bg-foreground rounded-[60%_/_10%] -translate-y-[165px] transition-all duration-1000 ease-in-out">
       <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
 
         <label htmlFor="session_chk" aria-hidden="true"
@@ -44,13 +45,15 @@ function RegisterForm() {
             className="block w-3/5 mx-auto pl-10 pr-3 py-2 border placeholder-foreground-light text-background border-foreground-light rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
         </div>
 
-        <button type="submit"
-          disabled={isLoading}
-          title="Crear Cuenta"
-          className="w-3/5 h-10 mx-auto my-3 block justify-center text-foreground bg-background text-[1em] font-bold mt-5 rounded-md cursor-pointer transition-all duration-200 ease-in  hover:bg-blue-800 hover:text-background disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
-        >
-          {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "SignUp"}
-        </button>
+        <div className="w-3/5 h-10 mx-auto mt-5">
+          <Button
+            disabled={isLoading}
+            title="Crear cuenta"
+            type="submit"
+          >
+            {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "SignUp"}
+          </Button>
+        </div>
       </form>
     </div>
   );

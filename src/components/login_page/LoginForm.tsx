@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuthContext } from "../session/context/useAuthContext";
 import { LoginDto } from "../session/dto/login.dto";
 import { SESSION_COOKIE } from "@/const/constants";
+import Button from "@/ui/Button";
 
 function LoginForm() {
   const { login, isLoading } = useAuthContext();
@@ -53,13 +54,16 @@ function LoginForm() {
             className="block w-3/5 mx-auto pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
         </div>
         
-        <button type="submit"
-          title="Iniciar sesión"
-          disabled={isLoading}
-          className="w-3/5 h-10 mx-auto my-3 block justify-center text-white bg-black text-[1em] font-bold mt-5 rounded-md cursor-pointer transition-all duration-200 ease-in hover:bg-blue-800 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:hover:bg-gray-400"
-        >
-          {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "LogIn"}
-        </button>
+        <div className="w-3/5 h-10 mx-auto mt-5">
+          <Button
+            disabled={isLoading}
+            title="Iniciar sesión"
+            type="submit"
+            variant="secondary"
+          >
+            {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "LogIn"}
+          </Button>
+        </div>
       </form>
     </div>
   );

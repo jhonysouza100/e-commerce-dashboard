@@ -2,10 +2,10 @@
 
 :root {
   /* COLORS */
-  --primary-color: #2d2d2d;
+  --primary-color: #1d1d1d;
   --secondary-color: #2563eb;
   --background-color: hsl(0, 100%, 100%);
-  --foreground-color: hsl(228, 18%, 16%);
+  --foreground-color: hsl(0, 0%, 11%);
   --foreground-color-muted: hsl(220, 9%, 46%);
   --foreground-color-light: hsl(228, 8%, 56%);
   --transparent-color-sm: #ffffffbb;
@@ -114,18 +114,18 @@ input, select, textarea, input:focus, select:focus, textarea:focus {
 }
 
 /* Modifica el scrollbar del dashboard */
-.sidebar_content::-webkit-scrollbar{
+.sidebar_navigation::-webkit-scrollbar{
   width: .4rem;
   background-color: hsl(288, 8%, 85%);
 }
-.sidebar_content::-webkit-scrollbar-thumb{
+.sidebar_navigation::-webkit-scrollbar-thumb{
   background-color: hsl(288, 8%, 75%);
 }
 /* Color changes in some parts of the website, in dark theme */
-.isDark .sidebar_content::-webkit-scrollbar {
+.isDark .sidebar_navigation::-webkit-scrollbar {
   background-color: hsl(228, 16%, 30%);
 } 
-.isDark .sidebar_content::-webkit-scrollbar-thumb {
+.isDark .sidebar_navigation::-webkit-scrollbar-thumb {
   background-color: hsl(228, 16%, 40%);
 }
 

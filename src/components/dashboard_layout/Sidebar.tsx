@@ -42,11 +42,11 @@ function Sidebar() {
     >
       <div className="sidebar_container flex flex-col gap-y-12 h-full overflow-hidden">
         {/* Sidebar User Profile */}
-        <div className="block lg:hidden overflow-hidden">
+        <div className="block mpx-auto lg:hidden overflow-hidden">
           <UserCard />
         </div>
-        {/* Sidebar Content */}
-        <nav className="sidebar_content flex flex-col gap-y-12 overflow-y-auto overflow-x-hidden">
+        {/* Sidebar Navigation */}
+        <nav className="sidebar_navigation flex flex-col gap-y-12 overflow-y-auto overflow-x-hidden">
           {menuItems.map((el, first) => (
             <div key={el.section}>
               <h3 className="sidebar_title w-full sm:w-[150px] text-tiny text-center font-semibold mb-6 lg:[transition:width_.4s]">
