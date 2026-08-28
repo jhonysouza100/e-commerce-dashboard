@@ -4,4 +4,5 @@ export interface SessionInterface {
   email: string
   role: string
   picture: string
+  company: string
 }

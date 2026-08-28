@@ -30,12 +30,12 @@ const SearchBar: React.FC<AvatarProps> = ({ placeholder }) => {
 
   return (
     <div className="relative w-full">
-      <RiSearch2Line className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+      <RiSearch2Line className="absolute left-3 top-1/2 transform -translate-y-1/2 text-foreground-light h-4 w-4" />
       <input
         type="text"
         onChange={handleSearch}
         placeholder={placeholder}
-        className="w-full bg-gray-100 rounded-full py-1 pl-10 pr-4 text-sm text-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-200"
+        className="w-full bg-surface-secondary rounded-full py-1 pl-10 pr-4 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-secondary"
       />
     </div>
   );

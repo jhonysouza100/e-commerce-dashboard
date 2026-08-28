@@ -6,7 +6,8 @@ function page() {
   return (
     <div>
       Página principal
-      <div className="w-1/5 mx-auto">
+      <div className="w-[40%] mx-auto">
+        
       </div>
       
     </div>

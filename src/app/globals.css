@@ -1,16 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  /* COLORS */
-  --primary-color: #1d1d1d;
-  --secondary-color: #2563eb;
-  --background-color: hsl(0, 100%, 100%);
-  --foreground-color: hsl(0, 0%, 11%);
-  --foreground-color-muted: hsl(220, 9%, 46%);
-  --foreground-color-light: hsl(228, 8%, 56%);
-  --transparent-color-sm: #ffffffbb;
-  --transparent-color-md: #ffffff66;
-  --transparent-color-row: hsl(0, 0%, 85%);
+  /* Semantic theme tokens */
+  --background-color: hsl(210 20% 98%);
+  --foreground-color: hsl(222 47% 11%);
+  --surface-color: hsl(0 0% 100%);
+  --surface-secondary-color: hsl(210 20% 96%);
+  --surface-hover-color: hsl(210 20% 93%);
+  --border-color: hsl(214 20% 88%);
+  --border-subtle-color: hsl(214 20% 93%);
+  --input-color: hsl(0 0% 100%);
+  --primary-color: hsl(222 47% 11%);
+  --primary-foreground-color: hsl(0 0% 100%);
+  --secondary-color: hsl(214 32% 91%);
+  --secondary-foreground-color: hsl(222 47% 11%);
+  --danger-color: hsl(0 72% 51%);
+  --danger-foreground-color: hsl(0 0% 100%);
+  --success-color: hsl(142 55% 35%);
+  --warning-color: hsl(32 90% 42%);
+  --foreground-color-muted: hsl(215 16% 42%);
+  --foreground-color-light: hsl(215 14% 52%);
+  --transparent-color-sm: hsl(0 0% 100% / .73);
+  --transparent-color-md: hsl(0 0% 100% / .4);
+  --transparent-color-row: hsl(210 20% 93%);
   --header-height: 3.5rem;
   --sidebar-width: 180px;
   /* LINEAR GRADIENT */
@@ -29,6 +41,30 @@
   }
 }
 
+[data-theme='dark'], .dark {
+  --background-color: #1d1d1d;
+  --foreground-color: hsl(210 20% 96%);
+  --surface-color: hsl(222 38% 12%);
+  --surface-secondary-color: hsl(222 34% 15%);
+  --surface-hover-color: hsl(222 30% 19%);
+  --border-color: hsl(217 22% 27%);
+  --border-subtle-color: hsl(217 22% 21%);
+  --input-color: hsl(222 34% 15%);
+  --primary-color: hsl(210 20% 96%);
+  --primary-foreground-color: hsl(222 47% 11%);
+  --secondary-color: hsl(217 28% 23%);
+  --secondary-foreground-color: hsl(210 20% 96%);
+  --danger-color: hsl(0 70% 62%);
+  --danger-foreground-color: hsl(222 47% 8%);
+  --success-color: hsl(142 55% 52%);
+  --warning-color: hsl(36 92% 58%);
+  --foreground-color-muted: hsl(215 15% 70%);
+  --foreground-color-light: hsl(215 14% 58%);
+  --transparent-color-sm: hsl(222 38% 12% / .88);
+  --transparent-color-md: hsl(222 38% 12% / .55);
+  --transparent-color-row: hsl(222 30% 19%);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {}
 }
@@ -36,23 +72,23 @@
 @theme inline {
   --font-sans: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
   --color-primary: var(--primary-color);
+  --color-primary-foreground: var(--primary-foreground-color);
   --color-background: var(--background-color);
   --color-foreground: var(--foreground-color);
   --color-foreground-muted: var(--foreground-color-muted);
   --color-foreground-light: var(--foreground-color-light);
-  --color-container: var(--container-color);
-  --color-container-alt: var(--container-color-alt);
-  --color-container-foreground: var(--container-color-foreground);
+  --color-surface: var(--surface-color);
+  --color-surface-secondary: var(--surface-secondary-color);
+  --color-surface-hover: var(--surface-hover-color);
+  --color-border: var(--border-color);
+  --color-border-subtle: var(--border-subtle-color);
+  --color-input: var(--input-color);
   --color-secondary: var(--secondary-color);
-  --color-secondary-muted: var(--secondary-color-muted);
-  --color-error: rgb(196, 28, 28);
-  --color-error-soft: rgb(252, 228, 228, 0.3);
-  --color-success: rgb(31, 122, 31);
-  --color-success-soft: rgba(227, 251, 227, 0.3);
-  --color-info: rgb(11, 107, 203);
-  --color-info-soft: rgb(227, 239, 251, 0.3);
-  --color-alert: rgb(154, 91, 19);
-  --color-alert-soft: rgb(253, 240, 225, 0.3);
+  --color-secondary-foreground: var(--secondary-foreground-color);
+  --color-danger: var(--danger-color);
+  --color-danger-foreground: var(--danger-foreground-color);
+  --color-success: var(--success-color);
+  --color-warning: var(--warning-color);
   --color-transparent: hsla(0, 0%, 100%, 0.2);
   --color-transparent-sm: var(--transparent-color-sm);
   --color-transparent-md: var(--transparent-color-md);
@@ -60,7 +96,7 @@
   --breakpoint-md: 620px;
   --breakpoint-lg: 968px;
   --breakpoint-xl: 1280px;
-  --breakpoint-2x: 1440p;
+  --breakpoint-2x: 1440px;
   --grid-template-columns-max2: repeat(2, max-content);
   --grid-template-columns-max3: repeat(3, max-content);
   --height-header: var(--header-height);
@@ -77,7 +113,9 @@ html {
 }
 input, select, textarea, input:focus, select:focus, textarea:focus {
   outline: hidden;
-  background-color: var(--background);
+  background-color: var(--input-color);
+  color: var(--foreground-color);
+  border-color: var(--border-color);
 }
 .button {
   padding: .5rem;
@@ -160,7 +198,7 @@ input, select, textarea, input:focus, select:focus, textarea:focus {
 
 /* TABLE DATA */
 tbody tr:nth-child(even) {
-  background-color: #0000000b;
+  background-color: var(--surface-secondary-color);
 }
 /*  ↓↓↓ ANIMATIONS TABLE ↓↓↓ ===================== */
 tbody tr {
@@ -218,18 +256,20 @@ tbody tr.hide td img {
   text-align: center;
 }
 .status.delivered {
-  background-color: #86e49d;
-  color: #006b21;
+  background-color: color-mix(in srgb, var(--success-color) 18%, var(--surface-color));
+  color: var(--success-color);
 }
 .status.cancelled {
-  background-color: #d893a3;
-  color: #b30021;
+  background-color: color-mix(in srgb, var(--danger-color) 18%, var(--surface-color));
+  color: var(--danger-color);
 }
 .status.pending {
-  background-color: #ebc474;
+  background-color: color-mix(in srgb, var(--warning-color) 18%, var(--surface-color));
+  color: var(--warning-color);
 }
 .status.aproved {
-  background-color: #6fcaea;
+  background-color: color-mix(in srgb, var(--secondary-color) 42%, var(--surface-color));
+  color: var(--secondary-foreground-color);
 }
 @media (max-width: 1080px) {
   td:not(:first-of-type) {

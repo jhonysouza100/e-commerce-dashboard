@@ -1,0 +1,43 @@
+export enum ProductCategoryEnum {
+  SMARTPHONES = 'Smartphones',
+  IPHONE = 'Iphone',
+  INFORMATICA = 'Informática',
+  ELECTRODOMESTICS = 'Electrodomésticos',
+  APPLIENCES = 'Accesorios',
+  BEBIDAS = 'Bebidas & Cigarros',
+  CAMPING = 'Pesaca y Camping',
+  AUTOMOTIVE = 'Automotor',
+  
+  ART = 'art', // Arte
+  BABY = 'baby', // Bebés
+  BEAUTY = 'beauty', // Perfumeria & Cosmeticos
+  BOOKS = 'books', // Libros
+  CARS = 'cars', // Autos y Otros Vehículos
+  CLOTHING = 'clothing', // Ropa y Accesorios
+  COLLECTIBLES = 'collectibles', // Coleccionables y Hobbies
+  COMPUTERS = 'computers', // Computación y Notebooks
+  COSMETICS = 'cosmetics', // Cosméticos
+  COURSES = 'courses', // Cursos y Educación
+  ELECTRONICS = 'electronics', // Electrónica, Audio y Video
+  ENTERTAINMENT = 'entertainment', // Entretenimiento y Entradas
+  FASHION = 'fashion', // Moda e Indumentaria
+  FOODS = 'foods', // Alimentos y Bebidas
+  GAMES = 'games', // Videojuegos y Consolas
+  HEALTH = 'health', // Salud y Bienestar
+  HOME = 'home', // Hogar, Muebles y Jardín
+  INSTRUMENTS = 'instruments', // Instrumentos Musicales
+  JEWELRY = 'jewelry', // Joyas y Relojes
+  MOVIES = 'movies', // Películas y Series
+  MUSIC = 'music', // Música y Vinilos
+  OFFICE = 'office', // Insumos de Oficina
+  OTHER = 'other', // Otros (Categoría por defecto)
+  PETS = 'pets', // Mascotas y Animales
+  PHONES = 'phones', // Celulares y Teléfonos
+  RETAIL = 'retail', // Comercio Minorista / General
+  SERVICES = 'services', // Servicios en General
+  SPORTS = 'sports', // Deportes y Fitness
+  TICKETS = 'tickets', // Entradas para Eventos
+  TOOLS = 'tools', // Herramientas y Construcción
+  TOYS = 'toys', // Juguetes & Coleccionables
+  TRAVEL = 'travel' // Viajes y Turismo
+}

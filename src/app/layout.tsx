@@ -1,6 +1,6 @@
 import "./globals.css";
 import QueryWrapper from "@/providers/QueryWrapper";
-// import { ThemeProvider } from "next-themes";
+import ThemeProvider from "@/providers/ThemeProvider";
 import { Toaster } from "sonner";
 import { Suspense } from "react";
 import GoogleSessionWrapper from "@/providers/GoogleSessionWrapper";
@@ -20,12 +20,12 @@ export default function RootLayout({
         <GoogleSessionWrapper>
           <QueryWrapper>
             <SessionInitializer />
-            {/* <ThemeProvider> */}
+            <ThemeProvider>
               <Suspense>
                 {children}
               </Suspense>
               <Toaster />
-            {/* </ThemeProvider> */}
+            </ThemeProvider>
           </QueryWrapper>
         </GoogleSessionWrapper>
       </body>

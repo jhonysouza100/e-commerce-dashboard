@@ -29,7 +29,7 @@ export default function proxy(request: NextRequest) {
 
   // ─────────────────────────────────────────────
   // 2. Cualquier otra ruta requiere autenticación
-  // ─────────────────────────────────────────────
+    // ─────────────────────────────────────────────
   if (!token) {
     const loginUrl = request.nextUrl.clone()
 
@@ -52,6 +52,6 @@ export default function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/",
+    "/", "/products", "/products/:path*",
   ],
 }

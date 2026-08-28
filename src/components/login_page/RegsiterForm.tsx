@@ -31,7 +31,7 @@ function RegisterForm() {
 
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-20 flex items-center pointer-events-none">
-            <RiUserReceivedLine className="h-5 w-5 text-gray-400" />
+            <RiUserReceivedLine className="h-5 w-5 text-foreground-light" />
           </div>
           <input required type="text" name="username" placeholder="Nombre de usuario"
             className="block w-3/5 mx-auto pl-10 pr-3 py-2 border placeholder-foreground-light text-background border-foreground-light rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
@@ -39,7 +39,7 @@ function RegisterForm() {
 
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-20 flex items-center pointer-events-none">
-            <RiMailAddLine className="h-5 w-5 text-gray-400" />
+            <RiMailAddLine className="h-5 w-5 text-foreground-light" />
           </div>
           <input required type="email" name="email" placeholder="Correo electrónico"
             className="block w-3/5 mx-auto pl-10 pr-3 py-2 border placeholder-foreground-light text-background border-foreground-light rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
@@ -47,9 +47,11 @@ function RegisterForm() {
 
         <div className="w-3/5 h-10 mx-auto mt-5">
           <Button
+            className="w-full"
             disabled={isLoading}
             title="Crear cuenta"
             type="submit"
+            variant="secondary"
           >
             {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "SignUp"}
           </Button>

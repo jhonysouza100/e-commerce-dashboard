@@ -38,7 +38,10 @@ function Pagination({ count }: { count: number }) {
   // console.log(`Page ${page}: ${ITEMS_PER_PAGE * (parseInt(page) - 1) + 1}-${Math.min(ITEMS_PER_PAGE * parseInt(page), count)} of ${count}`);
 
   return (
-    <div className="flex align-middle justify-between bg-white p-2 gap-2 shadow-md rounded-full">
+    <div className="flex align-middle justify-between bg-bacground p-2 gap-2 rounded-full">
+      <div className="flex items-center gap-2 text-sm text-foreground-muted">
+        <span className="font-semibold">{`items ${ITEMS_PER_PAGE * (parseInt(page) - 1) + 1}-${Math.min(ITEMS_PER_PAGE * parseInt(page), count)} de ${count}`}</span>
+      </div>
       <button
         className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-muted"
         disabled={!hasPrev}
@@ -47,7 +50,7 @@ function Pagination({ count }: { count: number }) {
         <RiArrowLeftSLine />
       </button>
       <div className="flex items-center gap-2 text-sm text-foreground-muted">
-      <span className="font-semibold">{`Pagína ${page}, items ${ITEMS_PER_PAGE * (parseInt(page) - 1) + 1}-${Math.min(ITEMS_PER_PAGE * parseInt(page), count)} de ${count}`}</span>
+        <span className="font-semibold">{`Pagína ${page}`}</span>
       </div>
       <button
         className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-muted"

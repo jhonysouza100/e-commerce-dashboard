@@ -40,26 +40,27 @@ function LoginForm() {
 
         <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-20 flex items-center pointer-events-none">
-              <RiAdminLine className="h-5 w-5 text-gray-400" />
+              <RiAdminLine className="h-5 w-5 text-foreground-light" />
             </div>
           <input required type="text" name="name" placeholder="Nombre de usuario"
-            className="block w-3/5 mx-auto pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+            className="block w-3/5 mx-auto pl-10 pr-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
         </div>
     
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-20 flex items-center pointer-events-none">
-            <RiLockLine className="h-5 w-5 text-gray-400" />
+            <RiLockLine className="h-5 w-5 text-foreground-light" />
           </div>
           <input required type="password" name="password" placeholder="Contraseña"
-            className="block w-3/5 mx-auto pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+            className="block w-3/5 mx-auto pl-10 pr-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
         </div>
         
         <div className="w-3/5 h-10 mx-auto mt-5">
           <Button
+            className="w-full"
             disabled={isLoading}
             title="Iniciar sesión"
             type="submit"
-            variant="secondary"
+            variant="primary"
           >
             {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "LogIn"}
           </Button>

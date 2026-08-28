@@ -34,10 +34,10 @@ const UserCard: React.FC<UserCardProps> = ({ order = "0", size="medium" }) => {
           <>
           {/* USER PROFILE - SKELETON */}
             <div className="user_profile_skeleton sidebar_user lg:w-60 flex items-center justify-center sm:gap-x-2 lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s,column-gap_.4s]">
-              <div className={`user_picture_skeleton bg-gray-300 animate-pulse rounded-full aspect-square ${sizes[size]} ${orders[order]}`}></div>
+              <div className={`user_picture_skeleton bg-surface-hover animate-pulse rounded-full aspect-square ${sizes[size]} ${orders[order]}`}></div>
               <div className={`user_data_skeleton hidden sm:flex flex-col gap-2 flex-1 ${align[order]}`}>
-                <div className={`w-3/4 h-4 bg-gray-300 animate-pulse rounded`}></div>
-                <div className={`w-1/2 h-3 bg-gray-300 animate-pulse rounded`}></div>
+                <div className={`w-3/4 h-4 sm:h-3 bg-surface-hover animate-pulse rounded`}></div>
+                <div className={`w-1/2 h-3 sm:h-2 bg-surface-hover animate-pulse rounded`}></div>
               </div>
             </div>
           </>
@@ -63,7 +63,7 @@ const UserCard: React.FC<UserCardProps> = ({ order = "0", size="medium" }) => {
                   <span
                     className="hidden text-smaller lg:block text-clip text-wrap truncate"
                   >
-                    {/* {session?.email} */}
+                    {session?.company}
                   </span>
                 </div>
             </Link>
