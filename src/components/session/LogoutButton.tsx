@@ -39,7 +39,7 @@ function LogoutButton({
         title="Cerrar sesión"
         type="button"
         aria-label="Logout"
-        onClick={() => signOutMutation.mutate(SESSION_COOKIE)}
+        onClick={() => signOutMutation.mutate()}
       >
         {icon}
         <span className={`${contentClass || ""}`}>
