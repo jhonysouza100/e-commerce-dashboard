@@ -65,7 +65,7 @@ function ListProductsTable() {
     }
   }, [data, setCount, count]); // Este useEffect se ejecuta cuando `data` cambia
 
-  if (isLoading) return <Loading message="productos ..." />;
+  if (isLoading) return <Loading message="items..." />;
   if (isError) return <Alert message={error.message} />;
 
   return (

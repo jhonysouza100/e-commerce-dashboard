@@ -86,7 +86,7 @@ export default function EditProductForm({ id }: { id?: number }) {
   if (isError) return (<Alert message={error.message} />)
 
   return (
-    <div className="w-full max-w-7xl pb-4 lg:pb-8 mx-auto">
+    <div className="w-full max-w-7xl mx-auto">
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Columna #1 */}
