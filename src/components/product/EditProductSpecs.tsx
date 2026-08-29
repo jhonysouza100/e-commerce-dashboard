@@ -37,7 +37,7 @@ function EditProductSpecs() {
         <button
           type="button"
           onClick={handleAddSpec}
-          className="flex items-center gap-1 text-sm text-primary hover:text-primary-dark"
+          className="flex items-center gap-1 text-sm hover:text-foreground"
         >
           <RiAddLine className="w-4 h-4" />
           Agregar especificación

@@ -126,7 +126,7 @@ function CreateProductWithAI() {
   return (
     <div
       onClick={handleClick} 
-      className="absolute right-10 top-1/2 -translate-y-1/2 text-primary hover:text-secondary bg-white rounded-md p-1 shadow">
+      className="absolute right-10 top-1/2 -translate-y-1/2 text-primary hover:text-secondary bg-background rounded-md p-1 shadow">
       <RiGeminiLine size={12} />
     </div>
   );

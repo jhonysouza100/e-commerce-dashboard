@@ -12,7 +12,7 @@ async function GetSingleProductPage({ params, }: { params: Promise<{ id: string 
           {/* Action Buttons */}
           <SaveProductButton id={id} />
         </section>
-        <section className="table_container w-[95%] py-3 mx-auto rounded-md max-h-[calc(100vh_-_(var(--header-height)_+_8.75rem))] lg:max-h-[calc(100vh_-_(var(--header-height)_+_11.5rem))] [overflow:auto_overlay]">
+        <section className="table_container py-3 px-4 rounded-md max-h-[calc(100vh_-_(var(--header-height)_+_2.25rem))] lg:max-h-[calc(100vh_-_(var(--header-height)_+_5rem))] [overflow:auto_overlay]">
           <EditProductForm id={id} />
         </section>
       </div>

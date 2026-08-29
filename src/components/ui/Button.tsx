@@ -1,6 +1,6 @@
 import React from "react";
 
-type ButtonVariant = "primary" | "secondary" | "danger";
+type ButtonVariant = "primary" | "secondary" | "danger" | "transparent";
 type ButtonSize = "small" | "normal" | "large";
 type ButtonIconPosition = "left" | "right";
 
@@ -21,22 +21,31 @@ const Button: React.FC<ButtonProps> = ({ type = "button", variant = "primary", c
 
   const variantClasses: Record<ButtonVariant, string> = {
     primary: `
-      bg-foreground
-      text-background
+      [background:var(--gradient-color)]
+      text-white
       hover:opacity-90
+      disabled:[background:var(--surface-hover-color)]
+      disabled:[color:var(--surfece-hover-color)]
     `,
 
     secondary: `
       bg-background
       text-foreground
       hover:opacity-90
+      disabled:bg-surface-hover
     `,
 
     danger: `
       bg-danger
-      text-danger-foreground
+      text-white
       hover:opacity-90
+      disabled:text-foreground-light
+      disabled:bg-surface-hover
     `,
+
+    transparent: `
+      text-foreground
+    `
   };
 
   const orientationClasses = {
@@ -60,10 +69,7 @@ const Button: React.FC<ButtonProps> = ({ type = "button", variant = "primary", c
         font-bold
         rounded-md
         cursor-pointer
-        transition-all
-        duration-200
         active:scale-[0.98]
-        disabled:bg-surface-hover disabled:text-foreground-light
         disabled:cursor-not-allowed
         disabled:active:scale-100
         ${className}

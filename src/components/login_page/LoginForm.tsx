@@ -20,7 +20,7 @@ function LoginForm() {
       password: formData.get('password') as string,
     };
 
-    await login(credential, SESSION_COOKIE);
+    await login(credential);
 
     const redirect = new URLSearchParams(window.location.search).get("redirect");
     if (redirect) {

@@ -27,7 +27,7 @@ const Avatar: React.FC<AvatarProps> = ({ className, children, src, alt, size = '
           height={100}
           loading="lazy"
           // quality={100}
-        /> ) : ( <span className="uppercase text-gray-600 text-3xl font-bold bg-primary-2">{alt?.charAt(0)}</span> )
+        /> ) : ( <span className="uppercase text-3xl font-bold bg-primary-2">{alt?.charAt(0)}</span> )
       }
     </div>
   );

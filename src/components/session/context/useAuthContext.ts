@@ -9,9 +9,9 @@ interface AuthContextType {
   session: SessionInterface | null;
   isLoading: boolean;
   errorMessage: string | null;
-  login: (credentials: LoginDto, cookieName: string) => Promise<void>;
-  logout: (cookieName: string) => Promise<void>;
-  verify: (cookieName: string) => Promise<void>;
+  login: (credentials: LoginDto) => Promise<void>;
+  logout: () => Promise<void>;
+  verify: () => Promise<void>;
 }
 
 export const useAuthContext = create<AuthContextType>((set) => ({

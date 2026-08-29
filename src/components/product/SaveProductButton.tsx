@@ -2,9 +2,9 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { RiArrowGoBackFill, RiCloseLine, RiSaveLine } from "@remixicon/react";
+import { RiArrowGoBackFill, RiCheckLine, RiCloseLine } from "@remixicon/react";
 import { useEffect, useMemo } from "react";
-import Button from "@/components/ui/Button";
+import Button from "@/ui/Button";
 import { useProductsContext } from "./context/useProductsContext";
 import { Product } from "./interface/product.interface";
 import { getProductRequest, updateProductRequest } from "./hooks/useProductsRequests";
@@ -98,7 +98,7 @@ function SaveProductButton({ id }: { id: number }) {
           }}
           icon={<RiArrowGoBackFill size={18} />}
           size="small"
-          variant="secondary"
+          variant="transparent"
       /> 
       <div className="space-x-3">
         <AlertDialog
@@ -114,7 +114,7 @@ function SaveProductButton({ id }: { id: number }) {
           <Button
             onClick={saveProduct}
             disabled={!product || !hasChanges || isLoading}
-            icon={<RiSaveLine size={18} />}
+            icon={<RiCheckLine size={18} />}
             size="small"
             title="Guardar cambios"
           />
@@ -134,6 +134,7 @@ function SaveProductButton({ id }: { id: number }) {
             icon={<RiCloseLine size={18} />}
             size="small"
             title="Descartar cambios"
+            variant="danger"
           />
         </AlertDialog>
       </div>

@@ -10,7 +10,7 @@ async function CreateProductPage() {
           {/* Action Buttons */}
           <CreateProductButton />
         </section>
-        <section className="table_container w-[95%] py-3 mx-auto rounded-md max-h-[calc(100vh_-_(var(--header-height)_+_8.75rem))] lg:max-h-[calc(100vh_-_(var(--header-height)_+_11.5rem))] [overflow:auto_overlay]">
+        <section className="table_container py-3 px-4 rounded-md max-h-[calc(100vh_-_(var(--header-height)_+_8.75rem))] lg:max-h-[calc(100vh_-_(var(--header-height)_+_11.5rem))] [overflow:auto_overlay]">
           <EditProductForm />
         </section>
       </div>

@@ -50,12 +50,12 @@ function Pagination({ count }: { count: number }) {
         <RiArrowLeftSLine />
       </button>
       <div className="flex items-center gap-2 text-sm text-foreground-muted">
-        <span className="font-semibold">{`Pagína ${page}`}</span>
+        <span className="font-semibold">{`Página ${page}`}</span>
       </div>
       <button
         className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-muted"
         disabled={!hasNext}
-        aria-label="Pagina siguinte"
+        aria-label="Página isguinte"
         onClick={() => handleChangePage("next")}>
         <RiArrowRightSLine />
       </button>

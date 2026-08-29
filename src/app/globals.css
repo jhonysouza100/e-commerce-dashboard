@@ -2,6 +2,7 @@
 
 :root {
   /* Semantic theme tokens */
+  --white-color: hsl(210 20% 98%);
   --background-color: hsl(210 20% 98%);
   --foreground-color: hsl(222 47% 11%);
   --surface-color: hsl(0 0% 100%);
@@ -10,8 +11,7 @@
   --border-color: hsl(214 20% 88%);
   --border-subtle-color: hsl(214 20% 93%);
   --input-color: hsl(0 0% 100%);
-  --primary-color: hsl(222 47% 11%);
-  --primary-foreground-color: hsl(0 0% 100%);
+  --primary-color: #3498db;
   --secondary-color: hsl(214 32% 91%);
   --secondary-foreground-color: hsl(222 47% 11%);
   --danger-color: hsl(0 72% 51%);
@@ -26,7 +26,7 @@
   --header-height: 3.5rem;
   --sidebar-width: 180px;
   /* LINEAR GRADIENT */
-  --gradient: linear-gradient(180deg,rgba(37, 99, 235, 1) 0%, rgba(147, 197, 253, 1) 100%);
+  --gradient-color: linear-gradient(180deg,rgba(37, 99, 235, 1) 0%, rgba(147, 197, 253, 1) 100%);
   /* TYPOGRAPHY */
   --normal-font: .938rem;
   --smaller-font: .65rem;
@@ -50,8 +50,6 @@
   --border-color: hsl(217 22% 27%);
   --border-subtle-color: hsl(217 22% 21%);
   --input-color: hsl(222 34% 15%);
-  --primary-color: hsl(210 20% 96%);
-  --primary-foreground-color: hsl(222 47% 11%);
   --secondary-color: hsl(217 28% 23%);
   --secondary-foreground-color: hsl(210 20% 96%);
   --danger-color: hsl(0 70% 62%);
@@ -66,17 +64,19 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {}
+  :root { 
+    /* El usuario debe seleccionar su preferencia */
+  }
 }
 
 @theme inline {
-  --font-sans: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
+  --color-white: var(--white-color);
   --color-primary: var(--primary-color);
-  --color-primary-foreground: var(--primary-foreground-color);
   --color-background: var(--background-color);
   --color-foreground: var(--foreground-color);
   --color-foreground-muted: var(--foreground-color-muted);
   --color-foreground-light: var(--foreground-color-light);
+  --color-gradient: var(var(--gradient-color));
   --color-surface: var(--surface-color);
   --color-surface-secondary: var(--surface-secondary-color);
   --color-surface-hover: var(--surface-hover-color);
@@ -117,6 +117,46 @@ input, select, textarea, input:focus, select:focus, textarea:focus {
   color: var(--foreground-color);
   border-color: var(--border-color);
 }
+/* 1. Selección y estilos base del Checkbox */
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    aspect-ratio: 1 / 1;
+    border: 2px solid var(--foreground-color-light);
+    background-color: (var(--background-color));
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-grid;
+    place-content: center;
+    position: relative;
+}
+/* 2. Efecto Hover (al pasar el mouse) */
+input[type="checkbox"]:hover {
+  border-color: var(--primary-color);
+}
+/* 3. Estilos cuando el Checkbox está seleccionado (:checked) */
+input[type="checkbox"]:checked {
+  background: var(--gradient-color);
+  border-color: var(--primary-color);
+}
+/* 4. Creación de la tilde (Check) usando el pseudoelemento ::before */
+input[type="checkbox"]::before {
+  content: "";
+  width: 10px;
+  height: 6px;
+  border-left: 3px solid white;
+  border-bottom: 3px solid white;
+  /* Rotamos los bordes para simular la forma de una tilde */
+  transform: rotate(-45deg) scale(0);
+  transition: transform 0.4s ease-in-out; 
+  /* Ajuste fino de posición */
+  margin-top: -2px; 
+}
+/* 5. Mostrar la tilde cuando esté seleccionado */
+input[type="checkbox"]:checked::before {
+  transform: rotate(-45deg) scale(1);
+}
 .button {
   padding: .5rem;
   font-size: medium;
@@ -128,14 +168,13 @@ input, select, textarea, input:focus, select:focus, textarea:focus {
   overflow: hidden;
   border-radius: 32px;
   cursor: pointer;
-  transition: all .3s;
 }
 
 /*  INTERACCIONES que disparan cambios en el DOM ===================== */
 
 /* Indica cuando un link está activo via script */
 .active-link {
-  color: var(--primary-color);
+  color: var(--foreground-color);
 }
 .active-link::after {
   content: '';
@@ -143,7 +182,7 @@ input, select, textarea, input:focus, select:focus, textarea:focus {
   left: 0;
   width: .25rem;
   height: 1.25rem;
-  background-color: var(--primary-color);
+  background-color: var(--foreground-color);
 }
 
 /* Mostrar el sidebar via script */
@@ -267,7 +306,7 @@ tbody tr.hide td img {
   background-color: color-mix(in srgb, var(--warning-color) 18%, var(--surface-color));
   color: var(--warning-color);
 }
-.status.aproved {
+.status.approved {
   background-color: color-mix(in srgb, var(--secondary-color) 42%, var(--surface-color));
   color: var(--secondary-foreground-color);
 }

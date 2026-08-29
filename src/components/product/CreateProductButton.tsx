@@ -1,6 +1,6 @@
 "use client";
 
-import { RiArrowGoBackFill, RiCloseLine, RiSaveLine } from "@remixicon/react";
+import { RiArrowGoBackFill, RiCheckLine, RiCloseLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
@@ -66,7 +66,7 @@ function CreateProductButton() {
         }}
         icon={<RiArrowGoBackFill size={18} />}
         size="small"
-        variant="secondary"
+        variant="transparent"
       />
       <div className="space-x-3">
         <AlertDialog
@@ -82,7 +82,7 @@ function CreateProductButton() {
           <Button
             onClick={saveProduct}
             disabled={!hasChanges}
-            icon={<RiSaveLine size={18} />}
+            icon={<RiCheckLine size={18} />}
             size="small"
             title="Guardar item"
           />
@@ -101,6 +101,7 @@ function CreateProductButton() {
             disabled={!hasChanges}
             icon={<RiCloseLine size={18} />}
             size="small"
+            variant="danger"
             title="Descartar cambios"
           />
         </AlertDialog>

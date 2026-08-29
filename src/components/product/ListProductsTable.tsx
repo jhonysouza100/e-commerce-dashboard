@@ -72,10 +72,10 @@ function ListProductsTable() {
     <table className="my_table w-full border-collapse text-left">
       <thead className="table_head">
         <tr className="table_row">
-          <th className="head_rows border-collapse py-3 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">
+          <th className="head_rows border-collapse p-2 md:p-3 text-center z-30">
             <input aria-label="Seleccionar todos los productos visibles" type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} />
           </th>
-          <th className="head_rows border-collapse py-3 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Producto</th>
+          <th className="head_rows border-collapse py-3 px-4 text-center lg:text-left sticky top-0 left-0 z-20 !min-w-4 bg-background">Producto</th>
           <td className="head_rows border-collapse py-2 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Precio</td>
           <td className="head_rows border-collapse py-2 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Stock</td>
           <td className="head_rows border-collapse py-2 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Descuento</td>
@@ -131,7 +131,7 @@ function ListProductsTable() {
                 <div className="flex gap-3">
                   <Link
                     href={`/products/${product.id}`}
-                    className="add_product_btn p-2 text-foreground-muted rounded-md [transition:color,_.2s] hover:text-primary active:text-blue-600 cursor-pointer"
+                    className="add_product_btn p-2 text-foreground-muted rounded-md [transition:color,_.2s] hover:text-foreground cursor-pointer"
                   >
                     <RiEdit2Fill />
                   </Link>

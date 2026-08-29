@@ -81,7 +81,7 @@ Los tokens reales están en `src/app/globals.css`:
 
 Tokens Tailwind publicados por `@theme inline`: `primary`, `background`, `foreground`, `foreground-muted`, `foreground-light`, `container`, `container-alt`, `container-foreground`, `secondary`, `secondary-muted`, `error`, `error-soft`, `success`, `success-soft`, `info`, `info-soft`, `alert`, `alert-soft`, `transparent`, `transparent-sm` y `transparent-md`. Los tokens `container*` y `secondary-muted` apuntan a variables no declaradas en el archivo actual.
 
-Estados semánticos publicados: error `rgb(196, 28, 28)`, success `rgb(31, 122, 31)`, info `rgb(11, 107, 203)` y alert `rgb(154, 91, 19)`, con sus fondos soft correspondientes. También aparecen colores directos en componentes y CSS: grises de Tailwind, `#86e49d/#006b21` para delivered, `#d893a3/#b30021` para cancelled, `#ebc474` para pending, `#6fcaea` para aproved, rojo Tailwind en Button danger y azul del input de búsqueda.
+Estados semánticos publicados: error `rgb(196, 28, 28)`, success `rgb(31, 122, 31)`, info `rgb(11, 107, 203)` y alert `rgb(154, 91, 19)`, con sus fondos soft correspondientes. También aparecen colores directos en componentes y CSS: grises de Tailwind, `#86e49d/#006b21` para delivered, `#d893a3/#b30021` para cancelled, `#ebc474` para pending, `#6fcaea` para approved, rojo Tailwind en Button danger y azul del input de búsqueda.
 
 No hay un tema oscuro implementado en tokens: el bloque `@media (prefers-color-scheme: dark)` está vacío. Sí existen reglas de scrollbar bajo `.isDark`, pero no se encontró el mecanismo que agregue esa clase.
 
@@ -99,7 +99,7 @@ No hay utilidades de borde compartidas. Inputs usan `border-gray-300` o `border-
 
 ### Interacciones y animación
 
-- Transiciones habituales: `transition-all duration-200`, `transition-all duration-300`, `transition-all duration-700/1000 ease-in-out` y transiciones arbitrarias de color, padding, width, opacity y background.
+- Transiciones habituales: `transition-all duration-700/1000 ease-in-out`, `* .4s ease-in-out` y transiciones arbitrarias, padding, width, opacity y background.
 - Button reduce escala a `.98` en active.
 - Sidebar anima posición, ancho y color de fondo; `.active-link::after` muestra una barra izquierda de `0.25rem × 1.25rem`.
 - Tabla define animación de salida mediante `.hide`: opacity, translateX, padding, font-size y tamaño de imágenes.
@@ -344,7 +344,7 @@ El tema se gestiona con `next-themes` desde `src/providers/ThemeProvider.tsx`. U
 | `success` / `warning` | Estados | `hsl(142 55% 35%)` / `hsl(32 90% 42%)` | `hsl(142 55% 52%)` / `hsl(36 92% 58%)` |
 | `foreground-muted` / `foreground-light` | Texto secundario | `hsl(215 16% 42%)` / `52%` | `hsl(215 15% 70%)` / `58%` |
 
-Usar `bg-background`, `bg-surface`, `text-foreground`, `text-foreground-muted`, `border-border`, `bg-primary`, `text-primary-foreground` y `focus:ring-secondary`. `dark:*` solo cuando no exista un token equivalente. Los componentes nuevos no deben duplicar paletas ni usar colores arbitrarios, `bg-white`/`bg-black` o `text-white`/`text-black`; deben reutilizar componentes propios y mantener `next-themes` y Tailwind sin instalar librerías.
+Usar `bg-background`, `bg-surface`, `text-foreground`, `text-foreground-muted`, `border-border`, `bg-primary`y `focus:ring-secondary`. `dark:*` solo cuando no exista un token equivalente. Los componentes nuevos no deben duplicar paletas ni usar colores arbitrarios, `bg-white`/`bg-black` o `text-white`/`text-black`; deben reutilizar componentes propios y mantener `next-themes` y Tailwind sin instalar librerías.
 
 ## 8. Product UX
 
@@ -354,20 +354,15 @@ La tabla permite selección individual, selección total de los productos visibl
 
 ## 9. Observaciones e inconsistencias existentes
 
-- La página principal solo muestra `Página principal`; los imports de `Button`, `Pagination` y `Ri24HoursFill` están presentes pero no se usan.
 - `Sidebar` apunta a `/users`, `/products`, `/orders` y `/profile`, pero esas páginas no están en el árbol auditado.
 - `DashboardDOMHydratation` depende de `localStorage` y listeners imperativos, mientras `Sidebar` también calcula el enlace activo declarativamente; existen dos fuentes para active state.
 - `localStorage` se utiliza únicamente para el estado visual del sidebar; no es una persistencia de datos de negocio.
 - `handleOpenModal` tipa/guarda un booleano opcional en un estado booleano y el modal/close están comentados; la lógica de modal no está completa.
-- `LoginForm` y `RegisterForm` importan `Button` por `@/ui/Button`, mientras el resto puede usar `@/components/ui/Button`; ambos aliases existen.
-- Hay nombres/ortografía inconsistentes: `RegsiterForm.tsx`, `DashboardDOMHydratation`, `isLogued` comentado, `Pagína`, `Pagina siguinte`, `aproved` y `Crtl + D`.
+- Hay nombres/ortografía inconsistentes: `DashboardDOMHydratation`.
 - `SessionInitializer` verifica sesión en cada cambio de ruta y puede generar requests repetidos.
-- `useAuthContext` declara argumentos `cookieName` en la interfaz, pero las implementaciones `login`, `logout` y `verify` los ignoran; las llamadas sí los pasan.
 - `setSessionCookie` deja el token accesible a JavaScript (`httpOnly: false`), una decisión de seguridad existente que no se modifica en esta auditoría.
-- `globals.css` tiene referencias a variables no declaradas (`--container-color`, `--container-color-alt`, `--container-color-foreground`, `--secondary-color-muted`, `--background` en selectores de formulario y `--font-roboto`).
 - La configuración de imagen permite cualquier hostname HTTP/HTTPS y `unoptimized: true`.
-- `prefers-color-scheme: dark` está vacío; solo hay reglas parciales para `.isDark`.
-- Hay colores directos y valores arbitrarios mezclados con tokens, por ejemplo `bg-white`, `text-gray-600`, `bg-red-600`, `w-[350px]` y radios arbitrarios.
+- Hay radios arbitrarios.
 - `next.config.ts` no define headers de seguridad.
 - No se encontraron componentes propios de Card, Input, Select, Table, Modal, Dropdown, Badge, Alert o Loader; no deben citarse como existentes.
 

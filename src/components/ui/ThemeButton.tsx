@@ -15,7 +15,7 @@ export default function ThemeButton() {
   return (
     <button
       id="theme-button"
-      className="sidebar_link gap-x-4 relative grid pl-8 [transition:color_.4s,_opacity_.4s] grid-cols-[max-content] px-8 hover:text-primary cursor-pointer sm:grid-cols-max2"
+      className="sidebar_link gap-x-4 relative grid pl-8 [transition:color_.4s,_opacity_.4s] grid-cols-[max-content] px-8 hover:text-foreground cursor-pointer sm:grid-cols-max2"
       type="button"
       aria-label={isDark ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
       title={isDark ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}

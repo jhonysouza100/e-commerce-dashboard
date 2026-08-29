@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import LoginForm from "./LoginForm";
 import { useLoginContainerContext } from "./context/useLoginContainerContext";
-import RegisterForm from "./RegsiterForm";
+import RegisterForm from "./RegisterForm";
 // import { useAuthContext } from "@/components/auth/context/authContext";
 // import Link from "next/link";
 // import { RiAddLargeFill } from "@remixicon/react";
@@ -11,11 +11,11 @@ import RegisterForm from "./RegsiterForm";
 
 function LoginContainer() {
   const { openModal, handleOpenModal } = useLoginContainerContext();
-  // const { isLogued } = useAuthContext();
+  // const { isLogged } = useAuthContext();
   
   
   useEffect(() => {
-    // if(isLogued) {
+    // if(isLogged) {
     //   handleOpenModal(false);
     // }
     
@@ -32,8 +32,7 @@ function LoginContainer() {
   }, [openModal]);
 
   return (
-    // <div className="login_container fixed -right-full top-0 flex justify-center items-center min-h-screen w-full bg-background transition-all duration-300" id="login_container">
-    <div className="login_container flex justify-center items-center h-[calc(100vh_-_1rem)] w-full bg-background transition-all duration-300" id="login_container">
+    <div className="login_container flex justify-center items-center h-[calc(100vh_-_1rem)] w-full bg-background" id="login_container">
       <div className="relative bg-background w-[350px] h-[500px] overflow-hidden rounded-lg shadow-lg">
         {/* <div className="login_container_close text-foreground-light cursor-pointer inline-flex absolute right-2 top-2" id="login_container_close"><RiCloseLine /></div> */}
         {/* <Link href={'/register'} className="text-foreground cursor-pointer inline-flex absolute right-4 top-4">

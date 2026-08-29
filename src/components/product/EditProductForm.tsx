@@ -22,7 +22,7 @@ function CleanButton({ name }: { name: string; }) {
     <button
       type="button"
       onClick={() => updateProduct({ [name]: "" })}
-      className="absolute right-2 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 bg-white rounded-full p-1 shadow"
+      className="absolute right-2 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 bg-background rounded-full p-1 shadow"
     >
       <RiCloseLine size={12} />
     </button>
@@ -94,7 +94,7 @@ export default function EditProductForm({ id }: { id?: number }) {
           {/* Grupo 1A */}
           <div className="grid grid-cols-2 gap-2">
             {/* Product Name */}
-            <div>
+            <div>                                                         
               <div className="flex items-center gap-2 mb-1">
                 <label htmlFor="name" className="font-medium text-xs text-foreground-muted">
                   Nombre
@@ -187,7 +187,7 @@ export default function EditProductForm({ id }: { id?: number }) {
                     onChange={handleStatusChange}
                     className="sr-only peer"
                   />
-                  <div className="w-11 h-6 bg-foreground-muted peer-focus:outline-none rounded-full peer peer-checked:bg-green-400 peer-checked:after:translate-x-5 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all"></div>
+                  <div className="w-11 h-6 bg-foreground-muted peer-focus:outline-none rounded-full relative peer-checked:[background:var(--gradient-color)] peer-checked:after:translate-x-5 after:transition-[transition:translate_.4s_ease-in-out] after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border after:border-white after:rounded-full after:h-5 after:w-5"></div>
                 </label>
               </div>
             </div>
@@ -255,7 +255,7 @@ export default function EditProductForm({ id }: { id?: number }) {
                 <button
                   type="button"
                   onClick={() => updateProduct({ description: "" })}
-                  className="absolute right-2 top-2 text-red-500 hover:text-red-700 bg-white rounded-full p-[2px] shadow"
+                  className="absolute right-2 top-2 text-red-500 hover:text-red-700 bg-background rounded-full p-[2px] shadow"
                 >
                   <RiCloseLine className="w-3 h-3" />
                 </button>
@@ -291,7 +291,7 @@ export default function EditProductForm({ id }: { id?: number }) {
                     />
                     <button
                       onClick={() => removeImage(img.secure_url)}
-                      className="absolute top-2 right-2 bg-white rounded-full p-1 shadow-md"
+                      className="absolute top-2 right-2 bg-background rounded-full p-1 shadow-md"
                     >
                       <RiCloseLine className="w-3 h-3 text-red-500" />
                     </button>

@@ -58,9 +58,8 @@ function Sidebar() {
                   <Link
                     key={index}
                     href={`${item.href}`}
-                    className={`${pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/") ? "active-link" : first} sidebar_link relative grid-cols-[max-content] grid sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer [transition:color_.4s,_opacity_.4s] hover:text-primary`}
+                    className={`${pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/") ? "active-link" : first} sidebar_link relative grid-cols-[max-content] grid sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground`}
                   >
-                    {/* <Link key={index} href={`${item.href}`} className={`${first === 0 && index === 0 ? 'active-link' : ''} sidebar_link gap-x-4 relative grid items-center sm:grid-cols-max2 pl-8 [transition:color_.4s,_opacity_.4s] grid-cols-[max-content] px-8 hover:text-primary`}> */}
                     <item.icon className="w-5 h-5" />
                     <span className="font-semibold lg:[transition:opacity_.4s] hidden sm:block">
                       {item.label}
@@ -76,7 +75,7 @@ function Sidebar() {
           {/* Theme button */}
           <ThemeButton />
           <LogoutButton
-            containerClass="sidebar_link relative grid grid-cols-[max-content] sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-primary [transition:color_.4s,_opacity_.4s] hover:text-primary"
+            containerClass="sidebar_link relative grid grid-cols-[max-content] sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground [transition:opacity_.4s]"
             contentClass="font-semibold text-normal lg:[transition:opacity_.4s] hidden sm:block"
             icon={<RiLogoutBoxFill />} 
             />
@@ -84,8 +83,8 @@ function Sidebar() {
       </div>
 
       <div className="sidebar-append items-center justify-center hidden lg:flex">
-        <button className="header_toggle text-foreground cursor-pointer" id="header-toggle-desktop" title="Crtl + D">
-          <RiArrowLeftWideLine size={16} className="rotate-0 [transition:all_.6s_ease-in-out]" id="toggle-icon-desktop"/>
+        <button className="header_toggle text-foreground cursor-pointer" id="header-toggle-desktop" title="Ctrl + D">
+          <RiArrowLeftWideLine size={16} className="rotate-0 [transition:transform_.4s_ease-in-out]" id="toggle-icon-desktop"/>
         </button>
       </div>
     </aside>

@@ -1,7 +1,3 @@
-import Button from "@/components/ui/Button";
-import Pagination from "@/components/ui/Pagination";
-import { Ri24HoursFill } from "@remixicon/react";
-
 function page() {
   return (
     <div>
