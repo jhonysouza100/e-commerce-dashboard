@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "./context/useAuthContext"; 
 import { useRouter } from "next/navigation";
-import { SESSION_COOKIE } from "@/const/constants";
 import AlertDialog from "@/components/ui/AlertDialog";
 
 function LogoutButton({

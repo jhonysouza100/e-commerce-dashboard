@@ -4,7 +4,6 @@ import { RiAdminLine, RiLoader2Fill, RiLockLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../session/context/useAuthContext";
 import { LoginDto } from "../session/dto/login.dto";
-import { SESSION_COOKIE } from "@/const/constants";
 import Button from "@/ui/Button";
 
 function LoginForm() {
