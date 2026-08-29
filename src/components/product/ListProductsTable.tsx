@@ -131,7 +131,7 @@ function ListProductsTable() {
                 <div className="flex gap-3">
                   <Link
                     href={`/products/${product.id}`}
-                    className="add_product_btn p-2 text-foreground-muted rounded-md [transition:color,_.2s] hover:text-foreground cursor-pointer"
+                    className="add_product_btn p-2 text-foreground-muted rounded-md hover:text-foreground cursor-pointer"
                   >
                     <RiEdit2Fill />
                   </Link>

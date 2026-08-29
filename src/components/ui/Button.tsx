@@ -73,6 +73,8 @@ const Button: React.FC<ButtonProps> = ({ type = "button", variant = "primary", c
         disabled:cursor-not-allowed
         disabled:active:scale-100
         ${className}
+        transition-all
+        duration-400
       `}
     >
       {icon && <span>{icon}</span>}

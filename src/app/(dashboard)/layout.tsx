@@ -8,7 +8,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div id="dashboard-layout" className="dashboard_layout fixed left-4 right-4 pt-[calc(var(--header-height)_+_1rem)] h-[calc(100vh_-_var(--header-height))] lg:pt-[calc(var(--header-height)_+_3.5rem)] lg:pl-sidebar lg:[transition:_padding_.4s]">
+    <div id="dashboard-layout" className="dashboard_layout fixed left-4 right-4 pt-[calc(var(--header-height)_+_1rem)] h-[calc(100vh_-_var(--header-height))] lg:pt-[calc(var(--header-height)_+_3.5rem)] lg:pl-sidebar lg:transition-padding">
       <Header />
       <Sidebar />
       <DashboardDOMHydratation />

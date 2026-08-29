@@ -20,9 +20,7 @@ const menuItems = [
     section: "Dashboard",
     items: [
       { icon: RiHome3Fill, label: "Inicio", href: "/" },
-      { icon: RiGroupFill, label: "Usuarios", href: "/users" },
       { icon: RiBox3Fill, label: "Productos", href: "/products" },
-      { icon: RiTodoFill, label: "Pedidos", href: "/orders" },
     ],
   },
   // {
@@ -38,7 +36,7 @@ function Sidebar() {
 
   return (
     <aside
-      className="sidebar w-max fixed -left-[120%] top-0 bottom-0 z-50 bg-background shadow-md py-6 m-3 rounded-2xl [transition:left_.4s,_width_.4s] lg:left-0 lg:w-sidebar lg:m-4"
+      className="sidebar w-max fixed -left-[120%] top-0 bottom-0 z-50 bg-background shadow-md py-6 m-3 rounded-2xl transition-sidebar lg:left-0 lg:w-sidebar lg:m-4"
       id="sidebar"
     >
       <div className="sidebar_container flex flex-col gap-y-12 h-full overflow-hidden">
@@ -50,7 +48,7 @@ function Sidebar() {
         <nav className="sidebar_navigation flex flex-col gap-y-12 overflow-y-auto overflow-x-hidden">
           {menuItems.map((el, first) => (
             <div key={el.section}>
-              <h3 className="sidebar_title w-full sm:w-[150px] text-tiny text-center font-semibold mb-6 lg:[transition:width_.4s]">
+              <h3 className="sidebar_title w-full sm:w-[150px] text-tiny text-center font-semibold mb-6 lg:transition-width">
                 {el.section}
               </h3>
               <div className="sidebar_list justify-center grid gap-y-6 sm:justify-start">
@@ -60,8 +58,8 @@ function Sidebar() {
                     href={`${item.href}`}
                     className={`${pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/") ? "active-link" : first} sidebar_link relative grid-cols-[max-content] grid sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground`}
                   >
-                    <item.icon className="w-5 h-5" />
-                    <span className="font-semibold lg:[transition:opacity_.4s] hidden sm:block">
+                    <item.icon size={20} className="transition-theme" />
+                    <span className="font-semibold lg:transition-opacity hidden sm:block">
                       {item.label}
                     </span>
                   </Link>
@@ -75,16 +73,16 @@ function Sidebar() {
           {/* Theme button */}
           <ThemeButton />
           <LogoutButton
-            containerClass="sidebar_link relative grid grid-cols-[max-content] sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground [transition:opacity_.4s]"
-            contentClass="font-semibold text-normal lg:[transition:opacity_.4s] hidden sm:block"
-            icon={<RiLogoutBoxFill />} 
+            containerClass="sidebar_link relative grid grid-cols-[max-content] sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground transition-apacity"
+            contentClass="font-semibold text-normal lg:transition-apacity hidden sm:block"
+            icon={<RiLogoutBoxFill size={20} className="transition-theme" />} 
             />
         </div>
       </div>
 
       <div className="sidebar-append items-center justify-center hidden lg:flex">
         <button className="header_toggle text-foreground cursor-pointer" id="header-toggle-desktop" title="Ctrl + D">
-          <RiArrowLeftWideLine size={16} className="rotate-0 [transition:transform_.4s_ease-in-out]" id="toggle-icon-desktop"/>
+          <RiArrowLeftWideLine size={16} className="rotate-0 duration-400 transition-transform ease-in-out" id="toggle-icon-desktop"/>
         </button>
       </div>
     </aside>

@@ -33,7 +33,7 @@ const UserCard: React.FC<UserCardProps> = ({ order = "0", size="medium" }) => {
     {!session ? (
           <>
           {/* USER PROFILE - SKELETON */}
-            <div className="user_profile_skeleton sidebar_user lg:w-60 flex items-center justify-center sm:gap-x-2 lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s,column-gap_.4s]">
+            <div className="user_profile_skeleton sidebar_user lg:w-60 flex items-center justify-center sm:gap-x-2 lg:transition-card">
               <div className={`user_picture_skeleton bg-surface-hover animate-pulse rounded-full aspect-square ${sizes[size]} ${orders[order]}`}></div>
               <div className={`user_data_skeleton hidden sm:flex flex-col gap-2 flex-1 ${align[order]}`}>
                 <div className={`w-3/4 h-4 sm:h-3 bg-surface-hover animate-pulse rounded`}></div>
@@ -44,7 +44,7 @@ const UserCard: React.FC<UserCardProps> = ({ order = "0", size="medium" }) => {
         ) : (
           <>
             <Link href={"/profile"} title={`Abrir el perfil de ${session.role.toLowerCase()} para ${session.name}`}
-              className="sidebar_user cursor-pointer lg:w-60 flex items-center justify-center sm:gap-x-2 overflow-hidden lg:[transition:padding_.4s,_box-shadow_.4s,_margin_.4s,column-gap_.4s]"
+              className="sidebar_user cursor-pointer lg:w-60 flex items-center justify-center sm:gap-x-2 overflow-hidden lg:transition-card"
             >
               <Avatar
                 className={`sidebar_user-img relative bg-primary text-background ${orders[order]}`}
@@ -56,7 +56,7 @@ const UserCard: React.FC<UserCardProps> = ({ order = "0", size="medium" }) => {
               </Avatar>
                 <div className={`sidebar_user-info w-full hidden sm:flex flex-col opacity-[1] lg:[transition:all_.4s] ${align[order]}`}>
                   <h3
-                    className="text-normal text-foreground font-bold hidden sm:block [transition:color_.4s] max-w-min truncate"
+                    className="text-normal text-foreground font-bold hidden sm:block max-w-min truncate"
                   >
                     {session?.name}
                   </h3>

@@ -31,6 +31,8 @@
   --normal-font: .938rem;
   --smaller-font: .65rem;
   --tiny-font: .75rem;
+  /* ANIMATION TOKENS */
+  --animation-duration: 0.4s;
 }
 
 /* LARGE devices */
@@ -76,7 +78,7 @@
   --color-foreground: var(--foreground-color);
   --color-foreground-muted: var(--foreground-color-muted);
   --color-foreground-light: var(--foreground-color-light);
-  --color-gradient: var(var(--gradient-color));
+  --color-gradient: var(--gradient-color);
   --color-surface: var(--surface-color);
   --color-surface-secondary: var(--surface-secondary-color);
   --color-surface-hover: var(--surface-hover-color);
@@ -106,6 +108,24 @@
   --text-normal: var(--normal-font);
   --text-smaller: var(--smaller-font);
   --text-tiny: var(--tiny-font);
+
+  /* ANIMATION TOKENS */
+  /* 1. Transición base para cambios de tema (Modo Oscuro / Claro) */
+  --transition-property-theme: background-color, color;
+  
+  /* 2. Transición específica para el Sidebar (incluye el cambio de tema + Layout) */
+  --transition-property-sidebar: background-color, color, left, width;
+  --transition-property-padding: background-color, color, padding;
+  --transition-property-width: background-color, color, width;
+  --transition-property-opacity: background-color, color, opacity;
+  --transition-property-transform: background-color, color, transform;
+  --transition-property-translate: background-color, color, translate;
+
+  /* 4. Transición de contenedores principales o tarjetas */
+  --transition-property-card: background-color, color, padding, box-shadow,_margin, column-gap;
+  
+  /* 3. Configuramos la duración por defecto para estas transiciones */
+  --transition-duration: var(--animation-duration);
 }
 
 html {
@@ -119,17 +139,18 @@ input, select, textarea, input:focus, select:focus, textarea:focus {
 }
 /* 1. Selección y estilos base del Checkbox */
 input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    width: 16px;
-    aspect-ratio: 1 / 1;
-    border: 2px solid var(--foreground-color-light);
-    background-color: (var(--background-color));
-    border-radius: 4px;
-    cursor: pointer;
-    display: inline-grid;
-    place-content: center;
-    position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  aspect-ratio: 1 / 1;
+  border: 2px solid var(--foreground-color-light);
+  background-color: (var(--background-color));
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  position: relative;
+  transition: all 0.4s ease-in-out;
 }
 /* 2. Efecto Hover (al pasar el mouse) */
 input[type="checkbox"]:hover {
@@ -242,7 +263,7 @@ tbody tr:nth-child(even) {
 /*  ↓↓↓ ANIMATIONS TABLE ↓↓↓ ===================== */
 tbody tr {
   --delay: 0.1s;
-  transition: transform 0.5s ease-in-out var(--delay), opacity 0.5s ease-in-out var(--delay);
+  transition: transform 0.4s ease-in-out var(--delay), opacity 0.4s ease-in-out var(--delay);
 }
 tbody tr.hide {
   opacity: 0;
@@ -264,12 +285,12 @@ tbody tr.hide td p,
 .hide .delete_user_btn {
   padding: 0;
   font: 0 / 0 sans-serif;
-  transition: padding 0.2s ease-in-out 0.5s, transform 0.2s ease-in-out 0.5s;
+  transition: padding 0.2s ease-in-out 0.4s, transform 0.2s ease-in-out 0.4s;
 }
 tbody tr.hide td img {
   width: 0;
   height: 0;
-  transition: width 0.2s ease-in-out 0.5s, height 0.2s ease-in-out 0.5s;
+  transition: width 0.2s ease-in-out 0.4s, height 0.2s ease-in-out 0.4s;
 }
 /*  ↑↑↑ ANIMATIONS TABLE ↑↑↑ ===================== */
 

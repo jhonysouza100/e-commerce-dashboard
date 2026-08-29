@@ -16,7 +16,7 @@ export default function RootLayout({
       suppressHydrationWarning
       lang="es-AR"
     >
-      <body className={`font-sans antialiased text-normal bg-background text-foreground-muted [transition:background-color_.4s,color_.4s]`}>
+      <body className={`font-sans antialiased text-normal bg-background text-foreground-muted transition-theme`}>
         <GoogleSessionWrapper>
           <QueryWrapper>
             <SessionInitializer />

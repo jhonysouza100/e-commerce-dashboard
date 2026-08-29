@@ -354,7 +354,6 @@ La tabla permite selección individual, selección total de los productos visibl
 
 ## 9. Observaciones e inconsistencias existentes
 
-- `Sidebar` apunta a `/users`, `/products`, `/orders` y `/profile`, pero esas páginas no están en el árbol auditado.
 - `DashboardDOMHydratation` depende de `localStorage` y listeners imperativos, mientras `Sidebar` también calcula el enlace activo declarativamente; existen dos fuentes para active state.
 - `localStorage` se utiliza únicamente para el estado visual del sidebar; no es una persistencia de datos de negocio.
 - `handleOpenModal` tipa/guarda un booleano opcional en un estado booleano y el modal/close están comentados; la lógica de modal no está completa.
