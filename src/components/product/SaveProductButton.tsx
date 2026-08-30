@@ -10,6 +10,7 @@ import { Product } from "./interface/product.interface";
 import { getProductRequest, updateProductRequest } from "./hooks/useProductsRequests";
 import { UpdateProductDto } from "./dtos/update-product.dto";
 import AlertDialog from "../ui/AlertDialog";
+import { normalizeProductUpdate } from "./utils/normalizeProductForm";
 
 function SaveProductButton({ id }: { id: number }) {
   const { product, setProduct, files, clearFiles } = useProductsContext();
@@ -68,13 +69,7 @@ function SaveProductButton({ id }: { id: number }) {
     if (product && hasChanges) {
       updateProductMutation.mutate({
         id,
-        product: {
-          ...product,
-          images: product?.images?.map((image) => ({
-            public_id: image.public_id,
-            secure_url: image.secure_url,
-          })),
-        },
+        product: normalizeProductUpdate(product),
         files,
       });
     } else {

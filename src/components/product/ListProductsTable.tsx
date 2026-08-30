@@ -73,7 +73,7 @@ function ListProductsTable() {
       <thead className="table_head">
         <tr className="table_row">
           <th className="head_rows border-collapse p-2 md:p-3 text-center z-30">
-            <input aria-label="Seleccionar todos los productos visibles" type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} />
+            <input aria-label="Seleccionar todos los productos visibles" title="Seleccionar todos" type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} />
           </th>
           <th className="head_rows border-collapse py-3 px-4 text-center lg:text-left sticky top-0 left-0 z-20 !min-w-4 bg-background">Producto</th>
           <td className="head_rows border-collapse py-2 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Precio</td>

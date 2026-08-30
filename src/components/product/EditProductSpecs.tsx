@@ -32,7 +32,12 @@ function EditProductSpecs() {
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <label className="font-medium text-xs text-foreground-muted">Especificaciones</label>
-          {/* <RiInformationLine className="w-4 h-4 text-foreground-muted" /> */}
+          <span title="Agrega característica extras">
+            <RiInformationLine size={16} />
+          </span>
+          <span className="text-xs">
+            (opcional)
+          </span>
         </div>
         <button
           type="button"
@@ -40,7 +45,7 @@ function EditProductSpecs() {
           className="flex items-center gap-1 text-sm hover:text-foreground"
         >
           <RiAddLine className="w-4 h-4" />
-          Agregar especificación
+          Agregar característica
         </button>
       </div>
 

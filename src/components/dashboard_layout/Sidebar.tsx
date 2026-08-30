@@ -81,7 +81,7 @@ function Sidebar() {
       </div>
 
       <div className="sidebar-append items-center justify-center hidden lg:flex">
-        <button className="header_toggle text-foreground cursor-pointer" id="header-toggle-desktop" title="Ctrl + D">
+        <button className="header_toggle text-foreground cursor-pointer" id="header-toggle-desktop" title="Ctrl + B">
           <RiArrowLeftWideLine size={16} className="rotate-0 duration-400 transition-transform ease-in-out" id="toggle-icon-desktop"/>
         </button>
       </div>

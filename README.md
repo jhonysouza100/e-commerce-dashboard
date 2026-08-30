@@ -56,7 +56,7 @@ El layout del dashboard mantiene una envoltura fija con `left-4 right-4`, altura
 
 En móvil el sidebar empieza fuera de pantalla con `-left-[120%]`; la clase `.show-sidebar` lo lleva a `left: 0`. En desktop empieza visible en `lg:left-0`; puede reducirse a 90px mediante `.show-sidebar` desde `min-width: 968px`. `Header` usa `RiMenuFill` para abrir/cerrar en móvil y el botón lateral con `RiArrowLeftWideLine` para desktop.
 
-`DashboardDOMHydratation` conecta estos botones mediante listeners imperativos y guarda `sidebarState` en `localStorage`. También aplica `.left-pd` a header y layout y permite alternar el sidebar con `Ctrl + D`. La navegación tiene un segundo mecanismo: el click agrega `.active-link` de forma imperativa, mientras `Sidebar` también calcula la clase según la ruta.
+`DashboardDOMHydratation` conecta estos botones mediante listeners imperativos y guarda `sidebarState` en `localStorage`. También aplica `.left-pd` a header y layout y permite alternar el sidebar con `Ctrl + B`. La navegación tiene un segundo mecanismo: el click agrega `.active-link` de forma imperativa, mientras `Sidebar` también calcula la clase según la ruta.
 
 Breakpoints definidos en `@theme`: `sm: 425px`, `md: 620px`, `lg: 968px`, `xl: 1280px`; existe también `2x`, actualmente definido como `1440p`.
 

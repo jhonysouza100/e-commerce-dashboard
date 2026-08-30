@@ -37,9 +37,9 @@ export default function DashboardDOMHydratation() {
       (event.currentTarget as HTMLElement).classList.add("active-link");
     };
 
-    // Evento de teclado ctrl+D para ocultar/mostrar el sidebar
+    // Evento de teclado ctrl + B para ocultar/mostrar el sidebar
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.key === "d") {
+      if (event.ctrlKey && event.key === "b") {
         event.preventDefault();
         showSideBar();
       }
