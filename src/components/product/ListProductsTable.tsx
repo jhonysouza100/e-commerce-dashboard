@@ -69,7 +69,7 @@ function ListProductsTable() {
   if (isError) return <Alert message={error.message} />;
 
   return (
-    <table className="my_table w-full max-h-max border-collapse text-left">
+    <table className="my_table w-full h-0 border-collapse text-left">
       <thead className="table_head">
         <tr className="table_row">
           <th className="head_rows border-collapse p-2 md:p-3 text-center z-30">
