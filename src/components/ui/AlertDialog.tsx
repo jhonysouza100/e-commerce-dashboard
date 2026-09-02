@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useId, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import Button from "./Button";
 
 type TriggerElement = React.ReactElement;
@@ -11,6 +11,7 @@ export interface AlertDialogProps {
   children: TriggerElement;
   message: React.ReactNode;
   title?: React.ReactNode;
+  isLoading?: boolean;
   confirmButtonProps?: ButtonProps;
   cancelButtonProps?: ButtonProps;
 }
@@ -19,18 +20,33 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
   children,
   message,
   title = "¿Estás seguro?",
+  isLoading = false,
   confirmButtonProps,
   cancelButtonProps,
 }) => {
   const [open, setOpen] = useState(false);
   const titleId = useId();
   const descriptionId = useId();
+  const confirmButtonRef = useRef<HTMLButtonElement>(null);
+
+  const handleCancel = (event: React.MouseEvent<HTMLButtonElement>) => {
+    cancelButtonProps?.onClick?.(event);
+    if (!event.defaultPrevented) setOpen(false);
+  };
 
   useEffect(() => {
     if (!open) return;
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+      }
+
+      if (event.key === "Enter") {
+        event.preventDefault();
+        confirmButtonRef.current?.click();
+      }
     };
 
     document.addEventListener("keydown", handleKeyDown);
@@ -57,7 +73,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
 
     const triggerOnClick = (children.props as { onClick?: React.MouseEventHandler }).onClick;
     triggerOnClick?.(event as unknown as React.MouseEvent);
-    setOpen(false);
+    // setOpen(false);
   };
 
   return (
@@ -88,21 +104,20 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
               </p>
             </div>
             <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
-              <Button
+              <Button 
                 {...cancelButtonProps}
                 type="button"
                 variant={cancelButtonProps?.variant ?? "secondary"}
-                onClick={(event) => {
-                  cancelButtonProps?.onClick?.(event);
-                  if (!event.defaultPrevented) setOpen(false);
-                }}
+                onClick={handleCancel}
               >
                 {cancelButtonProps?.children ?? "Cancelar"}
               </Button>
-              <Button
+              <Button 
                 {...confirmButtonProps}
+                ref={confirmButtonRef}
                 type="button"
                 variant={confirmButtonProps?.variant ?? "danger"}
+                disabled={confirmButtonProps?.disabled}
                 onClick={handleConfirm}
               >
                 {confirmButtonProps?.children ?? "Confirmar"}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import { RiArrowGoBackFill, RiCheckLine, RiCloseLine } from "@remixicon/react";
 import { useEffect, useMemo } from "react";
 import Button from "@/ui/Button";
@@ -11,6 +10,8 @@ import { getProductRequest, updateProductRequest } from "./hooks/useProductsRequ
 import { UpdateProductDto } from "./dtos/update-product.dto";
 import AlertDialog from "../ui/AlertDialog";
 import { normalizeProductUpdate } from "./utils/normalizeProductForm";
+import { useRouter } from "next/navigation";
+import handleGoBackRoute from "@/utils/handleGoBaackRoute";
 
 function SaveProductButton({ id }: { id: number }) {
   const { product, setProduct, files, clearFiles } = useProductsContext();
@@ -20,7 +21,7 @@ function SaveProductButton({ id }: { id: number }) {
   const queryClient = useQueryClient();
 
   // Consulta de producto via useQuery, para ternerlo memorizado en un estado inicial
-  const {data, isLoading} = useQuery<Product>({
+  const { data, isLoading } = useQuery<Product>({
     queryKey: ['product', id],
     queryFn: () => getProductRequest(id),
   });
@@ -52,17 +53,24 @@ function SaveProductButton({ id }: { id: number }) {
   }, [product, initialProduct]);
 
   const updateProductMutation = useMutation({
-    mutationFn: ({ id, product, files }: { id: number; product: UpdateProductDto, files: {data: File, tempUrl: string}[] }) =>
+    mutationFn: ({ id, product, files }: { id: number; product: UpdateProductDto, files: { data: File, tempUrl: string }[] }) =>
       updateProductRequest(id, product, files),
+    onMutate: () => {
+      // Se ejecuta inmediatamente antes de que comience la mutación, es decir, antes de llamar a la API.
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] }); // Invalidar la consulta de productos
       queryClient.invalidateQueries({ queryKey: ["products", id] }); // Invalidar la consulta del producto específico
       clearFiles(); // Limpiar archivos después de la actualización
-      router.back();
+      handleGoBackRoute(router);
     },
     onError: (error) => {
       console.log(error.message);
     },
+    onSettled: () => {
+      // Siempre al finalizar la mutación, tanto si termina correctamente como si falla.
+      return;
+    }
   });
 
   function saveProduct() {
@@ -86,16 +94,16 @@ function SaveProductButton({ id }: { id: number }) {
 
   return (
     <div className="w-full flex justify-between gap-4">
-      <Button 
+      <Button
         onClick={() => {
           clearFiles(); // Limpiar archivos después de la actualización
-          router.back()
-          }}
-          icon={<RiArrowGoBackFill size={18} />}
-          size="small"
-          variant="transparent"
-      /> 
-      <div className="space-x-3">
+          handleGoBackRoute(router);
+        }}
+        icon={<RiArrowGoBackFill size={18} />}
+        size="small"
+        variant="transparent"
+      />
+      <div className="flex gap-3">
         <AlertDialog
           title="Estás seguro de guardar los cambios?"
           message="Esta acción es permanente y no se podrá deshacer."
@@ -113,8 +121,8 @@ function SaveProductButton({ id }: { id: number }) {
             size="small"
             title="Guardar cambios"
           />
-        </AlertDialog>  
-         <AlertDialog
+        </AlertDialog>
+        <AlertDialog
           title="Descartar cambios sin guardar?"
           message="Si salís ahora, perderás todas las modificaciones realizadas."
           confirmButtonProps={{

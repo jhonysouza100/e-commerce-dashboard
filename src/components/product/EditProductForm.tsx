@@ -8,11 +8,10 @@ import Image from "next/image"
 import ImageUploadDropzone from "./ImageUploadDropzone"
 import { useQuery } from "@tanstack/react-query"
 import EditProductSpecs from "./EditProductSpecs"
-import CreateProductWithAI from "./CreateProductWithAI"
 import { useProductsContext } from "./context/useProductsContext"
 import { EMPTY_INITIAL_PRODUCT, Product } from "./interface/product.interface"
 import { getProductRequest } from "./hooks/useProductsRequests"
-import { ProductCategoryEnum } from "./enums/product-category.enum"
+import { ProductCategoryEnum, ProductCategoryLabel } from "./enums/product-category.enum"
 import Loading from "@/ui/Loading"
 import Alert from "@/ui/Alert"
 import FormLabel from "@/ui/FormLabel"
@@ -83,7 +82,7 @@ export default function EditProductForm({ id }: { id?: number }) {
     removeFile(secure_url);
   }
 
-  if (isLoading) return (<Loading message="producto" />)
+  if (isLoading) return (<Loading message="item" />)
   if (isError) return (<Alert message={error.message} />)
 
   return (
@@ -99,7 +98,6 @@ export default function EditProductForm({ id }: { id?: number }) {
               {([
                 ['name', 'Nombre', 'Ingresa el nombre', false, false, ""],
                 ['alias', 'Alias', 'Alias comercial', true, true, "Nombre alternativo para facturación"],
-                ['slug', 'Slug', 'Nombre en formato de URL', false, true, "Nombre alternativo para usar como URL (ejemplo: nombre-del-producto)"]
               ] as const).map(([name, label, placeholder, optional, showInfoIcon, info]) => (
                 <div key={name}>
                   <FormLabel
@@ -121,7 +119,6 @@ export default function EditProductForm({ id }: { id?: number }) {
                       />
                       {product?.[name] && (<>
                         <CleanButton name={name} />
-                        <CreateProductWithAI />
                       </>
                       )}
                     </div>
@@ -154,7 +151,6 @@ export default function EditProductForm({ id }: { id?: number }) {
                       />
                       {product?.[name] && (<>
                         <CleanButton name={name} />
-                        <CreateProductWithAI />
                       </>
                       )}
                     </div>
@@ -178,7 +174,7 @@ export default function EditProductForm({ id }: { id?: number }) {
                 >
                   {Object.values(ProductCategoryEnum).map((category) => (
                     <option key={category} value={category}>
-                      {category}
+                      {ProductCategoryLabel[category]}
                     </option>
                   ))}
                 </select>
@@ -219,9 +215,11 @@ export default function EditProductForm({ id }: { id?: number }) {
           {/* Product Images */}
           <div>
             <FormLabel
-              title="Imágenes del item"
+              title="Imágenes del item (Max. 5)"
+              showInfoIcon={true}
+              info="Agregue imágenes del item. Puede subir hasta 5 imágenes. Se recomienda que las imágenes sean en formato .png o .webp sin fondo."
             />
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-1.5">
               {product?.images && product.images.length > 0
                 ? product.images.map((img, index) => (
                   <div key={index} className="relative rounded p-1 aspect-square h-28 sm:h-32">

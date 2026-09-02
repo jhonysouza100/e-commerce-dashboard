@@ -22,6 +22,7 @@ function ListProductsHeader() {
             icon={<RiAddLargeLine size={18} />}
             size="small"
             title="Crear nuevo item"
+            variant="gradient"
           />
         </Link>
       </div>

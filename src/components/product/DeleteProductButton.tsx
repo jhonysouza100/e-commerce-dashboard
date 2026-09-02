@@ -27,7 +27,7 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
       await Promise.all(id.map((singleId) => {
         deleteProductsMutation(singleId)
         // Limpiar el estado de filas seleccionadas después de eliminar
-        setSelectedRows(singleId); 
+        setSelectedRows(singleId);
       }));
     } else {
       // Si es un número, ejecuta la mutación directamente
@@ -40,14 +40,18 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
   return (
     <AlertDialog
       message="Vas a eliminar el item premanentemente."
-      cancelButtonProps={{ children: "Cancelar" }}
+      cancelButtonProps={{ children: "Cancelar", variant: "secondary" }}
+      confirmButtonProps={{
+        children: "Eliminar",
+        variant: "danger"
+      }}
     >
       <Button
-       onClick={handleDelete}
-       icon={<RiDeleteBin5Fill size={18} />}
-       size="small"
-       variant="danger"
-     />
+        onClick={handleDelete}
+        icon={<RiDeleteBin5Fill size={18} />}
+        size="small"
+        variant="danger"
+      />
     </AlertDialog>
   );
 }

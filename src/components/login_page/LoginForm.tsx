@@ -1,6 +1,6 @@
 "use client";
 
-import { RiAdminLine, RiLoader2Fill, RiLockLine } from "@remixicon/react";
+import { RiAdminLine, RiLoader3Line, RiLockLine } from "@remixicon/react";
 import { useRouter } from "next/navigation";
 import { useAuthContext } from "../session/context/useAuthContext";
 import { LoginDto } from "../session/dto/login.dto";
@@ -61,7 +61,7 @@ function LoginForm() {
             type="submit"
             variant="primary"
           >
-            {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "LogIn"}
+            {isLoading ? <RiLoader3Line className="justify-self-center animate-spin" /> : "LogIn"}
           </Button>
         </div>
       </form>

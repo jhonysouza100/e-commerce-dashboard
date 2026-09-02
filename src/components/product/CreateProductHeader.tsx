@@ -1,7 +1,6 @@
 "use client";
 
 import { RiArrowGoBackFill, RiCheckLine, RiCloseLine } from "@remixicon/react";
-import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useProductsContext } from "./context/useProductsContext";
@@ -11,10 +10,14 @@ import { EMPTY_INITIAL_PRODUCT } from "./interface/product.interface";
 import Button from "../ui/Button";
 import AlertDialog from "../ui/AlertDialog";
 import { normalizeProductForm } from "./utils/normalizeProductForm";
+import { useRouter } from "next/navigation";
+import handleGoBackRoute from "@/utils/handleGoBaackRoute";
 
-function CreateProductButton() {
+function CreateProductHeader() {
   const { product: data, setProduct, files, clearFiles } = useProductsContext();
+
   const router = useRouter();
+
   const queryClient = useQueryClient();
 
   const updateProductMutation = useMutation({
@@ -24,7 +27,7 @@ function CreateProductButton() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] }); // Invalidar la consulta de productos
       clearFiles(); // Limpiar archivos después de la actualización
-      router.back();
+      handleGoBackRoute(router);
     },
     onError: (error) => {
       console.log(error.message);
@@ -57,13 +60,13 @@ function CreateProductButton() {
       <Button
         onClick={() => {
           clearFiles(); // Limpiar archivos después de la actualización
-          router.back()
+          handleGoBackRoute(router);
         }}
         icon={<RiArrowGoBackFill size={18} />}
         size="small"
         variant="transparent"
       />
-      <div className="space-x-3">
+      <div className="flex gap-3">
         <AlertDialog
           title="Confirmar la creación del nuevo ítem?"
           message="El ítem se guardará con los datos ingresados."
@@ -105,4 +108,4 @@ function CreateProductButton() {
   );
 }
 
-export default CreateProductButton;
+export default CreateProductHeader;

@@ -25,7 +25,7 @@ const FormLabel: React.FC<FormLabelProps> = ({
       {...props}
       className={`flex flex-col gap-1 text-xs ${className}`}
     >
-      <span className="flex gap-1">
+      <span className="flex gap-1.5">
         {title}
         {
           info && showInfoIcon && (

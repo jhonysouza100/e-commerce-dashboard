@@ -1,6 +1,6 @@
 "use client";
 
-import { RiLoader2Fill, RiMailAddLine, RiUserReceivedLine } from "@remixicon/react";
+import { RiLoader3Line, RiMailAddLine, RiUserReceivedLine } from "@remixicon/react";
 import { toast } from "sonner";
 import Button from "@/ui/Button";
 
@@ -53,7 +53,7 @@ function RegisterForm() {
             type="submit"
             variant="secondary"
           >
-            {isLoading ? <RiLoader2Fill className="justify-self-center animate-spin" /> : "SignUp"}
+            {isLoading ? <RiLoader3Line className="justify-self-center animate-spin" /> : "SignUp"}
           </Button>
         </div>
       </form>

@@ -5,6 +5,8 @@ import { UpdateProductDto } from '../dtos/update-product.dto';
 interface ProductsContextState {
   count: number;
   setCount: (count: number) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
   product: CreateProductDto | null;
   setProduct: (product: CreateProductDto | null) => void;
   updateProduct: (updates: UpdateProductDto) => void;
@@ -23,6 +25,10 @@ export const useProductsContext = create<ProductsContextState>((set, get) => ({
   count: 0,
   setCount: (count: number) => {
     set(() => ({ count: count }));
+  },
+  isLoading: false,
+  setIsLoading: (isLoading: boolean) => {
+    set(() => ({ isLoading: isLoading }));
   },
   product: null,
   setProduct: (product: CreateProductDto | null) => set({ product }),

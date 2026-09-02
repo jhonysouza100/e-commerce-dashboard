@@ -74,7 +74,7 @@ function Sidebar() {
           <ThemeButton />
           <LogoutButton
             containerClass="sidebar_link relative grid grid-cols-[max-content] sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground transition-apacity"
-            contentClass="font-semibold text-normal lg:transition-apacity hidden sm:block"
+            contentClass="font-semibold text-normal lg:transition-opacity hidden sm:block"
             icon={<RiLogoutBoxFill size={20} className="transition-theme" />} 
             />
         </div>

@@ -1,4 +1,4 @@
-import SaveProductButton from "@/components/product/SaveProductButton";
+import SaveProductButton from "@/components/product/SaveProductHeader";
 import EditProductForm from "@/components/product/EditProductForm";
 import MainContainer from "@/components/dashboard_layout/MainContainer";
 

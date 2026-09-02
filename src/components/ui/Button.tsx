@@ -1,6 +1,6 @@
 import React from "react";
 
-type ButtonVariant = "primary" | "secondary" | "danger" | "transparent";
+type ButtonVariant = "primary" | "secondary" | "gradient" | "danger" | "transparent";
 type ButtonSize = "small" | "normal" | "large";
 type ButtonIconPosition = "left" | "right";
 
@@ -12,7 +12,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children?: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({ type = "button", variant = "primary", className = "", title, disabled = false, children, icon, orientation = "left", size = "normal", ...props }) => {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({ type = "button", variant = "primary", className = "", title, disabled = false, children, icon, orientation = "left", size = "normal", ...props }, ref) => {
   const sizeClasses: Record<ButtonSize, string> = {
     small: "px-2 py-2 text-sm gap-1.5",
     normal: "px-4 py-2 text-base gap-2",
@@ -20,11 +20,19 @@ const Button: React.FC<ButtonProps> = ({ type = "button", variant = "primary", c
   };
 
   const variantClasses: Record<ButtonVariant, string> = {
-    primary: `
+    gradient: `
       [background:var(--gradient-color)]
       text-white
       hover:opacity-90
       disabled:[background:var(--surface-hover-color)]
+      disabled:[color:var(--surfece-hover-color)]
+    `,
+
+    primary: `
+      bg-foreground
+      text-background
+      hover:opacity-90
+      disabled:bg-surface-hover
       disabled:[color:var(--surfece-hover-color)]
     `,
 
@@ -33,6 +41,7 @@ const Button: React.FC<ButtonProps> = ({ type = "button", variant = "primary", c
       text-foreground
       hover:opacity-90
       disabled:bg-surface-hover
+      disabled:[color:var(--surfece-hover-color)]
     `,
 
     danger: `
@@ -55,6 +64,7 @@ const Button: React.FC<ButtonProps> = ({ type = "button", variant = "primary", c
 
   return (
     <button
+      ref={ref}
       {...props}
       type={type}
       disabled={disabled}
@@ -82,6 +92,8 @@ const Button: React.FC<ButtonProps> = ({ type = "button", variant = "primary", c
       {children && <div>{children}</div>}
     </button>
   );
-};
+});
+
+Button.displayName = "Button";
 
 export default Button;

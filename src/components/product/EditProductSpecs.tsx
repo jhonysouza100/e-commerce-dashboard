@@ -30,9 +30,9 @@ function EditProductSpecs() {
   return (
     <div className="space-y-2 mt-3">
       <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <label className="font-medium text-xs text-foreground-muted">Especificaciones</label>
-          <span title="Agrega característica extras">
+          <span title="Agrega características extras">
             <RiInformationLine size={16} />
           </span>
           <span className="text-xs">
@@ -42,9 +42,9 @@ function EditProductSpecs() {
         <button
           type="button"
           onClick={handleAddSpec}
-          className="flex items-center gap-1 text-sm hover:text-foreground"
+          className="flex items-center gap-1 text-sm hover:text-foreground pr-2"
         >
-          <RiAddLine className="w-4 h-4" />
+          <RiAddLine size={16} />
           Agregar característica
         </button>
       </div>
