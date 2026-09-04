@@ -104,7 +104,7 @@ function SaveProductButton({ id }: { id: number }) {
         variant="transparent"
       />
       <div className="flex gap-3">
-        <AlertDialog
+        <AlertDialog isAwait={true}
           title="Estás seguro de guardar los cambios?"
           message="Esta acción es permanente y no se podrá deshacer."
           confirmButtonProps={{
@@ -125,10 +125,7 @@ function SaveProductButton({ id }: { id: number }) {
         <AlertDialog
           title="Descartar cambios sin guardar?"
           message="Si salís ahora, perderás todas las modificaciones realizadas."
-          confirmButtonProps={{
-            children: updateProductMutation.isPending ? "Descartando..." : "Descartar",
-            disabled: updateProductMutation.isPending,
-          }}
+          confirmButtonProps={{ children: "Descartar" }}
           cancelButtonProps={{ children: "Volver" }}
         >
           <Button

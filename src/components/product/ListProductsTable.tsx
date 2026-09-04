@@ -13,10 +13,12 @@ import DeleteProductButton from "./DeleteProductButton";
 import { ListProductsQuery, listProductsRequest } from "./hooks/useProductsRequests";
 import Loading from "@/ui/Loading";
 import Alert from "@/ui/Alert";
+import { useRouter } from "next/navigation";
 
 function ListProductsTable() {
   const { session } = useAuthContext();
   const searchParams = useSearchParams(); // pasar estos parámetros a useQuery de manera reactiva.
+  const router = useRouter();
 
   const page = parseInt(searchParams.get("page") || "1", 10); // Parámetro 'page' es para la paginación
   const query: ListProductsQuery[] = [
@@ -86,7 +88,11 @@ function ListProductsTable() {
         {session &&
           data?.products.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
-            <tr key={product.id} tabIndex={0} onClick={() => window.location.assign(`/products/${product.id}`)} onKeyDown={(event) => { if (event.key === "Enter") window.location.assign(`/products/${product.id}`); }} className={`cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-secondary ${selectedRows.includes(product.id) ? "!bg-surface-hover" : ""}`}>
+            <tr key={product.id} tabIndex={0} 
+              onClick={(event) => { event.stopPropagation(); router.push(`/products/${product.id}`)} }
+              onKeyDown={(event) => { if (event.key === "Enter") router.push(`/products/${product.id}`); }} 
+              className={`cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-secondary ${selectedRows.includes(product.id) ? "!bg-surface-hover" : ""}`}
+            >
               <td className="table_data border-collapse p-2 md:p-3 text-center z-0">
                 <input aria-label={`Seleccionar ${product.name}`} type="checkbox" checked={selectedRows.includes(product.id)} onChange={() => setSelectedRows(product.id)} onClick={(e) => e.stopPropagation()} />
               </td>

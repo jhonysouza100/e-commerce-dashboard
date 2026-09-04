@@ -67,7 +67,7 @@ function CreateProductHeader() {
         variant="transparent"
       />
       <div className="flex gap-3">
-        <AlertDialog
+        <AlertDialog isAwait={true}
           title="Confirmar la creación del nuevo ítem?"
           message="El ítem se guardará con los datos ingresados."
           confirmButtonProps={{
@@ -88,10 +88,7 @@ function CreateProductHeader() {
         <AlertDialog
           title="Descartar nuevo ítem?"
           message="Perderás todos los datos que ingresaste en el formulario."
-          confirmButtonProps={{
-            children: updateProductMutation.isPending ? "Descartando..." : "Descartar",
-            disabled: updateProductMutation.isPending,
-          }}
+          confirmButtonProps={{ children: "Descartar" }}
           cancelButtonProps={{ children: "Volver" }}
         >
           <Button

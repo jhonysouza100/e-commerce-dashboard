@@ -11,7 +11,7 @@ export interface AlertDialogProps {
   children: TriggerElement;
   message: React.ReactNode;
   title?: React.ReactNode;
-  isLoading?: boolean;
+  isAwait?: boolean;
   confirmButtonProps?: ButtonProps;
   cancelButtonProps?: ButtonProps;
 }
@@ -20,7 +20,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
   children,
   message,
   title = "¿Estás seguro?",
-  isLoading = false,
+  isAwait = false,
   confirmButtonProps,
   cancelButtonProps,
 }) => {
@@ -73,7 +73,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
 
     const triggerOnClick = (children.props as { onClick?: React.MouseEventHandler }).onClick;
     triggerOnClick?.(event as unknown as React.MouseEvent);
-    // setOpen(false);
+    if(!isAwait) setOpen(false);;
   };
 
   return (

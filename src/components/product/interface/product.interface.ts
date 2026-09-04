@@ -40,7 +40,7 @@ export const EMPTY_INITIAL_PRODUCT = {
   specifications: [{ label: "", value: "" }],
   dimensions: { weight: 0, height: 0, width: 0, length: 0 },
   price: 0,
-  stock: 0,
+  stock: 1,
   discount: 0,
   minCount: 1,
   maxCount: 1,

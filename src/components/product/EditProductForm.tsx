@@ -22,9 +22,9 @@ function CleanButton({ name }: { name: string; }) {
     <button
       type="button"
       onClick={() => updateProduct({ [name]: "" })}
-      className="absolute right-2 top-1/2 -translate-y-1/2 text-red-500 hover:text-red-700 bg-background rounded-full p-1 shadow"
+      className="absolute right-2 top-1/2 -translate-y-1/2 bg-background text-red-500 hover:text-red-700 rounded-full p-1 shadow"
     >
-      <RiCloseLine size={12} />
+      <RiCloseLine size={14} />
     </button>
   )
 }
@@ -128,8 +128,8 @@ export default function EditProductForm({ id }: { id?: number }) {
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
               {([
-                ['brand', 'Marca', 'Ingresa la marca', false, false, ""],
-                ['model', 'Modelo', 'Ingresa el modelo', false, false, ""]
+                ['brand', 'Marca', 'Ingresa la marca', true, false, ""],
+                ['model', 'Modelo', 'Ingresa el modelo', true, false, ""]
               ] as const).map(([name, label, placeholder, optional, showInfoIcon, info]) => (
                 <div key={name}>
                   <FormLabel
@@ -198,7 +198,12 @@ export default function EditProductForm({ id }: { id?: number }) {
                 placeholder="Describa el item..."
               />
               {product?.description && (
-                <CleanButton name="description" />
+                <button
+                      onClick={() => updateProduct({ description: "" })}
+                      className="absolute top-1 right-1 bg-background  text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
+                    >
+                      <RiCloseLine size={14} />
+                    </button>
               )}
             </div>
             <p className="text-xs text-foreground-muted">
@@ -232,9 +237,9 @@ export default function EditProductForm({ id }: { id?: number }) {
                     />
                     <button
                       onClick={() => removeImage(img.secure_url)}
-                      className="absolute top-2 right-2 bg-background rounded-full p-1 shadow-md"
+                      className="absolute -top-1 right-1 bg-background text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
                     >
-                      <RiCloseLine className="w-3 h-3 text-red-500" />
+                      <RiCloseLine size={14} />
                     </button>
                   </div>
                 ))
@@ -251,34 +256,34 @@ export default function EditProductForm({ id }: { id?: number }) {
               title="Color"
               optional
             >
-                  <div className="grid grid-cols-2">
-                    <div className="relative">
-                      <input
-                        name="colorName" 
-                        id="colorName"
-                        value={product?.color?.name ?? ""}
-                        onChange={(e) => updateProduct({ color: { name: e.target.value, value: product?.color?.value ?? "" } })}
-                        className="rounded-l-md border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
-                        placeholder="Nombre del color"
-                        />
-                      {(product?.color?.name || product?.color?.value) && (
-                        <button
-                          onClick={() => updateProduct({ color: { name: "", value: "" }})}
-                          className="absolute top-2 right-2 bg-background rounded-full p-1 shadow-md"
-                        >
-                          <RiCloseLine className="w-3 h-3 text-red-500" />
-                        </button>
-                      )}
-                    </div>
-                    <input
-                      name="colorValue"
-                      id="colorValue"
-                      type="color"
-                      value={product?.color?.value ?? ""}
-                      onChange={(e) => updateProduct({ color: { name: product?.color?.name ?? "", value: e.target.value } })}
-                      className="rounded-r-md h-full border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
-                    />
-                  </div>
+              <div className="grid grid-cols-2">
+                <div className="relative">
+                  <input
+                    name="colorName"
+                    id="colorName"
+                    value={product?.color?.name ?? ""}
+                    onChange={(e) => updateProduct({ color: { name: e.target.value, value: product?.color?.value ?? "" } })}
+                    className="rounded-l-md w-full border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
+                    placeholder="Nombre del color"
+                  />
+                  {(product?.color?.name || product?.color?.value) && (
+                    <button
+                      onClick={() => updateProduct({ color: { name: "", value: "" } })}
+                      className="absolute top-2 right-2 bg-background  text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
+                    >
+                      <RiCloseLine size={14} />
+                    </button>
+                  )}
+                </div>
+                <input
+                  name="colorValue"
+                  id="colorValue"
+                  type="color"
+                  value={product?.color?.value ?? ""}
+                  onChange={(e) => updateProduct({ color: { name: product?.color?.name ?? "", value: e.target.value } })}
+                  className="rounded-r-md h-full border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
+                />
+              </div>
             </FormLabel>
           </div>
 
