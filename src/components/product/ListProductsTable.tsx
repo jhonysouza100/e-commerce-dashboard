@@ -88,8 +88,8 @@ function ListProductsTable() {
         {session &&
           data?.products.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
-            <tr key={product.id} tabIndex={0} 
-              onClick={(event) => { event.stopPropagation(); router.push(`/products/${product.id}`)} }
+            <tr key={product.id} tabIndex={index} 
+              onClick={() => router.push(`/products/${product.id}`)}
               onKeyDown={(event) => { if (event.key === "Enter") router.push(`/products/${product.id}`); }} 
               className={`cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-secondary ${selectedRows.includes(product.id) ? "!bg-surface-hover" : ""}`}
             >
@@ -133,8 +133,9 @@ function ListProductsTable() {
               <td className="table_data border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4">
                 {Math.round(product.discount)}%
               </td>
-              <td className="table_data border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4">
-                <div className="flex gap-3 items-center justify-center z-10">
+              <td className="table_data border-collapse p-2 md:p-3 text-center lg:text-left z-0 !min-w-4"
+                onClick={(e) => e.stopPropagation()}>
+                <div className="flex gap-3 items-center justify-center">
                   <DeleteProductButton id={product.id} />
                 </div>
               </td>
