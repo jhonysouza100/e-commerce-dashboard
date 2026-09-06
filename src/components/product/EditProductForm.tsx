@@ -30,28 +30,33 @@ function CleanButton({ name }: { name: string; }) {
 }
 
 export default function EditProductForm({ id }: { id?: number }) {
-  const { product, setProduct, updateProduct, removeFile } = useProductsContext();
+  const { products, product, setProduct, updateProduct, removeFile } = useProductsContext();
+  const mockProduct = id ? products.find((item) => item.id === id) : undefined;
 
-  // Consulta de producto via useQuery
+  // La consulta real queda disponible como fallback para productos no mockeados.
   const { data, isLoading, isError, error } = useQuery<Product>({
     queryKey: ['product', id],
     queryFn: () => getProductRequest(id),
-    enabled: !!id, // Solo se ejecuta si id es proporcionado
+    enabled: !!id && !mockProduct, // Los mocks se cargan directamente desde Zustand
   });
 
   // Inicializamos el store cuando llega el producto de la query
   useEffect(() => {
-    if (data) {
-      // Exclude id, tenant_id, createdAt, modifiedAt if not needed for update
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id, tenant_id, createdAt, modifiedAt, ...filteredData } = data;
-      setProduct(filteredData);
-    }
-    // Si no se provee id se trata como nuevo producto y se inicializa con valores por defecto
-    if (!id) {
+    const sourceProduct = data ?? mockProduct;
+    if (sourceProduct) {
+      // Exclude backend-only fields before placing the product in the edit DTO.
+      const { id: productId, tenant_id, createdAt, modifiedAt, average, ...editableProduct } = sourceProduct;
+      void productId;
+      void tenant_id;
+      void createdAt;
+      void modifiedAt;
+      void average;
+      setProduct(editableProduct);
+    } else if (!id) {
+      // Si no se provee id se trata como nuevo producto.
       setProduct(EMPTY_INITIAL_PRODUCT);
     }
-  }, [id, data, setProduct])
+  }, [id, data, mockProduct, setProduct])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target

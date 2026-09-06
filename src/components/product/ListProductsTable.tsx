@@ -1,74 +1,40 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query";
+
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
-import { RiEdit2Fill, RiProhibited2Line } from "@remixicon/react";
-import { useAuthContext } from "../session/context/useAuthContext";
+import { RiProhibited2Line } from "@remixicon/react";
 import { useProductsContext } from "./context/useProductsContext";
 import { Product } from "./interface/product.interface";
 import DeleteProductButton from "./DeleteProductButton";
-import { ListProductsQuery, listProductsRequest } from "./hooks/useProductsRequests";
-import Loading from "@/ui/Loading";
-import Alert from "@/ui/Alert";
+
 import { useRouter } from "next/navigation";
 
 function ListProductsTable() {
-  const { session } = useAuthContext();
+
   const searchParams = useSearchParams(); // pasar estos parámetros a useQuery de manera reactiva.
   const router = useRouter();
 
   const page = parseInt(searchParams.get("page") || "1", 10); // Parámetro 'page' es para la paginación
-  const query: ListProductsQuery[] = [
-    {
-      key: "name",
-      value: searchParams.get("q") || ""
-    }
-  ];
-
-  const { setCount, count, setSelectedRows, selectedRows } =
+  const searchTerm = (searchParams.get("q") || "").trim().toLowerCase();
+  const { products, setCount, count, setSelectedRows, selectedRows } =
     useProductsContext();
-  const { data, isLoading, isError, error } = useQuery<{
-    count: number;
-    products: Product[];
-  }>({
-    queryKey: ["products", query, page, session?.id], // useQuery depende de los parámetros de búsqueda y paginación, lo que garantizará que la consulta se vuelva a ejecutar cada vez que cambien
-    queryFn: () => {
-      if (session) {
-        return listProductsRequest(query, page, session.id);
-      }
-      return Promise.resolve({ count: 0, products: [] });
-    },
-    select: ({ count, products }) => ({
-      // devuelve { count: number, products: Product[] }
-      count,
-      // Ordenar alfabéticamente por nombre
-      products: products
-        ? products.sort((a: Product, b: Product) =>
-            a.name.localeCompare(b.name)
-          )
-        : [],
-    }),
-  });
-
-  const visibleProductIds = data?.products.map((product) => product.id) ?? [];
+  const filteredProducts = products
+    .filter((product) => product.name.toLowerCase().includes(searchTerm))
+    .sort((a, b) => a.name.localeCompare(b.name));
+  const pageSize = 10;
+  const visibleProducts = filteredProducts.slice((page - 1) * pageSize, page * pageSize);
+  const visibleProductIds = visibleProducts.map((product) => product.id);
   const allVisibleSelected = visibleProductIds.length > 0 && visibleProductIds.every((id) => selectedRows.includes(id));
   const toggleAllVisible = () => visibleProductIds.forEach((id) => {
     if (allVisibleSelected === selectedRows.includes(id)) setSelectedRows(id);
   });
 
-  // Actualizar el número total de products en Zustand
+  // La paginación usa el total filtrado sin consultar la API.
   useEffect(() => {
-    if (data && data.count !== count) {
-      // Comprobamos si el count realmente ha cambiado
-      setCount(data.count); // Actualizamos el count en Zustand
-    }
-  }, [data, setCount, count]); // Este useEffect se ejecuta cuando `data` cambia
-
-  if (isLoading) return <Loading message="items..." />;
-  if (isError) return <Alert message={error.message} />;
+    if (count !== filteredProducts.length) setCount(filteredProducts.length);
+  }, [count, filteredProducts.length, setCount]);
 
   return (
     <table className="my_table w-full h-0 border-collapse text-left">
@@ -85,8 +51,7 @@ function ListProductsTable() {
         </tr>
       </thead>
       <tbody className="table_body">
-        {session &&
-          data?.products.map((product: Product, index: number) => (
+        {visibleProducts.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
             <tr key={product.id} tabIndex={index} 
               onClick={() => router.push(`/products/${product.id}`)}

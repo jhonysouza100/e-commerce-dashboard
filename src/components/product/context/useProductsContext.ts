@@ -1,8 +1,12 @@
 import { create } from 'zustand';
 import { CreateProductDto } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
+import { Product } from '../interface/product.interface';
+import { initialProducts } from './products.mock';
 
 interface ProductsContextState {
+  /** Mock temporal cargado localmente; las mutations reales siguen usando la API. */
+  products: Product[];
   count: number;
   setCount: (count: number) => void;
   isLoading: boolean;
@@ -22,7 +26,9 @@ interface ProductsContextState {
 }
 
 export const useProductsContext = create<ProductsContextState>((set, get) => ({
-  count: 0,
+  // Datos mock iniciales para desarrollo de UI; no provienen de ningún fetch.
+  products: initialProducts,
+  count: initialProducts.length,
   setCount: (count: number) => {
     set(() => ({ count: count }));
   },
