@@ -33,8 +33,8 @@ function getPerformance(product: Product, index: number): Performance {
 function PerformanceGauge({ score, label }: Pick<Performance, "score" | "label">) {
   const fill = Math.min(100, Math.max(16, Math.round(score / 10)));
   return (
-    <div className="flex min-w-36 items-center gap-3" aria-label={`Performance ${label}`}>
-      <div className="relative h-12 w-24 overflow-hidden">
+    <div className="flex min-w-40 items-center gap-3" aria-label={`Performance ${label}`}>
+      <div className="relative h-12 w-24 shrink-0 overflow-hidden">
         <div
           className="absolute inset-x-0 top-2 h-24 rounded-full border-[7px] border-muted"
           style={{ clipPath: "inset(0 0 50% 0)" }}
@@ -76,7 +76,7 @@ function ListProductsTable() {
   return (
     <div className="w-full overflow-x-auto rounded-xl border border-border bg-background shadow-sm">
       <div className="min-w-[1120px]">
-        <div className="grid grid-cols-[40px_minmax(245px,1.7fr)_minmax(235px,1.4fr)_135px_170px_135px_120px] items-center gap-0 border-b border-border px-4 py-3 text-xs font-medium text-muted-foreground">
+        <div className="grid grid-cols-[40px_minmax(245px,1.7fr)_minmax(235px,1.4fr)_135px_170px_115px_125px_112px] items-center gap-0 border-b border-border px-4 py-3 text-xs font-medium text-muted-foreground">
           <div>
             <input aria-label="Seleccionar todos los items visibles" title="Seleccionar todos los items visibles" type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} />
           </div>
@@ -86,6 +86,7 @@ function ListProductsTable() {
           <div>Product Price</div>
           <div>Discount</div>
           <div>Visibility</div>
+          <div className="text-center">Actions</div>
         </div>
 
         {visibleProducts.map((product: Product, index: number) => {
@@ -100,7 +101,7 @@ function ListProductsTable() {
               tabIndex={0}
               onClick={() => router.push(`/products/${product.id}`)}
               onKeyDown={(event) => { if (event.key === "Enter" || event.key === " ") router.push(`/products/${product.id}`); }}
-              className={`grid grid-cols-[40px_minmax(245px,1.7fr)_minmax(235px,1.4fr)_135px_170px_135px_120px] items-center border-b border-border px-4 py-4 transition-colors last:border-b-0 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${isSelected ? "bg-muted/60" : ""}`}
+              className={`grid grid-cols-[40px_minmax(245px,1.7fr)_minmax(235px,1.4fr)_135px_170px_115px_125px_112px] items-center border-b border-border px-4 py-4 transition-colors last:border-b-0 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${isSelected ? "bg-muted/60" : ""}`}
             >
               <div onClick={(event) => event.stopPropagation()}>
                 <input aria-label={`Seleccionar ${product.name}`} type="checkbox" checked={isSelected} onChange={() => setSelectedRows(product.id)} />
@@ -139,18 +140,17 @@ function ListProductsTable() {
                 <p className="mt-1 flex items-center gap-2 text-sm font-semibold text-emerald-600"><RiShoppingBag3Line className="size-4" /> {Math.round(product.discount ?? 0)}%</p>
               </div>
 
-              <div className="flex items-center justify-between border-l border-border pl-6">
-                <div>
-                  <p className="text-xs text-muted-foreground">Visibility</p>
-                  <div className={`mt-2 flex h-5 w-9 items-center rounded-full p-0.5 ${isVisible ? "justify-end bg-foreground" : "justify-start bg-muted-foreground/30"}`} aria-label={isVisible ? "Visible" : "Hidden"}>
-                    <span className={`size-4 rounded-full ${isVisible ? "bg-background" : "bg-background"}`} />
-                  </div>
+              <div className="border-l border-border pl-6">
+                <p className="text-xs text-muted-foreground">Visibility</p>
+                <div className={`mt-2 flex h-5 w-9 items-center rounded-full p-0.5 transition-colors ${isVisible ? "justify-end bg-foreground" : "justify-start bg-muted-foreground/30"}`} aria-label={isVisible ? "Visible" : "Hidden"}>
+                  <span className="size-4 rounded-full bg-background shadow-sm" />
                 </div>
-                <div className="flex items-center gap-2" onClick={(event) => event.stopPropagation()}>
-                  <button type="button" aria-label={`Editar ${product.name}`} className="text-foreground transition-colors hover:text-primary" onClick={() => router.push(`/products/${product.id}`)}><RiEdit2Line className="size-5" /></button>
-                  <button type="button" aria-label={`${isVisible ? "Ocultar" : "Ver"} ${product.name}`} className="text-foreground transition-colors hover:text-primary"><RiEyeLine className="size-5" /></button>
-                  <DeleteProductButton id={product.id} />
-                </div>
+              </div>
+
+              <div className="flex items-center justify-center gap-3 border-l border-border pl-4" onClick={(event) => event.stopPropagation()}>
+                <button type="button" aria-label={`Editar ${product.name}`} className="text-foreground transition-colors hover:text-primary" onClick={() => router.push(`/products/${product.id}`)}><RiEdit2Line className="size-5" /></button>
+                <button type="button" aria-label={`${isVisible ? "Ocultar" : "Ver"} ${product.name}`} className="text-foreground transition-colors hover:text-primary"><RiEyeLine className="size-5" /></button>
+                <DeleteProductButton id={product.id} />
               </div>
             </div>
           );
