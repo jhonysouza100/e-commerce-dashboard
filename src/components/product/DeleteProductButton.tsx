@@ -52,7 +52,8 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
         onClick={handleDelete}
         icon={<RiDeleteBin7Line size={18} />}
         size="small"
-        variant="danger"
+        variant="transparent"
+        title="Eliminar item"
       />
     </AlertDialog>
   );

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { RiMoonClearFill, RiSunFill } from "@remixicon/react";
+import { RiMoonClearLine, RiSunFill } from "@remixicon/react";
 
 export default function ThemeButton() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -21,7 +21,7 @@ export default function ThemeButton() {
       title={isDark ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
-      {isDark ? <RiSunFill size={20} className="transition-theme" /> : <RiMoonClearFill size={20} className="transition-theme" />}
+      {isDark ? <RiSunFill size={20} className="transition-theme" /> : <RiMoonClearLine size={20} className="transition-theme" />}
       <span className="font-semibold text-normal lg:transition-opacity hidden sm:block">
         Tema
       </span>

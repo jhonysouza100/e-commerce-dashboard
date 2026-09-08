@@ -1,11 +1,9 @@
 "use client";
 
 import {
-  RiHome3Fill,
-  RiBox3Fill,
-  RiTodoFill,
-  RiGroupFill,
-  RiLogoutBoxFill,
+  RiBarChartHorizontalFill,
+  RiShoppingBag4Fill,
+  RiLogoutCircleLine,
   RiArrowLeftWideLine,
 } from "@remixicon/react";
 import Link from "next/link";
@@ -19,8 +17,8 @@ const menuItems = [
   {
     section: "Dashboard",
     items: [
-      { icon: RiHome3Fill, label: "Inicio", href: "/" },
-      { icon: RiBox3Fill, label: "Productos", href: "/products" },
+      { icon: RiBarChartHorizontalFill, label: "Inicio", href: "/" },
+      { icon: RiShoppingBag4Fill, label: "Productos", href: "/products" },
     ],
   },
   // {
@@ -75,7 +73,7 @@ function Sidebar() {
           <LogoutButton
             containerClass="sidebar_link relative grid grid-cols-[max-content] sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground transition-apacity"
             contentClass="font-semibold text-normal lg:transition-opacity hidden sm:block"
-            icon={<RiLogoutBoxFill size={20} className="transition-theme" />} 
+            icon={<RiLogoutCircleLine size={20} className="transition-theme" />} 
             />
         </div>
       </div>

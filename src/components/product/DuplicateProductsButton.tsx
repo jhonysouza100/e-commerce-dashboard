@@ -7,7 +7,7 @@ import { duplicateProductsRequest } from "./hooks/useProductsRequests";
 import Button from "@/ui/Button";
 import AlertDialog from "@/ui/AlertDialog";
 
-function DuplicateProductsButton({ id, className }: { id: number[], className?: string }) {
+function DuplicateProductsButton({ id }: { id: number | number[] }) {
   const { setSelectedRows } = useProductsContext();
   const queryClient = useQueryClient();
 
@@ -19,11 +19,13 @@ function DuplicateProductsButton({ id, className }: { id: number[], className?: 
   })
 
   const handleDuplicate = async () => {
-    duplicateProductsMutation.mutate(id);
-    await Promise.all(id.map((singleId) => {
-      // Limpiar el estado de filas seleccionadas después de eliminar
-      setSelectedRows(singleId);
-    }));
+    duplicateProductsMutation.mutate(Array.isArray(id) ? id : [id]);
+    if (Array.isArray(id)) {
+      await Promise.all(id.map((singleId) => {
+        // Limpiar el estado de filas seleccionadas después de eliminar
+        setSelectedRows(singleId);
+      }));
+    }
   }
 
   return (
@@ -42,6 +44,7 @@ function DuplicateProductsButton({ id, className }: { id: number[], className?: 
         icon={<RiFileCopyLine size={18} />}
         size="small"
         variant="transparent"
+        title="Duplicar item"
       />
     </AlertDialog>
   );

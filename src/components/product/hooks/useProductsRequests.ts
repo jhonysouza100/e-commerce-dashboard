@@ -136,6 +136,17 @@ export async function duplicateProductsRequest(ids: number[]): Promise<OkRespons
   }
 }
 
+export async function desactiveProductRequest(ids: number[]): Promise<OkResponse> {
+  try {
+    const response = await productRequest.patch('/desactivate', { ids });
+    handleAxiosSuccessResponse(response.data.message);
+    return response.data;
+  } catch (error) {
+    handleAxiosErrorResponse(error as ErrorResponse);
+    throw new Error("No se pudo actualizar el estado del item");
+  }
+}
+
 export async function updateProductRequest(id: number, product: UpdateProductDto, files?: {data: File, tempUrl: string}[]): Promise<OkResponse> {
   try {
     const formData = new FormData();
