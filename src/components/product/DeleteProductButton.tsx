@@ -1,6 +1,6 @@
 "use client";
 
-import { RiDeleteBin5Fill } from "@remixicon/react";
+import { RiDeleteBin7Line } from "@remixicon/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useProductsContext } from "./context/useProductsContext";
 import { removeProductRequest } from "./hooks/useProductsRequests";
@@ -11,7 +11,7 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
   const { setSelectedRows } = useProductsContext();
   const queryClient = useQueryClient();
 
-  const { mutateAsync: deleteProductsMutation } = useMutation({
+  const { mutateAsync: deleteProductsMutation, isPending } = useMutation({
     mutationFn: removeProductRequest,
     onSuccess: (data) => {
       console.log(data.message);
@@ -38,17 +38,19 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
   };
 
   return (
-    <AlertDialog
+    <AlertDialog isAwait={true}
+      title="Eliminar item"
       message="Vas a eliminar el item premanentemente."
-      cancelButtonProps={{ children: "Cancelar", variant: "secondary" }}
+      cancelButtonProps={{ children: "Volver" }}
       confirmButtonProps={{
-        children: "Eliminar",
+        children: isPending ? "Eliminando..." : "Eliminar",
+        disabled: isPending,
         variant: "danger"
       }}
     >
       <Button
         onClick={handleDelete}
-        icon={<RiDeleteBin5Fill size={18} />}
+        icon={<RiDeleteBin7Line size={18} />}
         size="small"
         variant="danger"
       />

@@ -121,7 +121,18 @@ export async function removeProductRequest(id: number): Promise<OkResponse> {
     return response.data;
   } catch (error) {
     handleAxiosErrorResponse(error as ErrorResponse);
-    throw new Error("No se pudo eliminar el producto");
+    throw new Error("No se pudo eliminar el item");
+  }
+}
+
+export async function duplicateProductsRequest(ids: number[]): Promise<OkResponse> {
+  try {
+    const response = await productRequest.post('/duplicate', { ids });
+    handleAxiosSuccessResponse(response.data.message);
+    return response.data;
+  } catch (error) {
+    handleAxiosErrorResponse(error as ErrorResponse);
+    throw new Error("No se pudo duplicar el item");
   }
 }
 
@@ -144,6 +155,6 @@ export async function updateProductRequest(id: number, product: UpdateProductDto
     return response.data;
   } catch (error) {
     handleAxiosErrorResponse(error as ErrorResponse);
-    throw new Error("No se pudo actualizar el producto");
+    throw new Error("No se pudo actualizar el item");
   }
 }

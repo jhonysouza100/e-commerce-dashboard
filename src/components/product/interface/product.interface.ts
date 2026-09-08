@@ -21,6 +21,7 @@ export interface Product {
   minCount?: number;
   isActive: boolean;
   tenant_id: number;
+  rating?: number;
   // questions: QuestionInterface[];
   // reviews: ReviewInterface[];
   average: number;

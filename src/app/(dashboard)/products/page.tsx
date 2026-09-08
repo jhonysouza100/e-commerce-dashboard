@@ -8,6 +8,7 @@ import ListProductsTable from "@/components/product/ListProductsTable";
 import Button from "@/ui/Button";
 import Pagination from "@/components/ui/Pagination";
 import MainContainer from "@/components/dashboard_layout/MainContainer";
+import DuplicateProductsButton from "@/components/product/DuplicateProductsButton";
 
 function ListProductsHeader() {
   const { selectedRows, count } = useProductsContext();
@@ -16,7 +17,11 @@ function ListProductsHeader() {
     <>
       <Pagination count={count} />
       <div className="flex gap-2 items-center justify-between">
-        {selectedRows.length > 0 && (<DeleteProductButton id={selectedRows} />)}
+        {selectedRows.length > 0 && (
+          <div className="flex gap-2 items-center">
+            <DuplicateProductsButton id={selectedRows} />
+            <DeleteProductButton id={selectedRows} />
+          </div>)}
         <Link href="/products/add">
           <Button
             icon={<RiAddLargeLine size={18} />}

@@ -3,9 +3,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
-import { RiEdit2Fill, RiProhibited2Line } from "@remixicon/react";
+import { RiProhibited2Line, RiStarFill } from "@remixicon/react";
 import { useAuthContext } from "../session/context/useAuthContext";
 import { useProductsContext } from "./context/useProductsContext";
 import { Product } from "./interface/product.interface";
@@ -14,6 +13,7 @@ import { ListProductsQuery, listProductsRequest } from "./hooks/useProductsReque
 import Loading from "@/ui/Loading";
 import Alert from "@/ui/Alert";
 import { useRouter } from "next/navigation";
+import { formatCurrency, handleFormatPrice } from "@/utils/handleFormatPrice";
 
 function ListProductsTable() {
   const { session } = useAuthContext();
@@ -72,7 +72,7 @@ function ListProductsTable() {
 
   return (
     <table className="my_table w-full h-0 border-collapse text-left">
-      <thead className="table_head">
+      <thead className="table_head bg-background">
         <tr className="table_row">
           <th className="head_rows border-collapse p-2 md:p-3 text-center z-30">
             <input aria-label="Seleccionar todos los items visibles" title="Seleccionar todos los items visibles" type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} />
@@ -112,12 +112,27 @@ function ListProductsTable() {
                   )}
                 </span>
                 {/* NOMBRE DEL PRODUCTO */}
-                <span className="max-w-20 md:max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
-                  {product.name}
-                </span>
+                <div className="min-w-0 max-w-20 md:max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
+                  <p className="truncate text-sm font-medium text-foreground">{product.name}</p>
+                  <span className="text-xs space-x-1">
+                    <span className="text-foreground-muted">Reviews:</span>
+                  <span className="inline-flex items-center gap-0.25 text-foreground">
+                    <span className="font-semibold">{product.rating}</span>
+                    <RiStarFill size={12} />
+                  </span>
+                  </span>
+                </div>
               </td>
               <td className="price_money table_data border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4">
-                ${product.price}
+                <div className="min-w-0 max-w-20 md:max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
+                  <p className="truncate text-sm font-medium text-foreground">{formatCurrency(product.price)}</p>
+                  <span className="text-xs space-x-1">
+                    <span className="text-foreground-muted">Descuento:</span>
+                  <span className="inline-flex items-center gap-0.25 text-foreground">
+                    <span className="text-sm font-semibold text-green-500">{product.discount}%</span>
+                  </span>
+                  </span>
+                </div>
               </td>
               <td
                 className={`table_data border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 ${
