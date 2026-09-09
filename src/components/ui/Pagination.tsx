@@ -45,17 +45,18 @@ function Pagination({ count }: { count: number }) {
       <button
         className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-muted"
         disabled={!hasPrev}
-        aria-label="Pagina anterior"
+        aria-label="Página anterior"
         onClick={() => handleChangePage("prev")}>
         <RiArrowLeftSLine />
       </button>
       <div className="flex items-center gap-2 text-sm text-foreground-muted">
-        <span className="font-semibold">{`Página ${page}`}</span>
+        <span className="hidden sm:inline-flex">Página</span>
+        <span className="font-semibold">{` ${page}`}</span>
       </div>
       <button
         className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-muted"
         disabled={!hasNext}
-        aria-label="Página isguinte"
+        aria-label="Página siguinte"
         onClick={() => handleChangePage("next")}>
         <RiArrowRightSLine />
       </button>

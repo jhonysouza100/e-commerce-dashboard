@@ -95,11 +95,11 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
             aria-describedby={descriptionId}
             onMouseDown={(event) => event.stopPropagation()}
           >
-            <div className="flex flex-col gap-3">
-              <h2 id={titleId} className="text-lg font-bold text-balance">
+            <div className="flex flex-col gap-3 w-full">
+              <h2 id={titleId} className="text-lg font-bold text-balance text-center">
                 {title}
               </h2>
-              <p id={descriptionId} className="leading-6 text-foreground-muted">
+              <p id={descriptionId} className="leading-6 text-foreground-muted text-center">
                 {message}
               </p>
             </div>
