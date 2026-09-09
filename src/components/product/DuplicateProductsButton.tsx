@@ -20,19 +20,14 @@ function DuplicateProductsButton({ id }: { id: number | number[] }) {
 
   const handleDuplicate = async () => {
     duplicateProductsMutation.mutate(Array.isArray(id) ? id : [id]);
-    if (Array.isArray(id)) {
-      await Promise.all(id.map((singleId) => {
-        // Limpiar el estado de filas seleccionadas después de eliminar
-        setSelectedRows(singleId);
-      }));
-    }
+    setSelectedRows(Array.isArray(id) ? id : [id]);
   }
 
   return (
     <AlertDialog isAwait={true}
       title="Duplicar item"
       message="Vas a duplicar el item."
-      cancelButtonProps={{ children: "Volver", variant: "transparent" }}
+      cancelButtonProps={{ children: "Volver", variant: "transparent", disabled: duplicateProductsMutation.isPending }}
       confirmButtonProps={{
         children: duplicateProductsMutation.isPending ? "Duplicando..." : "Duplicar",
         disabled: duplicateProductsMutation.isPending,

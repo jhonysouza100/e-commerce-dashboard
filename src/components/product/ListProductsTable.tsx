@@ -13,100 +13,9 @@ import { ListProductsQuery, listProductsRequest } from "./hooks/useProductsReque
 import Loading from "@/ui/Loading";
 import Alert from "@/ui/Alert";
 import { useRouter } from "next/navigation";
-import { formatCurrency, handleFormatPrice } from "@/utils/handleFormatPrice";
-import FormLabel from "../ui/FormLabel";
+import { formatCurrency } from "@/utils/handleFormatPrice";
 import DesactiveProductsButton from "./DesactiveProductsButton";
-
-
-export const mockProducts: Product[] = [
-  {
-    id: 1,
-    name: 'Auriculares Pro X',
-    slug: 'auriculares-pro-x',
-    description: 'Auriculares inalámbricos con sonido envolvente y cancelación activa de ruido.',
-    images: [
-      {
-        public_id: 'mock-1',
-        secure_url: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=900&q=80',
-      },
-    ],
-    specifications: [
-      { label: 'Bluetooth', value: '5.3' },
-      { label: 'Batería', value: '30h' },
-    ],
-    dimensions: { weight: 250, height: 18, width: 16, length: 8 },
-    brand: 'AudioMax',
-    model: 'APX-2024',
-    color: { name: 'Negro', value: '#111827' },
-    price: 2499,
-    stock: 12,
-    discount: 0,
-    isActive: false,
-    tenant_id: 1,
-    rating: 4.8,
-    average: 4.8,
-    createdAt: new Date('2024-01-15T00:00:00.000Z'),
-    modifiedAt: new Date('2024-02-10T00:00:00.000Z'),
-  },
-  {
-    id: 2,
-    name: 'Smartwatch Vega',
-    slug: 'smartwatch-vega',
-    description: 'Reloj inteligente con monitor de actividad, GPS y resistencia al agua.',
-    images: [
-      {
-        public_id: 'mock-2',
-        secure_url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80',
-      },
-    ],
-    specifications: [
-      { label: 'Pantalla', value: '1.9" AMOLED' },
-      { label: 'Resistencia', value: '5 ATM' },
-    ],
-    dimensions: { weight: 340, height: 41, width: 35, length: 11 },
-    brand: 'TimeLoop',
-    model: 'VGA-9',
-    color: { name: 'Azul', value: '#2563eb' },
-    price: 1899,
-    stock: 7,
-    discount: 15,
-    isActive: false,
-    tenant_id: 1,
-    rating: 4.6,
-    average: 4.6,
-    createdAt: new Date('2024-02-01T00:00:00.000Z'),
-    modifiedAt: new Date('2024-02-22T00:00:00.000Z'),
-  },
-  {
-    id: 3,
-    name: 'Cámara Lite 4K',
-    slug: 'camara-lite-4k',
-    description: 'Cámara compacta para videos en 4K, ideal para vloggers y contenido diario.',
-    images: [
-      {
-        public_id: 'mock-3',
-        secure_url: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=900&q=80',
-      },
-    ],
-    specifications: [
-      { label: 'Resolución', value: '4K UHD' },
-      { label: 'Sensor', value: '24MP' },
-    ],
-    dimensions: { weight: 520, height: 64, width: 55, length: 91 },
-    brand: 'PixelNest',
-    model: 'CL4K',
-    color: { name: 'Gris', value: '#6b7280' },
-    price: 3299,
-    stock: 4,
-    discount: 20,
-    isActive: false,
-    tenant_id: 1,
-    rating: 4.9,
-    average: 4.9,
-    createdAt: new Date('2024-01-10T00:00:00.000Z'),
-    modifiedAt: new Date('2024-03-05T00:00:00.000Z'),
-  },
-];
+// import { mockProducts } from "@/mocks/mocks";
 
 function ListProductsTable() {
   const { session } = useAuthContext();
@@ -140,17 +49,20 @@ function ListProductsTable() {
       // Ordenar alfabéticamente por nombre
       products: products
         ? products.sort((a: Product, b: Product) =>
-            a.name.localeCompare(b.name)
-          )
+          a.name.localeCompare(b.name)
+        )
         : [],
     }),
   });
 
   const visibleProductIds = data?.products.map((product) => product.id) ?? [];
   const allVisibleSelected = visibleProductIds.length > 0 && visibleProductIds.every((id) => selectedRows.includes(id));
-  const toggleAllVisible = () => visibleProductIds.forEach((id) => {
-    if (allVisibleSelected === selectedRows.includes(id)) setSelectedRows(id);
-  });
+  const toggleAllVisible = () => {
+    const idsToToggle = visibleProductIds.filter((id) =>
+      allVisibleSelected === selectedRows.includes(id)
+    );
+    setSelectedRows(idsToToggle);
+  };
 
   // Actualizar el número total de products en Zustand
   useEffect(() => {
@@ -180,24 +92,23 @@ function ListProductsTable() {
       <tbody className="table_body">
         {session &&
           data?.products.map((product: Product, index: number) => (
-        // {mockProducts.map((product: Product, index: number) => (
+            // {mockProducts.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
-            <tr key={product.id} tabIndex={index} 
+            <tr key={product.id} tabIndex={index}
               onClick={() => router.push(`/products/${product.id}`)}
-              onKeyDown={(event) => { if (event.key === "Enter") router.push(`/products/${product.id}`); }} 
+              onKeyDown={(event) => { if (event.key === "Enter") router.push(`/products/${product.id}`); }}
               className={`cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-secondary ${selectedRows.includes(product.id) ? "!bg-surface-hover" : ""}`}
             >
               {/* CHECKBOX */}
               <td className="table_row border-collapse p-2 md:p-3 text-center z-0">
-                <input aria-label={`Seleccionar ${product.name}`} type="checkbox" checked={selectedRows.includes(product.id)} onChange={() => setSelectedRows(product.id)} onClick={(e) => e.stopPropagation()} />
+                <input aria-label={`Seleccionar ${product.name}`} type="checkbox" checked={selectedRows.includes(product.id)} onChange={() => setSelectedRows([product.id])} onClick={(e) => e.stopPropagation()} />
               </td>
               <td className="table_row border-collapse p-2 gap-2 md:p-3 text-center lg:text-left z-0 !min-w-max flex items-center">
                 {/* IMAGEN DEL ITEM */}
                 <div className="relative">
                   <Image
-                    className={`table_img w-12 h-12 mr-2 text-xs rounded-md align-middle object-cover aspect-square ${
-                      !product.isActive ? "grayscale" : ""
-                    }`}
+                    className={`table_img w-12 h-12 mr-2 text-xs rounded-md align-middle object-cover aspect-square ${!product.isActive ? "grayscale" : ""
+                      }`}
                     src={product?.images[0]?.secure_url}
                     alt="product image"
                     width={50}
@@ -246,10 +157,9 @@ function ListProductsTable() {
                 <div className="min-w-0 max-w-20 md:max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
                   <p className="truncate text-start text-sm font-medium text-foreground">{formatCurrency(product.price)}</p>
                   <div className="text-xs text-start space-x-1">
-                    <span className={`${
-                        product.discount > 0 
-                          ? "text-green-500 font-semibold "
-                          : ""
+                    <span className={`${product.discount > 0
+                        ? "text-green-500 font-semibold "
+                        : ""
                       }`
                     }>{product.discount}%</span>
                     <span className="text-foreground-muted">OFF</span>
@@ -258,15 +168,14 @@ function ListProductsTable() {
               </td>
               {/* STOCK DEL ITEM */}
               <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4">
-                <span className="inline-flex items-center gap-1 text-xs">
+                <span className="inline-flex items-center gap-2 text-xs">
                   <RiBox3Line size={16} />
-                  <span className={`text-sm ${
-                    product.stock <= 1
+                  <span className={`text-sm ${product.stock <= 1
                       ? "text-red-500 font-medium"
                       : product.stock <= 5
-                      ? "text-yellow-500 font-medium"
-                      : "text-foreground font-medium"
-                  }`}
+                        ? "text-yellow-500 font-medium"
+                        : "text-foreground font-medium"
+                    }`}
                   >
                     {product.stock}
                   </span>

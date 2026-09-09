@@ -4,8 +4,8 @@ import { RiDeleteBin7Line } from "@remixicon/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useProductsContext } from "./context/useProductsContext";
 import { removeProductRequest } from "./hooks/useProductsRequests";
-import Button from "../ui/Button";
-import AlertDialog from "../ui/AlertDialog";
+import Button from "@/ui/Button";
+import AlertDialog from "@/ui/AlertDialog";
 
 function DeleteProductButton({ id, className }: { id: number | number[], className?: string }) {
   const { setSelectedRows } = useProductsContext();
@@ -22,12 +22,11 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
   });
 
   const handleDelete = async () => {
+    setSelectedRows(Array.isArray(id) ? id : [id]);
     if (Array.isArray(id)) {
       // Si es un array, ejecuta la mutación para cada id
       await Promise.all(id.map((singleId) => {
         deleteProductsMutation(singleId)
-        // Limpiar el estado de filas seleccionadas después de eliminar
-        setSelectedRows(singleId);
       }));
     } else {
       // Si es un número, ejecuta la mutación directamente
@@ -41,7 +40,7 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
     <AlertDialog isAwait={true}
       title="Eliminar item"
       message="Vas a eliminar el item premanentemente."
-      cancelButtonProps={{ children: "Volver" }}
+      cancelButtonProps={{ children: "Volver", disabled: isPending }}
       confirmButtonProps={{
         children: isPending ? "Eliminando..." : "Eliminar",
         disabled: isPending,

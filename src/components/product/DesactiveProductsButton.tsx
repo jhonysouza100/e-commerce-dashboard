@@ -21,14 +21,8 @@ function DesactiveProductsButton({ id, status }: { id: number | number[], status
 
   const handleStatusChange = async () => {
     desactiveProductsMutation(Array.isArray(id) ? id : [id]);
-    if (Array.isArray(id)) {
-      await Promise.all(id.map((singleId) => {
-        // Limpiar el estado de filas seleccionadas después de eliminar
-        setSelectedRows(singleId);
-      }));
-    } 
+    setSelectedRows(Array.isArray(id) ? id : [id]);
   };
-
 
   return (
     <AlertDialog isAwait={true}
@@ -38,15 +32,16 @@ function DesactiveProductsButton({ id, status }: { id: number | number[], status
       confirmButtonProps={{
         children: isPending ? "Confirmando..." : "Confirmar",
         disabled: isPending,
-        variant: "primary"
+        variant: "primary",
+        onClick: handleStatusChange,
       }}
     >
       <div className="relative inline-flex">
         <input
           type="checkbox"
           id="status"
+          readOnly
           checked={status ?? false}
-          onChange={handleStatusChange}
           className="sr-only peer"
         />
         <div className="w-10 h-5 bg-foreground-muted peer-focus:outline-none rounded-full relative peer-checked:[background:var(--gradient-color)] peer-checked:after:translate-x-5 after:transition-translate after:ease-in-out after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border after:border-white after:rounded-full after:h-4 after:aspect-square"></div>

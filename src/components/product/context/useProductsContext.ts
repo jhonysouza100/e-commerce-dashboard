@@ -18,7 +18,7 @@ interface ProductsContextState {
   removeFile: (secureUrl: string) => void;
   clearFiles: () => void;
   selectedRows: number[]; // IDs de las filas seleccionados
-  setSelectedRows: (rowId: number) => void; // Función para actualizar los IDs seleccionados
+  setSelectedRows: (rowId: number[]) => void; // Función para actualizar los IDs seleccionados
 }
 
 export const useProductsContext = create<ProductsContextState>((set, get) => ({
@@ -54,11 +54,13 @@ export const useProductsContext = create<ProductsContextState>((set, get) => ({
   },
   clearFiles: () => set({ files: [] }),
   selectedRows: [], // Inicializamos el estado de filas seleccionadas
-  setSelectedRows: (rowId: number) => { // Función para actualizar los IDs seleccionados
-    const currentSelectedRows = get().selectedRows;
-    const updatedSelectedRows = currentSelectedRows.includes(rowId)
-      ? currentSelectedRows.filter((id) => id !== rowId) // Eliminamos el ID si ya está seleccionado
-      : [...currentSelectedRows, rowId]; // Añadimos el ID si no está seleccionado
+  setSelectedRows: (rowIds: number[]) => { // Función para actualizar los IDs seleccionados
+    const updatedSelectedRows = rowIds.reduce((selectedRows, rowId) => {
+      return selectedRows.includes(rowId)
+        ? selectedRows.filter((id) => id !== rowId)
+        : [...selectedRows, rowId];
+    }, get().selectedRows);
+
     set({ selectedRows: updatedSelectedRows });
   },
 }));
