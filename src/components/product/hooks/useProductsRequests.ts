@@ -114,9 +114,9 @@ export async function createProductRequest(product: CreateProductDto, files: {da
   }
 }
 
-export async function removeProductRequest(id: number): Promise<OkResponse> {
+export async function removeProductRequest(ids: number[]): Promise<OkResponse> {
   try {
-    const response = await productRequest.delete(`/[${id}]`);
+    const response = await productRequest.delete(`/[${ids}]`);
     handleAxiosSuccessResponse(response.data.message);
     return response.data;
   } catch (error) {

@@ -19,8 +19,8 @@ function ListProductsHeader() {
       <div className="flex gap-2 items-center justify-between">
         {selectedRows.length > 0 && (
           <div className="flex gap-2 items-center">
-            <DuplicateProductsButton id={selectedRows} />
             <DeleteProductButton id={selectedRows} />
+            <DuplicateProductsButton id={selectedRows} />
           </div>)}
         <Link href="/products/add">
           <Button

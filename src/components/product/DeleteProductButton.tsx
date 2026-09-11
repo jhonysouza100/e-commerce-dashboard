@@ -14,7 +14,7 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
   const { mutateAsync: deleteProductsMutation, isPending } = useMutation({
     mutationFn: removeProductRequest,
     onSuccess: (data) => {
-      console.log(data.message);
+      queryClient.invalidateQueries({ queryKey: ["products"] });
     },
     onError: (error) => {
       console.log(error.message);
@@ -22,18 +22,8 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
   });
 
   const handleDelete = async () => {
+    deleteProductsMutation(Array.isArray(id) ? id : [id]);
     setSelectedRows(Array.isArray(id) ? id : [id]);
-    if (Array.isArray(id)) {
-      // Si es un array, ejecuta la mutación para cada id
-      await Promise.all(id.map((singleId) => {
-        deleteProductsMutation(singleId)
-      }));
-    } else {
-      // Si es un número, ejecuta la mutación directamente
-      await deleteProductsMutation(id);
-    }
-    // Invalida las queries después de completar todas las mutaciones
-    queryClient.invalidateQueries({ queryKey: ["products"] });
   };
 
   return (

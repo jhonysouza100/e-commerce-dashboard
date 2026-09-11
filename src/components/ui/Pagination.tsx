@@ -43,7 +43,7 @@ function Pagination({ count }: { count: number }) {
         <span className="font-semibold">{`${ITEMS_PER_PAGE * (parseInt(page) - 1) + 1}-${Math.min(ITEMS_PER_PAGE * parseInt(page), count)} de ${count}`}</span>
       </div>
       <button
-        className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-muted"
+        className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-light/50"
         disabled={!hasPrev}
         aria-label="Página anterior"
         onClick={() => handleChangePage("prev")}>
@@ -54,7 +54,7 @@ function Pagination({ count }: { count: number }) {
         <span className="font-semibold">{` ${page}`}</span>
       </div>
       <button
-        className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-muted"
+        className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-light/50"
         disabled={!hasNext}
         aria-label="Página siguinte"
         onClick={() => handleChangePage("next")}>
