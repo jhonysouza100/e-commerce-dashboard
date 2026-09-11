@@ -220,7 +220,7 @@ export default function EditProductForm({ id }: { id?: number }) {
           {/* Product Gallery */}
           <div>
             <FormLabel
-              title="Imágenes del item (Max. 5)"
+              title="Galeía del item (Max. 5)"
               showInfoIcon={true}
               info="Agregue imágenes del item. Puede subir hasta 5 imágenes. Se recomienda que las imágenes sean en formato .png o .webp sin fondo."
             />

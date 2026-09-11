@@ -78,14 +78,14 @@ function ListProductsTable() {
     <table className="my_table w-full h-0 border-collapse text-left">
       <thead className="table_head bg-background">
         <tr className="table_row sticky top-0 left-0 z-10 bg-background">
-          <th className="head_rows border-collapse text-center">
+          <th className="head_rows border-collapse py-3">
             <input aria-label="Seleccionar todos los items visibles" title="Seleccionar todos los items visibles" type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} />
           </th>
-          <th className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Producto</th>
-          <td className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Estadísticas</td>
-          <td className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Precio</td>
-          <td className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Stock</td>
-          <td className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Acciones</td>
+          <th className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Producto</th>
+          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Estadísticas</td>
+          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Precio</td>
+          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Stock</td>
+          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Acciones</td>
         </tr>
       </thead>
       <tbody className="table_body">
