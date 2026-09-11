@@ -132,7 +132,7 @@
 }
 
 html {
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
 }
 input, select, textarea, input:focus, select:focus, textarea:focus {
   outline: hidden;

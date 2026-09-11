@@ -25,7 +25,7 @@ function DesactiveProductsButton({ id, status }: { id: number | number[], status
   };
 
   return (
-    <AlertDialog isAwait={true}
+    <AlertDialog
       title="Cambiar el estado de item"
       message="Estas seguro de cambiar el estado del item?"
       cancelButtonProps={{ children: "Volver", disabled: isPending }}

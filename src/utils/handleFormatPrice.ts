@@ -30,6 +30,23 @@ export const formatCurrency = (amount: number) => {
   }).format(amount).replace(/,\d+$/, "")
 }
 
+export const formatCompactNumber = (value: number) => {
+  const absoluteValue = Math.abs(value);
+  const units = [
+    { value: 1_000_000_000, suffix: "B" },
+    { value: 1_000_000, suffix: "M" },
+    { value: 1_000, suffix: "K" },
+  ];
+  const unit = units.find(({ value: unitValue }) => absoluteValue >= unitValue);
+
+  if (!unit) return value.toString();
+
+  const compactValue = value / unit.value;
+  const formattedValue = compactValue.toFixed(1).replace(/\.0$/, "");
+
+  return `${compactValue === 1 ? compactValue.toFixed(1) : formattedValue}${unit.suffix}`;
+}
+
 export const formatDate = (dateString: string | Date) => {
   return new Date(dateString).toLocaleDateString("es-AR", {
     year: "numeric",

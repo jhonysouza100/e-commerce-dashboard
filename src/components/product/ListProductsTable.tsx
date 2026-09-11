@@ -13,9 +13,8 @@ import { ListProductsQuery, listProductsRequest } from "./hooks/useProductsReque
 import Loading from "@/ui/Loading";
 import Alert from "@/ui/Alert";
 import { useRouter } from "next/navigation";
-import { formatCurrency } from "@/utils/handleFormatPrice";
+import { formatCompactNumber, formatCurrency } from "@/utils/handleFormatPrice";
 import DesactiveProductsButton from "./DesactiveProductsButton";
-// import { mockProducts } from "@/mocks/mocks";
 
 function ListProductsTable() {
   const { session } = useAuthContext();
@@ -78,21 +77,20 @@ function ListProductsTable() {
   return (
     <table className="my_table w-full h-0 border-collapse text-left">
       <thead className="table_head bg-background">
-        <tr className="table_row">
-          <th className="head_rows border-collapse p-2 md:p-3 text-center z-30">
+        <tr className="table_row sticky top-0 left-0 z-10 bg-background">
+          <th className="head_rows border-collapse text-center">
             <input aria-label="Seleccionar todos los items visibles" title="Seleccionar todos los items visibles" type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} />
           </th>
-          <th className="head_rows border-collapse py-3 px-4 text-center lg:text-left sticky top-0 left-0 z-20 !min-w-4 bg-background">Producto</th>
-          <td className="head_rows border-collapse py-2 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Estadísticas</td>
-          <td className="head_rows border-collapse py-2 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Precio</td>
-          <td className="head_rows border-collapse py-2 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Stock</td>
-          <td className="head_rows border-collapse py-2 px-4 text-center lg:text-left sticky top-0 left-0 z-10 !min-w-4">Acciones</td>
+          <th className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Producto</th>
+          <td className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Estadísticas</td>
+          <td className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Precio</td>
+          <td className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Stock</td>
+          <td className="head_rows border-collapse px-2 text-center lg:text-left !min-w-4">Acciones</td>
         </tr>
       </thead>
       <tbody className="table_body">
         {session &&
           data?.products.map((product: Product, index: number) => (
-            // {mockProducts.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
             <tr key={product.id} tabIndex={index}
               onClick={() => router.push(`/products/${product.id}`)}
@@ -103,13 +101,13 @@ function ListProductsTable() {
               <td className="table_row border-collapse p-2 md:p-3 text-center z-0">
                 <input aria-label={`Seleccionar ${product.name}`} type="checkbox" checked={selectedRows.includes(product.id)} onChange={() => setSelectedRows([product.id])} onClick={(e) => e.stopPropagation()} />
               </td>
-              <td className="table_row border-collapse p-2 gap-2 md:p-3 text-center lg:text-left z-0 !min-w-max flex items-center">
+              <td className="table_row border-collapse p-2 gap-2 md:p-3 text-center lg:text-left !min-w-4 z-0 !min-w-max flex items-center">
                 {/* IMAGEN DEL ITEM */}
                 <div className="relative">
                   <Image
                     className={`table_img w-12 h-12 mr-2 text-xs rounded-md align-middle object-cover aspect-square ${!product.isActive ? "grayscale" : ""
                       }`}
-                    src={product?.images[0]?.secure_url}
+                    src={product?.images[0]?.secure_url || "https://agrimart.in/uploads/vendor_banner_image/default.jpg"}
                     alt="product image"
                     width={50}
                     height={50}
@@ -124,13 +122,13 @@ function ListProductsTable() {
                   <div className="text-xs text-start space-x-1">
                     <span>Reseñas:</span>
                     <span className="inline-flex items-center gap-0.25 text-foreground">
-                      <span className="font-semibold">{product.rating}</span>
+                      <span className="font-semibold">{product.performance?.rating || 5.0}</span>
                       <RiStarFill size={12} />
                     </span>
                   </div>
                 </div>
               </td>
-              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4">
+              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 !min-w-4">
                 <div className="text-xs space-y-1">
                   <div className="text-start space-x-1">
                     <span>Ventas: </span>
@@ -141,19 +139,19 @@ function ListProductsTable() {
                       <span>
                         <RiLineChartLine size={12} />
                       </span>
-                      <span className="text-foreground">123</span>
+                      <span className="text-foreground">{formatCompactNumber(product.performance?.sales || 0)}</span>
                     </div>
                     <div className="inline-flex items-center gap-0.25">
                       <span>
                         <RiShoppingBag4Line size={12} />
                       </span>
-                      <span className="text-foreground">12.5K</span>
+                      <span className="text-foreground">{formatCompactNumber(product.performance?.sales || 0)}</span>
                     </div>
                   </div>
                 </div>
               </td>
               {/* PRECIOS DEL ITEM */}
-              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4">
+              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 !min-w-4">
                 <div className="min-w-0 max-w-20 md:max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
                   <p className="truncate text-start text-sm font-medium text-foreground">{formatCurrency(product.price)}</p>
                   <div className="text-xs text-start space-x-1">
@@ -167,7 +165,7 @@ function ListProductsTable() {
                 </div>
               </td>
               {/* STOCK DEL ITEM */}
-              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4">
+              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 !min-w-4">
                 <span className="inline-flex items-center gap-2 text-xs">
                   <RiBox3Line size={16} />
                   <span className={`text-sm ${product.stock <= 1
@@ -182,7 +180,7 @@ function ListProductsTable() {
                 </span>
               </td>
               {/* ACCIONES PARA EL ITEM */}
-              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left z-0 !min-w-4"
+              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 z-0 !min-w-4"
                 onClick={(e) => e.stopPropagation()}>
                 <div className="flex gap-4 items-center justify-start">
                   <DesactiveProductsButton id={product.id} status={product.isActive} />
