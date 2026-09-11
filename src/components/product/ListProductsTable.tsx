@@ -117,7 +117,7 @@ function ListProductsTable() {
                   )}
                 </div>
                 {/* NOMBRE DEL ITEM */}
-                <div className="min-w-0 max-w-20 md:max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
+                <div className="min-w-0 max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
                   <p className="truncate text-sm font-medium text-foreground">{product.name}</p>
                   <div className="text-xs text-start space-x-1">
                     <span>Reseñas:</span>
