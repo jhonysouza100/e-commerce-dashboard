@@ -69,9 +69,9 @@ export default function EditProductForm({ id }: { id?: number }) {
     })
   }
 
-  const removeImage = (secure_url: string) => {
+  const removeImageFromGallery = (secure_url: string) => {
     if (!product) return
-    // Actualizamos las imágenes del item en el store
+    // Actualizamos la galeria del item en el store
     // (esto no se guardará en la base de datos, solo es para previsualización)
     updateProduct({
       images: product?.images?.filter((img) => img.secure_url !== secure_url),
@@ -217,7 +217,7 @@ export default function EditProductForm({ id }: { id?: number }) {
 
         {/* Columna #2 */}
         <div className="grid grid-cols-1 gap-3 grid-rows-[repeat(2,max-content)]">
-          {/* Product Images */}
+          {/* Product Gallery */}
           <div>
             <FormLabel
               title="Imágenes del item (Max. 5)"
@@ -236,7 +236,7 @@ export default function EditProductForm({ id }: { id?: number }) {
                       className="w-full h-full object-contain text-xs"
                     />
                     <button
-                      onClick={() => removeImage(img.secure_url)}
+                      onClick={() => removeImageFromGallery(img.secure_url)}
                       className="absolute -top-1 right-1 bg-background text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
                     >
                       <RiCloseLine size={14} />

@@ -107,7 +107,7 @@ function ListProductsTable() {
                   <Image
                     className={`table_img w-12 h-12 mr-2 text-xs rounded-md align-middle object-cover aspect-square ${!product.isActive ? "grayscale" : ""
                       }`}
-                    src={product?.images[0]?.secure_url || "https://agrimart.in/uploads/vendor_banner_image/default.jpg"}
+                    src={product?.image?.secure_url || "https://agrimart.in/uploads/vendor_banner_image/default.jpg"}
                     alt="product image"
                     width={50}
                     height={50}

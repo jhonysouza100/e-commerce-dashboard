@@ -1,18 +1,18 @@
 import { ProductCategoryEnum } from "../enums/product-category.enum";
 
-interface ProductImageInterface {
+export interface ProductImageInterface {
   public_id: string;
 
   secure_url: string;
 }
 
-interface ProductSpecificationsInterface {
+export interface ProductSpecificationsInterface {
   label: string;
   
   value: string;
 }
 
-interface ProductDimensionsInterface {
+export interface ProductDimensionsInterface {
   weight: number;
 
   height: number;

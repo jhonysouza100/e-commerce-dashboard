@@ -1,4 +1,4 @@
-import { ProductColorInterface } from "../dtos/create-product.dto";
+import { ProductColorInterface, ProductDimensionsInterface, ProductImageInterface, ProductSpecificationsInterface } from "../dtos/create-product.dto";
 import { ProductCategoryEnum } from "../enums/product-category.enum";
 
 export interface Product {
@@ -7,9 +7,10 @@ export interface Product {
   slug: string;
   alias?: string;
   description: string;
-  images: { public_id: string; secure_url: string }[];
-  specifications: { label: string, value: string }[]
-  dimensions?: { weight: number; height: number; width: number; length: number };
+  images: ProductImageInterface[];
+  image: ProductImageInterface,
+  specifications: ProductSpecificationsInterface[]
+  dimensions?: ProductDimensionsInterface;
   category: ProductCategoryEnum;
   brand: string;
   model: string;
@@ -40,6 +41,7 @@ export const EMPTY_INITIAL_PRODUCT = {
   brand: "",
   model: "",
   description: "",
+  image: "",
   images: [],
   specifications: [{ label: "", value: "" }],
   dimensions: { weight: 0, height: 0, width: 0, length: 0 },

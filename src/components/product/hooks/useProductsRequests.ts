@@ -116,7 +116,7 @@ export async function createProductRequest(product: CreateProductDto, files: {da
 
 export async function removeProductRequest(id: number): Promise<OkResponse> {
   try {
-    const response = await productRequest.delete(`/${id}`);
+    const response = await productRequest.delete(`/[${id}]`);
     handleAxiosSuccessResponse(response.data.message);
     return response.data;
   } catch (error) {
@@ -138,7 +138,7 @@ export async function duplicateProductsRequest(ids: number[]): Promise<OkRespons
 
 export async function desactiveProductRequest(ids: number[]): Promise<OkResponse> {
   try {
-    const response = await productRequest.patch('/desactivate', { ids });
+    const response = await productRequest.patch('/desactive', { ids });
     handleAxiosSuccessResponse(response.data.message);
     return response.data;
   } catch (error) {
