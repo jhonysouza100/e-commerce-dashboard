@@ -4,7 +4,7 @@ import { useProductsContext } from "./context/useProductsContext";
 
 function ImageUploadDropzone() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { product, updateProduct, addFile } = useProductsContext();
+  const { product, updateProduct, addGalleryFile } = useProductsContext();
 
   const handleFilesUpload = (files: FileList) => {
     // Por cada archivo, generamos una URL temporal y lo añadimos al contexto
@@ -13,7 +13,7 @@ function ImageUploadDropzone() {
       const tempUrl = URL.createObjectURL(file);
 
       // Actualizamos el estado de archivos en el contexto
-      addFile(file, tempUrl);
+      addGalleryFile(file, tempUrl);
       return {
         public_id: "temp_id", // ID temporal para la vista previa
         secure_url: tempUrl, // URL temporal
@@ -23,7 +23,7 @@ function ImageUploadDropzone() {
     // Actualizamos las imágenes del producto en para frontend
     // (esto no se guardará en la base de datos, solo es para previsualización)
     updateProduct({
-      images: product?.images ? [...product.images, ...newImages] : newImages,
+      gallery: product?.gallery ? [...product.gallery, ...newImages] : newImages,
     });
   };
   

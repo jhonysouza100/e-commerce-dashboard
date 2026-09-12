@@ -47,7 +47,9 @@ export interface CreateProductDto {
   
   dimensions?: ProductDimensionsInterface;
   
-  images?: ProductImageInterface[];
+  gallery?: ProductImageInterface[];
+
+  image?: ProductImageInterface;
   
   color?: ProductColorInterface;
   

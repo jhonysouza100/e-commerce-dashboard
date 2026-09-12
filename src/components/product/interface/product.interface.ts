@@ -7,7 +7,7 @@ export interface Product {
   slug: string;
   alias?: string;
   description: string;
-  images: ProductImageInterface[];
+  gallery: ProductImageInterface[];
   image: ProductImageInterface,
   specifications: ProductSpecificationsInterface[]
   dimensions?: ProductDimensionsInterface;
@@ -41,8 +41,8 @@ export const EMPTY_INITIAL_PRODUCT = {
   brand: "",
   model: "",
   description: "",
-  image: "",
-  images: [],
+  image: undefined,
+  gallery: [],
   specifications: [{ label: "", value: "" }],
   dimensions: { weight: 0, height: 0, width: 0, length: 0 },
   price: 0,

@@ -58,8 +58,8 @@ export function normalizeProductForm(form: ProductFormValues): CreateProductDto 
   if (dimensions && Object.values(dimensions).every((value) => value !== undefined)) {
     payload.dimensions = dimensions as NonNullable<CreateProductDto["dimensions"]>;
   }
-  if (form.images?.length) {
-    payload.images = form.images.map(({ public_id, secure_url }) => ({ public_id, secure_url }));
+  if (form.gallery?.length) {
+    payload.gallery = form.gallery.map(({ public_id, secure_url }) => ({ public_id, secure_url }));
   }
   if (color) payload.color = color;
 

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "sonner";
 import { getSessionCookie } from "@/utils/handleCookies";
 import { BACKEND_URL, SESSION_COOKIE} from "@/const/constants";
 import { Product } from "../interface/product.interface";
@@ -71,9 +70,9 @@ export async function getProductByNameRequest(name: string): Promise<Product> {
   }
 }
 
-export async function getProductsSitemapByNameRequest(): Promise<{name: string, modifiedAt: string, images: { secure_url: string }[]}[]> {
+export async function getProductsSitemapByNameRequest(): Promise<{name: string, modifiedAt: string, gallery: { secure_url: string }[]}[]> {
   try {
-    const response = await productRequest.get<{name: string, modifiedAt: string, images: { secure_url: string }[]}[]>('/name/sitemap');
+    const response = await productRequest.get<{name: string, modifiedAt: string, gallery: { secure_url: string }[]}[]>('/name/sitemap');
     return response.data;
   } catch (error) {
     console.log(error);
@@ -91,11 +90,18 @@ export async function getRelatedProductsRequest(category: string): Promise<Produ
   }
 }
 
-export async function createProductRequest(product: CreateProductDto, files: {data: File, tempUrl: string}[]): Promise<OkResponse> {
+interface ProductMedia {
+  image?: { data: File; tempUrl: string };
+  gallery: { data: File; tempUrl: string }[];
+}
+
+export async function createProductRequest(product: CreateProductDto, media: ProductMedia): Promise<OkResponse> {
   try {
     const formData = new FormData();
-    // Agrega los archivos al FormData
-    files.forEach((file) => formData.append("files", file.data));
+    media.gallery
+      .filter((file) => file.tempUrl !== media.image?.tempUrl)
+      .forEach((file) => formData.append("gallery", file.data));
+    if (media.image) formData.append("image", media.image.data);
     // Agrega los datos del producto como una cadena JSON
     formData.append("product", JSON.stringify(product));
     
@@ -147,11 +153,13 @@ export async function desactiveProductRequest(ids: number[]): Promise<OkResponse
   }
 }
 
-export async function updateProductRequest(id: number, product: UpdateProductDto, files?: {data: File, tempUrl: string}[]): Promise<OkResponse> {
+export async function updateProductRequest(id: number, product: UpdateProductDto, media: ProductMedia): Promise<OkResponse> {
   try {
     const formData = new FormData();
-    // Agrega los archivos al FormData
-    files?.forEach((file) => formData.append("files", file.data));
+    media.gallery
+      .filter((file) => file.tempUrl !== media.image?.tempUrl)
+      .forEach((file) => formData.append("gallery", file.data));
+    if (media.image) formData.append("image", media.image.data);
     // Agrega los datos del producto como una cadena JSON
     formData.append("product", JSON.stringify(product));
 

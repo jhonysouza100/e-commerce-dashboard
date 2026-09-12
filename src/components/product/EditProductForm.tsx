@@ -30,7 +30,7 @@ function CleanButton({ name }: { name: string; }) {
 }
 
 export default function EditProductForm({ id }: { id?: number }) {
-  const { product, setProduct, updateProduct, removeFile } = useProductsContext();
+  const { product, setProduct, updateProduct, removeGalleryFile, image, setMainImage } = useProductsContext();
 
   // Consulta de producto via useQuery
   const { data, isLoading, isError, error } = useQuery<Product>({
@@ -74,13 +74,18 @@ export default function EditProductForm({ id }: { id?: number }) {
     // Actualizamos la galeria del item en el store
     // (esto no se guardará en la base de datos, solo es para previsualización)
     updateProduct({
-      images: product?.images?.filter((img) => img.secure_url !== secure_url),
+      gallery: product?.gallery?.filter((img) => img.secure_url !== secure_url),
     })
 
-    // Eliminamos el archivo correspondiente del estado `files`
-    // (files se mandan a la API para guardarse en cloudinary)
-    removeFile(secure_url);
+    // Eliminamos el archivo correspondiente del estado de la galería.
+    removeGalleryFile(secure_url);
   }
+
+  const handleMainImageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedUrl = event.target.value;
+    const selectedFile = useProductsContext.getState().gallery.find((file) => file.tempUrl === selectedUrl);
+    setMainImage(selectedFile);
+  };
 
   if (isLoading) return (<Loading message="item" />)
   if (isError) return (<Alert message={error.message} />)
@@ -220,13 +225,36 @@ export default function EditProductForm({ id }: { id?: number }) {
           {/* Product Gallery */}
           <div>
             <FormLabel
+              htmlFor="mainImage"
+              title="Imagen principal"
+              showInfoIcon={true}
+              info="Selecciona la imagen que se mostrará como portada del producto."
+            >
+              <select
+                id="mainImage"
+                value={image?.tempUrl || product?.image?.secure_url || ""}
+                onChange={handleMainImageChange}
+                className="w-full rounded-md border border-border bg-input p-2 text-sm shadow-sm transition focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/30"
+              >
+                <option value="">Selecciona una imagen</option>
+                {product?.image?.secure_url && (
+                  <option value={product.image.secure_url}>Imagen principal actual</option>
+                )}
+                {product?.gallery?.map((img, index) => (
+                  <option key={img.secure_url} value={img.secure_url}>
+                    Imagen de galería {index + 1}
+                  </option>
+                ))}
+              </select>
+            </FormLabel>
+            <FormLabel
               title="Galeía del item (Max. 5)"
               showInfoIcon={true}
               info="Agregue imágenes del item. Puede subir hasta 5 imágenes. Se recomienda que las imágenes sean en formato .png o .webp sin fondo."
             />
             <div className="flex flex-wrap gap-2 mt-1.5">
-              {product?.images && product.images.length > 0
-                ? product.images.map((img, index) => (
+              {product?.gallery && product.gallery.length > 0
+                ? product.gallery.map((img, index) => (
                   <div key={index} className="relative rounded p-1 aspect-square h-28 sm:h-32">
                     <Image
                       width={200}
@@ -245,7 +273,7 @@ export default function EditProductForm({ id }: { id?: number }) {
                 ))
                 : null}
 
-              {product?.images && product.images.length < 5 && <ImageUploadDropzone />}
+              {product?.gallery && product.gallery.length < 5 && <ImageUploadDropzone />}
             </div>
           </div>
 

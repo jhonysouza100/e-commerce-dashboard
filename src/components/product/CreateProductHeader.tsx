@@ -14,19 +14,19 @@ import { useRouter } from "next/navigation";
 import handleGoBackRoute from "@/utils/handleGoBaackRoute";
 
 function CreateProductHeader() {
-  const { product: data, setProduct, files, clearFiles } = useProductsContext();
+  const { product: data, setProduct, gallery, image, clearMedia } = useProductsContext();
 
   const router = useRouter();
 
   const queryClient = useQueryClient();
 
   const updateProductMutation = useMutation({
-    mutationFn: ({ product, files }: { product: CreateProductDto, files: { data: File, tempUrl: string }[] }) => {
-      return createProductRequest(product, files);
+    mutationFn: ({ product, gallery, image }: { product: CreateProductDto, gallery: { data: File, tempUrl: string }[], image?: { data: File, tempUrl: string } }) => {
+      return createProductRequest(product, { gallery, image });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] }); // Invalidar la consulta de productos
-      clearFiles(); // Limpiar archivos después de la actualización
+      clearMedia();
       handleGoBackRoute(router);
     },
     onError: (error) => {
@@ -43,7 +43,8 @@ function CreateProductHeader() {
     if (data) {
       updateProductMutation.mutate({
         product: normalizeProductForm(data),
-        files
+        gallery,
+        image
       });
     } else {
       console.error("Product is null and cannot be updated.");
@@ -52,14 +53,14 @@ function CreateProductHeader() {
 
   function cancelChanges() {
     setProduct(EMPTY_INITIAL_PRODUCT)
-    clearFiles();
+    clearMedia();
   }
 
   return (
     <div className="w-full flex justify-between gap-4">
       <Button
         onClick={() => {
-          clearFiles(); // Limpiar archivos después de la actualización
+          clearMedia();
           handleGoBackRoute(router);
         }}
         icon={<RiArrowGoBackFill size={18} />}

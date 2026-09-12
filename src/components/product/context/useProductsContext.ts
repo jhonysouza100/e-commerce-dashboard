@@ -10,13 +10,18 @@ interface ProductsContextState {
   product: CreateProductDto | null;
   setProduct: (product: CreateProductDto | null) => void;
   updateProduct: (updates: UpdateProductDto) => void;
-  files: {
+  gallery: {
     data: File;
     tempUrl: string; // URL temporal para comparar con el secure_url al momento de eliminar
   }[];
-  addFile: (file: File, tempUrl: string) => void;
-  removeFile: (secureUrl: string) => void;
-  clearFiles: () => void;
+  image?: {
+    data: File;
+    tempUrl: string;
+  };
+  addGalleryFile: (file: File, tempUrl: string) => void;
+  removeGalleryFile: (secureUrl: string) => void;
+  setMainImage: (image?: { data: File; tempUrl: string }) => void;
+  clearMedia: () => void;
   selectedRows: number[]; // IDs de las filas seleccionados
   setSelectedRows: (rowId: number[]) => void; // Función para actualizar los IDs seleccionados
 }
@@ -37,22 +42,28 @@ export const useProductsContext = create<ProductsContextState>((set, get) => ({
     if (!current) return
     set({ product: { ...current, ...updates } })
   },
-  files: [],
-  addFile: (newFile: File, tempUrl: string) => {
-    const currentFiles = get().files;
-    const fileExists = currentFiles.some((file) => file.data.name === newFile.name);
+  gallery: [],
+  image: undefined,
+  addGalleryFile: (newFile: File, tempUrl: string) => {
+    const currentGallery = get().gallery;
+    const fileExists = currentGallery.some((file) => file.data.name === newFile.name);
     if (!fileExists) {
-      set({ files: [...currentFiles, { data: newFile, tempUrl }] });
+      set({ gallery: [...currentGallery, { data: newFile, tempUrl }] });
     } else {
-      set({ files: currentFiles });
+      set({ gallery: currentGallery });
     }
   },
-  removeFile: (secureUrl: string) => {
-    const currentFiles = get().files;
-    const updatedFiles = currentFiles.filter((file) => file.tempUrl !== secureUrl);
-    set({ files: updatedFiles });
+  removeGalleryFile: (secureUrl: string) => {
+    const currentGallery = get().gallery;
+    const updatedGallery = currentGallery.filter((file) => file.tempUrl !== secureUrl);
+    const currentImage = get().image;
+    set({
+      gallery: updatedGallery,
+      image: currentImage?.tempUrl === secureUrl ? undefined : currentImage,
+    });
   },
-  clearFiles: () => set({ files: [] }),
+  setMainImage: (image) => set({ image }),
+  clearMedia: () => set({ gallery: [], image: undefined }),
   selectedRows: [], // Inicializamos el estado de filas seleccionadas
   setSelectedRows: (rowIds: number[]) => { // Función para actualizar los IDs seleccionados
     const updatedSelectedRows = rowIds.reduce((selectedRows, rowId) => {

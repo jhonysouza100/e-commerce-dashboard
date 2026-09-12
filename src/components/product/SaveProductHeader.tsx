@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import handleGoBackRoute from "@/utils/handleGoBaackRoute";
 
 function SaveProductButton({ id }: { id: number }) {
-  const { product, setProduct, files, clearFiles } = useProductsContext();
+  const { product, setProduct, gallery, image, clearMedia } = useProductsContext();
 
   const router = useRouter();
 
@@ -53,15 +53,15 @@ function SaveProductButton({ id }: { id: number }) {
   }, [product, initialProduct]);
 
   const updateProductMutation = useMutation({
-    mutationFn: ({ id, product, files }: { id: number; product: UpdateProductDto, files: { data: File, tempUrl: string }[] }) =>
-      updateProductRequest(id, product, files),
+    mutationFn: ({ id, product, gallery, image }: { id: number; product: UpdateProductDto, gallery: { data: File, tempUrl: string }[], image?: { data: File, tempUrl: string } }) =>
+      updateProductRequest(id, product, { gallery, image }),
     onMutate: () => {
       // Se ejecuta inmediatamente antes de que comience la mutación, es decir, antes de llamar a la API.
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] }); // Invalidar la consulta de productos
       queryClient.invalidateQueries({ queryKey: ["products", id] }); // Invalidar la consulta del producto específico
-      clearFiles(); // Limpiar archivos después de la actualización
+      clearMedia();
       handleGoBackRoute(router);
     },
     onError: (error) => {
@@ -78,7 +78,8 @@ function SaveProductButton({ id }: { id: number }) {
       updateProductMutation.mutate({
         id,
         product: normalizeProductUpdate(product),
-        files,
+        gallery,
+        image,
       });
     } else {
       console.error("Product is null and cannot be updated.");
@@ -88,7 +89,7 @@ function SaveProductButton({ id }: { id: number }) {
   function cancelChanges() {
     if (initialProduct) {
       setProduct(initialProduct);
-      clearFiles();
+      clearMedia();
     }
   }
 
@@ -96,7 +97,7 @@ function SaveProductButton({ id }: { id: number }) {
     <div className="w-full flex justify-between gap-4">
       <Button
         onClick={() => {
-          clearFiles(); // Limpiar archivos después de la actualización
+          clearMedia();
           handleGoBackRoute(router);
         }}
         icon={<RiArrowGoBackFill size={18} />}

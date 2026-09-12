@@ -88,7 +88,7 @@ function CreateProductWithAI() {
       category: ProductCategoryEnum;
       brand: string;
       model: string;
-      images: [];
+      gallery: [];
         }
 
         Ten en cuenta la interface de Product para responder solamente con un json completando los campos para el nombre de producto: ${product?.name as string}, su descripcion, caracteristicas, su categoria segun el enum, etc.`,
