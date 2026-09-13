@@ -69,18 +69,6 @@ export default function EditProductForm({ id }: { id?: number }) {
     })
   }
 
-  const removeImageFromGallery = (secure_url: string) => {
-    if (!product) return
-    // Actualizamos la galeria del item en el store
-    // (esto no se guardará en la base de datos, solo es para previsualización)
-    updateProduct({
-      gallery: product?.gallery?.filter((img) => img.secure_url !== secure_url),
-    })
-
-    // Eliminamos el archivo correspondiente del estado de la galería.
-    removeFileImage(secure_url);
-  }
-
   if (isLoading) return (<Loading message="item" />)
   if (isError) return (<Alert message={error.message} />)
 
@@ -91,6 +79,78 @@ export default function EditProductForm({ id }: { id?: number }) {
         {/* Columna #1 */}
         <div className="grid grid-cols-1 gap-3 grid-rows-[repeat(2,max-content)]">
           {/* Grupo A1 */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+            {/* Product image */}
+            <div className="justify-self-center">
+              <FormLabel
+                title="Imágen principal"
+                showInfoIcon={true}
+                info="Agregue la imágen principal del item. Se recomienda que la imágen sean en formato .png o .webp sin fondo."
+              />
+              {/* Main image */}
+              <div className="flex flex-wrap gap-2 mt-1.5">
+                {product?.image?.secure_url
+                  ?
+                    <div className="relative rounded aspect-square h-32 md:h-28 lg:h-32">
+                      <Image
+                        width={200}
+                        height={200}
+                        src={product.image.secure_url}
+                        alt={`Product image}`}
+                        className="w-full h-full object-contain text-xs"
+                      />
+                      <button
+                        onClick={() => removeFileImage(product?.image?.secure_url || "")}
+                        className="absolute -top-1 right-1 bg-background text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
+                      >
+                        <RiCloseLine size={14} />
+                      </button>
+                    </div>
+                  : 
+                  <div className="aspect-square h-32 md:h-28 lg:h-32">
+                    <ImageUploadDropzone isMultiple={false} />
+                  </div>
+                }
+              </div>
+            </div>
+            {/* Product Gallery */}
+            <div>
+              <FormLabel
+                title="Galería del item (Max. 5)"
+                showInfoIcon={true}
+                info="Agregue imágenes del item. Puede subir hasta 5 imágenes. Se recomienda que las imágenes sean en formato .png o .webp sin fondo."
+              />
+              {/* Gallery images list */}
+              <div className="flex flex-wrap gap-2 mt-1.5">
+                {product?.gallery && product.gallery.length > 0
+                  ? product.gallery.map((img, index) => (
+                    <div key={index} className="relative rounded aspect-square h-22 md:h-20">
+                      <Image
+                        width={200}
+                        height={200}
+                        src={img.secure_url}
+                        alt={`Product image ${index + 1}`}
+                        className="w-full h-full object-contain text-xs"
+                      />
+                      <button
+                        onClick={() => removeFileImage(img.secure_url)}
+                        className="absolute -top-1 right-1 bg-background text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
+                      >
+                        <RiCloseLine size={14} />
+                      </button>
+                    </div>
+                  ))
+                  : null}
+
+                {product?.gallery && product.gallery.length < 5 && 
+                <div className="aspect-square h-22 md:h-20">
+                  <ImageUploadDropzone size="small" />
+                </div>}
+              </div>
+            </div>
+          </div>
+
+          {/* Grupo A2 */}
           <div className="rounded-lg border border-border bg-surface-secondary p-4 space-y-3">
             <h2 className="text-sm font-semibold text-foreground">Nombre y características</h2>
             <div className="grid lg:grid-cols-2 gap-3">
@@ -181,7 +241,7 @@ export default function EditProductForm({ id }: { id?: number }) {
             </div>
           </div>
 
-          {/* Description */}
+          {/* Description A3 */}
           <FormLabel
             htmlFor="description"
             title="Descripción"
@@ -209,84 +269,10 @@ export default function EditProductForm({ id }: { id?: number }) {
               No exceda los 500 caracteres al ingresar la descripción del item.
             </p>
           </FormLabel>
-
-          {/* Especificaciones (specifications) */}
-          <EditProductSpecs />
         </div>
 
         {/* Columna #2 */}
         <div className="grid grid-cols-1 gap-3 grid-rows-[repeat(2,max-content)]">
-          {/* Product Gallery */}
-          <div>
-            <FormLabel
-              title="Galeía del item (Max. 5)"
-              showInfoIcon={true}
-              info="Agregue imágenes del item. Puede subir hasta 5 imágenes. Se recomienda que las imágenes sean en formato .png o .webp sin fondo."
-            />
-            {/* Gallery images list */}
-            <div className="flex flex-wrap gap-2 mt-1.5">
-              {product?.gallery && product.gallery.length > 0
-                ? product.gallery.map((img, index) => (
-                  <div key={index} className="relative rounded p-1 aspect-square h-28 sm:h-32">
-                    <Image
-                      width={200}
-                      height={200}
-                      src={img.secure_url}
-                      alt={`Product image ${index + 1}`}
-                      className="w-full h-full object-contain text-xs"
-                    />
-                    <button
-                      onClick={() => removeImageFromGallery(img.secure_url)}
-                      className="absolute -top-1 right-1 bg-background text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
-                    >
-                      <RiCloseLine size={14} />
-                    </button>
-                  </div>
-                ))
-                : null}
-
-              {product?.gallery && product.gallery.length < 5 && <ImageUploadDropzone />}
-            </div>
-          </div>
-
-          {/* Color */}
-          <div className="flex items-center justify-start">
-            <FormLabel
-              htmlFor="colorName"
-              title="Color"
-              optional
-            >
-              <div className="grid grid-cols-2">
-                <div className="relative">
-                  <input
-                    name="colorName"
-                    id="colorName"
-                    value={product?.color?.name ?? ""}
-                    onChange={(e) => updateProduct({ color: { name: e.target.value, value: product?.color?.value ?? "" } })}
-                    className="rounded-l-md w-full border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
-                    placeholder="Nombre del color"
-                  />
-                  {(product?.color?.name || product?.color?.value) && (
-                    <button
-                      onClick={() => updateProduct({ color: { name: "", value: "" } })}
-                      className="absolute top-2 right-2 bg-background  text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
-                    >
-                      <RiCloseLine size={14} />
-                    </button>
-                  )}
-                </div>
-                <input
-                  name="colorValue"
-                  id="colorValue"
-                  type="color"
-                  value={product?.color?.value ?? ""}
-                  onChange={(e) => updateProduct({ color: { name: product?.color?.name ?? "", value: e.target.value } })}
-                  className="rounded-r-md h-full border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
-                />
-              </div>
-            </FormLabel>
-          </div>
-
           {/* Inventory */}
           <div className="rounded-lg border border-border bg-surface-secondary p-4 space-y-3">
             <h2 className="text-sm font-semibold text-foreground">Inventario</h2>
@@ -385,6 +371,47 @@ export default function EditProductForm({ id }: { id?: number }) {
               ))}
             </div>
           </div>
+
+          {/* Color */}
+          <div className="flex items-center justify-start">
+            <FormLabel
+              htmlFor="colorName"
+              title="Color"
+              optional
+            >
+              <div className="grid grid-cols-2">
+                <div className="relative">
+                  <input
+                    name="colorName"
+                    id="colorName"
+                    value={product?.color?.name ?? ""}
+                    onChange={(e) => updateProduct({ color: { name: e.target.value, value: product?.color?.value ?? "" } })}
+                    className="rounded-l-md w-full border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
+                    placeholder="Nombre del color"
+                  />
+                  {(product?.color?.name || product?.color?.value) && (
+                    <button
+                      onClick={() => updateProduct({ color: { name: "", value: "" } })}
+                      className="absolute top-2 right-2 bg-background  text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
+                    >
+                      <RiCloseLine size={14} />
+                    </button>
+                  )}
+                </div>
+                <input
+                  name="colorValue"
+                  id="colorValue"
+                  type="color"
+                  value={product?.color?.value ?? ""}
+                  onChange={(e) => updateProduct({ color: { name: product?.color?.name ?? "", value: e.target.value } })}
+                  className="rounded-r-md h-full border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
+                />
+              </div>
+            </FormLabel>
+          </div>
+
+          {/* Especificaciones (specifications) A4 */}
+          <EditProductSpecs />
         </div>
       </div>
     </div>

@@ -3,8 +3,8 @@
 :root {
   /* Semantic theme tokens */
   --white-color: hsl(210 20% 98%);
-  --background-color: hsl(210 20% 98%);
-  --foreground-color: hsl(222 47% 11%);
+  --background-color: #f9fafb;
+  --foreground-color: #171717;
   --surface-color: hsl(0 0% 100%);
   --surface-secondary-color: hsl(210 20% 96%);
   --surface-hover-color: hsl(210 20% 93%);

@@ -36,7 +36,7 @@ export const ProductCategoryLabel: Record<ProductCategoryEnum, string> = {
   [ProductCategoryEnum.SPORTS]: 'Deportes y Fitness',
   [ProductCategoryEnum.CAMPING]: 'Pesca y Camping',
   [ProductCategoryEnum.GAMES]: 'Videojuegos y Consolas',
-  [ProductCategoryEnum.BOOKS]: 'Libros',
+  [ProductCategoryEnum.BOOKS]: 'Libros & Comics',
   [ProductCategoryEnum.OFFICE]: 'Insumos de Oficina',
   [ProductCategoryEnum.TOOLS]: 'Herramientas y Construcción',
   [ProductCategoryEnum.TOYS]: 'Juguetes & Coleccionables',

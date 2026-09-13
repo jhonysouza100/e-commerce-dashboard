@@ -1,6 +1,11 @@
 import { ProductColorInterface, ProductDimensionsInterface, ProductImageInterface, ProductSpecificationsInterface } from "../dtos/create-product.dto";
 import { ProductCategoryEnum } from "../enums/product-category.enum";
 
+export interface ProductMediaFile {
+  data: File;
+  tempUrl: string; // URL temporal para comparar con el secure_url al momento de eliminar
+}
+
 export interface Product {
   id: number;
   name: string;

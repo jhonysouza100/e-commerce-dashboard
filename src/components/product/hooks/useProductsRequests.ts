@@ -5,6 +5,7 @@ import { Product } from "../interface/product.interface";
 import { ErrorResponse, handleAxiosErrorResponse, handleAxiosSuccessResponse, OkResponse } from "@/utils/handleAxiosResponses";
 import { CreateProductDto } from "../dtos/create-product.dto";
 import { UpdateProductDto } from "../dtos/update-product.dto";
+import { ProductMediaFile } from "../interface/product.interface";
 
 const productRequest = axios.create({
   baseURL: `${BACKEND_URL}/products`,
@@ -91,16 +92,16 @@ export async function getRelatedProductsRequest(category: string): Promise<Produ
 }
 
 interface ProductMedia {
-  image?: { data: File; tempUrl: string };
-  gallery: { data: File; tempUrl: string }[];
+  image?: ProductMediaFile;
+  gallery: ProductMediaFile[];
 }
 
 export async function createProductRequest(product: CreateProductDto, media: ProductMedia): Promise<OkResponse> {
   try {
     const formData = new FormData();
     media.gallery
-      .filter((file) => file.tempUrl !== media.image?.tempUrl)
-      .forEach((file) => formData.append("gallery", file.data));
+      .filter((el) => el.tempUrl !== media.image?.tempUrl)
+      .forEach((el) => formData.append("gallery", el.data));
     if (media.image) formData.append("image", media.image.data);
     // Agrega los datos del producto como una cadena JSON
     formData.append("product", JSON.stringify(product));
