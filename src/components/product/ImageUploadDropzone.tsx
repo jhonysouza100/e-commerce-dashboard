@@ -2,23 +2,29 @@ import React, { useRef } from "react";
 import { RiAddCircleFill } from "@remixicon/react";
 import { useProductsContext } from "./context/useProductsContext";
 
-function ImageUploadDropzone() {
+function ImageUploadDropzone({ isMultiple = true }: { isMultiple?: boolean }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { product, updateProduct, addGalleryFile } = useProductsContext();
+  const { product, updateProduct, addGalleryImage, setMainImage } = useProductsContext();
 
   const handleFilesUpload = (files: FileList) => {
-    // Por cada archivo, generamos una URL temporal y lo añadimos al contexto
+    // Por cada archivo, generamos una URL temporal y lo añadimos al contexto    
     const newImages = Array.from(files).map((file) => {
       // Generamos URLs temporales para previsualización
       const tempUrl = URL.createObjectURL(file);
 
-      // Actualizamos el estado de archivos en el contexto
-      addGalleryFile(file, tempUrl);
+      if(isMultiple) {
+        // Actualizamos el estado de archivos en el contexto
+        addGalleryImage(file, tempUrl);
+      }
+
+      // setMainImage();
+
       return {
         public_id: "temp_id", // ID temporal para la vista previa
         secure_url: tempUrl, // URL temporal
       }
     });
+    
 
     // Actualizamos las imágenes del producto en para frontend
     // (esto no se guardará en la base de datos, solo es para previsualización)
@@ -65,7 +71,7 @@ function ImageUploadDropzone() {
         type="file"
         ref={fileInputRef}
         onChange={handleImageUpload}
-        multiple
+        multiple={isMultiple}
         accept="image/*"
         className="hidden"
       />

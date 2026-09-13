@@ -18,8 +18,8 @@ interface ProductsContextState {
     data: File;
     tempUrl: string;
   };
-  addGalleryFile: (file: File, tempUrl: string) => void;
-  removeGalleryFile: (secureUrl: string) => void;
+  addGalleryImage: (file: File, tempUrl: string) => void;
+  removeFileImage: (secureUrl: string) => void;
   setMainImage: (image?: { data: File; tempUrl: string }) => void;
   clearMedia: () => void;
   selectedRows: number[]; // IDs de las filas seleccionados
@@ -44,7 +44,7 @@ export const useProductsContext = create<ProductsContextState>((set, get) => ({
   },
   gallery: [],
   image: undefined,
-  addGalleryFile: (newFile: File, tempUrl: string) => {
+  addGalleryImage: (newFile: File, tempUrl: string) => {
     const currentGallery = get().gallery;
     const fileExists = currentGallery.some((file) => file.data.name === newFile.name);
     if (!fileExists) {
@@ -53,7 +53,7 @@ export const useProductsContext = create<ProductsContextState>((set, get) => ({
       set({ gallery: currentGallery });
     }
   },
-  removeGalleryFile: (secureUrl: string) => {
+  removeFileImage: (secureUrl: string) => {
     const currentGallery = get().gallery;
     const updatedGallery = currentGallery.filter((file) => file.tempUrl !== secureUrl);
     const currentImage = get().image;

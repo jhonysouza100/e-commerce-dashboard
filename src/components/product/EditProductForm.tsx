@@ -30,7 +30,7 @@ function CleanButton({ name }: { name: string; }) {
 }
 
 export default function EditProductForm({ id }: { id?: number }) {
-  const { product, setProduct, updateProduct, removeGalleryFile, image, setMainImage } = useProductsContext();
+  const { product, setProduct, updateProduct, removeFileImage } = useProductsContext();
 
   // Consulta de producto via useQuery
   const { data, isLoading, isError, error } = useQuery<Product>({
@@ -78,14 +78,8 @@ export default function EditProductForm({ id }: { id?: number }) {
     })
 
     // Eliminamos el archivo correspondiente del estado de la galería.
-    removeGalleryFile(secure_url);
+    removeFileImage(secure_url);
   }
-
-  const handleMainImageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedUrl = event.target.value;
-    const selectedFile = useProductsContext.getState().gallery.find((file) => file.tempUrl === selectedUrl);
-    setMainImage(selectedFile);
-  };
 
   if (isLoading) return (<Loading message="item" />)
   if (isError) return (<Alert message={error.message} />)
@@ -204,11 +198,11 @@ export default function EditProductForm({ id }: { id?: number }) {
               />
               {product?.description && (
                 <button
-                      onClick={() => updateProduct({ description: "" })}
-                      className="absolute top-1 right-1 bg-background  text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
-                    >
-                      <RiCloseLine size={14} />
-                    </button>
+                  onClick={() => updateProduct({ description: "" })}
+                  className="absolute top-1 right-1 bg-background  text-red-500 hover:text-red-700 rounded-full p-1 shadow-md"
+                >
+                  <RiCloseLine size={14} />
+                </button>
               )}
             </div>
             <p className="text-xs text-foreground-muted">
@@ -225,33 +219,11 @@ export default function EditProductForm({ id }: { id?: number }) {
           {/* Product Gallery */}
           <div>
             <FormLabel
-              htmlFor="mainImage"
-              title="Imagen principal"
-              showInfoIcon={true}
-              info="Selecciona la imagen que se mostrará como portada del producto."
-            >
-              <select
-                id="mainImage"
-                value={image?.tempUrl || product?.image?.secure_url || ""}
-                onChange={handleMainImageChange}
-                className="w-full rounded-md border border-border bg-input p-2 text-sm shadow-sm transition focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/30"
-              >
-                <option value="">Selecciona una imagen</option>
-                {product?.image?.secure_url && (
-                  <option value={product.image.secure_url}>Imagen principal actual</option>
-                )}
-                {product?.gallery?.map((img, index) => (
-                  <option key={img.secure_url} value={img.secure_url}>
-                    Imagen de galería {index + 1}
-                  </option>
-                ))}
-              </select>
-            </FormLabel>
-            <FormLabel
               title="Galeía del item (Max. 5)"
               showInfoIcon={true}
               info="Agregue imágenes del item. Puede subir hasta 5 imágenes. Se recomienda que las imágenes sean en formato .png o .webp sin fondo."
             />
+            {/* Gallery images list */}
             <div className="flex flex-wrap gap-2 mt-1.5">
               {product?.gallery && product.gallery.length > 0
                 ? product.gallery.map((img, index) => (
