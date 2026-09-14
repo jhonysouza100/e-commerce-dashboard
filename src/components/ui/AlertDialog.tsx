@@ -81,7 +81,7 @@ const AlertDialog: React.FC<AlertDialogProps> = ({
       {trigger}
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/35 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/35 py-4 px-8 backdrop-blur-sm"
           role="presentation"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) setOpen(false);
