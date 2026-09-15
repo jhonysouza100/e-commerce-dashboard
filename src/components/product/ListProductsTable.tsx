@@ -9,7 +9,7 @@ import { useAuthContext } from "../session/context/useAuthContext";
 import { useProductsContext } from "./context/useProductsContext";
 import { Product } from "./interface/product.interface";
 import DeleteProductButton from "./DeleteProductButton";
-import { ListProductsQuery, listProductsRequest } from "./hooks/useProductsRequests";
+import { ListProductsQuery, ListProductsResponse, listProductsRequest } from "./hooks/useProductsRequests";
 import Loading from "@/ui/Loading";
 import Alert from "@/ui/Alert";
 import { useRouter } from "next/navigation";
@@ -22,31 +22,35 @@ function ListProductsTable() {
   const router = useRouter();
 
   const page = parseInt(searchParams.get("page") || "1", 10); // Parámetro 'page' es para la paginación
-  const query: ListProductsQuery[] = [
-    {
-      key: "name",
-      value: searchParams.get("q") || ""
-    }
-  ];
+  const query: ListProductsQuery = {
+    page,
+    q: searchParams.get("q") || undefined,
+    tenant_id: session?.id,
+  };
 
   const { setCount, count, setSelectedRows, selectedRows } =
     useProductsContext();
-  const { data, isLoading, isError, error } = useQuery<{
-    count: number;
-    products: Product[];
-  }>({
-    queryKey: ["products", query, page, session?.id], // useQuery depende de los parámetros de búsqueda y paginación, lo que garantizará que la consulta se vuelva a ejecutar cada vez que cambien
+  const { data, isLoading, isError, error } = useQuery<ListProductsResponse>({
+    queryKey: ["products", query], // useQuery depende de los parámetros de búsqueda y paginación
     queryFn: () => {
       if (session) {
-        return listProductsRequest(query, page, session.id);
+        return listProductsRequest(query);
       }
-      return Promise.resolve({ count: 0, products: [] });
+      return Promise.resolve({
+        data: [],
+        count: {
+          page: 1,
+          limit: 0,
+          total: 0,
+          totalPages: 0,
+          hasNextPage: false,
+          hasPreviousPage: false,
+        },
+      });
     },
-    select: ({ count, products }) => ({
-      // devuelve { count: number, products: Product[] }
+    select: ({ count, data: products }) => ({
       count,
-      // Ordenar alfabéticamente por nombre
-      products: products
+      data: products
         ? products.sort((a: Product, b: Product) =>
           a.name.localeCompare(b.name)
         )
@@ -54,7 +58,7 @@ function ListProductsTable() {
     }),
   });
 
-  const visibleProductIds = data?.products.map((product) => product.id) ?? [];
+  const visibleProductIds = data?.data.map((product) => product.id) ?? [];
   const allVisibleSelected = visibleProductIds.length > 0 && visibleProductIds.every((id) => selectedRows.includes(id));
   const toggleAllVisible = () => {
     const idsToToggle = visibleProductIds.filter((id) =>
@@ -65,9 +69,9 @@ function ListProductsTable() {
 
   // Actualizar el número total de products en Zustand
   useEffect(() => {
-    if (data && data.count !== count) {
+    if (data && data.count.total !== count.total) {
       // Comprobamos si el count realmente ha cambiado
-      setCount(data.count); // Actualizamos el count en Zustand
+      setCount(data.count); // Actualizamos la metadata de paginación en Zustand
     }
   }, [data, setCount, count]); // Este useEffect se ejecuta cuando `data` cambia
 
@@ -90,7 +94,7 @@ function ListProductsTable() {
       </thead>
       <tbody className="table_body">
         {session &&
-          data?.products.map((product: Product, index: number) => (
+          data?.data.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
             <tr key={product.id} tabIndex={index}
               onClick={() => router.push(`/products/${product.id}`)}

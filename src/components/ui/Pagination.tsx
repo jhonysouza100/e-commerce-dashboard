@@ -2,45 +2,37 @@
 
 import {  RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { ITEMS_PER_PAGE } from "@/const/constants";
+import { PaginationInterface } from "@/components/product/hooks/useProductsRequests";
 
-function Pagination({ count }: { count: number }) {
+function Pagination({ count }: { count: PaginationInterface }) {
   const searchPrams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const page = searchPrams.get("page") || "1";
+  const page = count.page;
 
   const params = new URLSearchParams(searchPrams);
-  
-  const hasPrev = ITEMS_PER_PAGE * (parseInt(page) - 1) > 0;
-  const hasNext = ITEMS_PER_PAGE * (parseInt(page) - 1) + ITEMS_PER_PAGE < count;
+
+  const hasPrev = count.hasPreviousPage;
+  const hasNext = count.hasNextPage;
 
   // Aquí tipamos `type` como un literal de cadena
   const handleChangePage = (type: "prev" | "next"): void => {
     if (type === "prev") {
-      params.set("page", (parseInt(page) - 1).toString());
+      params.set("page", (page - 1).toString());
     } else {
-      params.set("page", (parseInt(page) + 1).toString());
+      params.set("page", (page + 1).toString());
     }
     replace(`${pathname}?${params}`);
   };
 
-  // const itemsInCurrentPage =
-  //   parseInt(page) === 1
-  //     ? Math.min(ITEMS_PER_PAGE, count)
-  //     : Math.min(ITEMS_PER_PAGE, count - ITEMS_PER_PAGE * (parseInt(page) - 1));
-
-  // Ej. ITEMS_PER_PAGE: 12
-  // Print the number of items in the current page and the total number of items
-  // console.log(`Items in current page: ${itemsInCurrentPage} of ${count}`);
-  // Page 3: 25-36  of 100
-  // console.log(`Page ${page}: ${ITEMS_PER_PAGE * (parseInt(page) - 1) + 1}-${Math.min(ITEMS_PER_PAGE * parseInt(page), count)} of ${count}`);
+  const firstItem = count.total === 0 ? 0 : (page - 1) * count.limit + 1;
+  const lastItem = Math.min(page * count.limit, count.total);
 
   return (
     <div className="flex align-middle justify-between bg-bacground p-2 gap-2 rounded-full">
       <div className="flex items-center gap-2 text-sm text-foreground-muted">
-        <span className="font-semibold">{`${ITEMS_PER_PAGE * (parseInt(page) - 1) + 1}-${Math.min(ITEMS_PER_PAGE * parseInt(page), count)} de ${count}`}</span>
+        <span className="font-semibold">{`${firstItem}-${lastItem} de ${count.total}`}</span>
       </div>
       <button
         className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-light/50"
@@ -51,7 +43,7 @@ function Pagination({ count }: { count: number }) {
       </button>
       <div className="flex items-center gap-2 text-sm text-foreground-muted">
         <span className="inline-flex">Página</span>
-        <span className="font-semibold">{` ${page}`}</span>
+        <span className="font-semibold">{` ${page} de ${count.totalPages}`}</span>
       </div>
       <button
         className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-light/50"

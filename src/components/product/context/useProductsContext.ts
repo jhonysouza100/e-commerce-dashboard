@@ -2,10 +2,11 @@ import { create } from 'zustand';
 import { CreateProductDto, ProductImageInterface } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
 import { ProductMediaFile } from "../interface/product.interface";
+import { PaginationInterface } from '../hooks/useProductsRequests';
 
 interface ProductsContextState {
-  count: number;
-  setCount: (count: number) => void;
+  count: PaginationInterface;
+  setCount: (count: PaginationInterface) => void;
   isLoading: boolean;
   setIsLoading: (isLoading: boolean) => void;
   product: CreateProductDto | null;
@@ -22,8 +23,15 @@ interface ProductsContextState {
 }
 
 export const useProductsContext = create<ProductsContextState>((set, get) => ({
-  count: 0,
-  setCount: (count: number) => {
+  count: {
+    page: 1,
+    limit: 0,
+    total: 0,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPreviousPage: false,
+  },
+  setCount: (count: PaginationInterface) => {
     set(() => ({ count: count }));
   },
   isLoading: false,

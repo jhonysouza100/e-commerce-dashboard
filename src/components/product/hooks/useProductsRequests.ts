@@ -27,25 +27,38 @@ productRequest.interceptors.request.use(async config => {
 });
 
 export interface ListProductsQuery {
-  key: string;
-  value: string
+  id?: number;
+  q?: string;
+  name?: string;
+  page?: number;
+  limit?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  status?: boolean;
+  isActive?: boolean;
+  stock?: boolean;
+  tenant_id?: number;
 }
 
-export async function listProductsRequest(q: ListProductsQuery[], page: number, tenant_id?: number): Promise<{ count: number, products: Product[] }> {
+export interface PaginationInterface {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
+export interface ListProductsResponse {
+  data: Product[];
+  count: PaginationInterface;
+}
+
+export async function listProductsRequest(query: ListProductsQuery): Promise<ListProductsResponse> {
   try {
-    // Filtrar solo los pares que tengan un value válido (no vacío, no null, no undefined).
-    const filteredQueryParams = q
-      .filter(({ value }) => value !== undefined && value !== null && value !== '')
-      // Convierte cada par key-value en una cadena key=value
-      .map(({ key, value }) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`) // Asegura que caracteres especiales no rompan la .
-      // Une todos los pares con "&" como separador.
-      .join('&');
-
-    // Construir la cadena query completa.
-    const query = `?${filteredQueryParams}${filteredQueryParams ? '&' : ''}page=${page}`; // Añade un & antes de page sólo si hay parámetros previos.
-
-    // const query = q ? `?${q.key}=${q.value}&page=${page}` : `?page=${page}`;
-    const response = await productRequest.get<{ count: number, products: Product[] }>(`${query}${tenant_id ? `&tenant_id=${tenant_id}` : '&status=true'}`);
+    const response = await productRequest.get<ListProductsResponse>('', {
+      params: query,
+    });
     return response.data;
   } catch (error) {
     throw new Error((error as ErrorResponse).response?.data.message || (error as ErrorResponse).message);
@@ -54,8 +67,8 @@ export async function listProductsRequest(q: ListProductsQuery[], page: number, 
 
 export async function getProductRequest(id?: number): Promise<Product> {
   try {
-    const response = await productRequest.get<{ count: number, products: Product[] }>(`?id=${id}`);
-    return response.data.products.at(0) as Product;
+    const response = await productRequest.get<ListProductsResponse>(`?id=${id}`);
+    return response.data.data.at(0) as Product;
   } catch (error) {
     handleAxiosErrorResponse(error as ErrorResponse);
     throw new Error("No se pudo obtener el producto");
@@ -83,8 +96,8 @@ export async function getProductsSitemapByNameRequest(): Promise<{name: string, 
 
 export async function getRelatedProductsRequest(category: string): Promise<Product[]> {
   try {
-    const response = await productRequest.get<{ count: number, products: Product[] }>(`?category=${encodeURIComponent(category)}&status=true`);
-    return response.data.products;
+    const response = await productRequest.get<ListProductsResponse>(`?category=${encodeURIComponent(category)}&status=true`);
+    return response.data.data;
   } catch (error) {
     handleAxiosErrorResponse(error as ErrorResponse);
     throw new Error("No se pudieron obtener los productos relacionados");
