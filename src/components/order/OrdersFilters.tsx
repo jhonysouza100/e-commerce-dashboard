@@ -3,6 +3,7 @@ import { RiCloseLine, RiFilter3Line } from "@remixicon/react";
 import Button from "@/ui/Button";
 import { ORDER_STATUSES } from "@/components/order/interface/order.interface";
 import { statusLabels } from "./order.constants";
+import { Pagination } from "../ui/Pagination";
 
 type OrdersFiltersProps = {
   searchParams: Pick<URLSearchParams, "get">;
@@ -17,6 +18,8 @@ export default function OrdersFilters({ searchParams, onSubmit, onReset }: Order
   };
 
   return (
+    <>
+    <Pagination  />
     <form onSubmit={handleSubmit} className="grid gap-3 rounded-md bg-surface-secondary p-3 md:grid-cols-2 xl:grid-cols-6">
       <label className="grid gap-1 text-sm"><span className="font-semibold">ID de orden</span><input name="order_id" type="number" min="1" defaultValue={searchParams.get("order_id") || ""} className="rounded-md border border-border bg-input px-3 py-2" /></label>
       <label className="grid gap-1 text-sm"><span className="font-semibold">Estado</span><select name="status" defaultValue={searchParams.get("status") || ""} className="rounded-md border border-border bg-input px-3 py-2"><option value="">Todos</option>{ORDER_STATUSES.map((value) => <option key={value} value={value}>{statusLabels[value]}</option>)}</select></label>
@@ -29,5 +32,6 @@ export default function OrdersFilters({ searchParams, onSubmit, onReset }: Order
         <Button type="button" onClick={onReset} icon={<RiCloseLine size={17} />} size="small" variant="secondary">Limpiar</Button>
       </div>
     </form>
+    </>
   );
 }

@@ -1,12 +1,13 @@
 import MainContainer from "@/components/dashboard_layout/MainContainer";
-import OrdersManager from "@/components/order/OrdersManager";
+import ListOrders from "@/components/order/ListOrders";
+import OrdersFilters from "@/components/order/OrdersFilters";
 
 export default function OrdersPage() {
 	return (
 		<>
 			<MainContainer 
-				headerContent={<></>}
-				mainContent={<OrdersManager />}
+				headerContent={<><OrdersFilters /></>}
+				mainContent={<ListOrders />}
 			/>
 		</>
 	)

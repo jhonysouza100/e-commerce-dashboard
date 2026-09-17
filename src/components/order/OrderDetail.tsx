@@ -17,7 +17,7 @@ import {
   updateOrderShipmentRequest,
   updateOrderStatusRequest,
 } from "@/components/order/hooks/useOrdersRequests";
-import { amount, deliveryStatuses, statusClass, statusLabels } from "./order.constants";
+import { amount, deliveryStatuses, statusClass, statusLabels } from "./constants/order.constants";
 
 type OrderDetailProps = {
   order: Order;
