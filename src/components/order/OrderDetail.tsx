@@ -1,8 +1,8 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { RiArrowLeftLine, RiExternalLinkLine } from "@remixicon/react";
+import { RiExternalLinkLine } from "@remixicon/react";
 import AlertDialog from "@/components/ui/AlertDialog";
 import Button from "@/ui/Button";
 import { formatCurrency, formatDate } from "@/utils/handleFormatPrice";
@@ -17,12 +17,11 @@ import {
   updateOrderShipmentRequest,
   updateOrderStatusRequest,
 } from "@/components/order/hooks/useOrdersRequests";
-import { amount, deliveryStatuses, statusClass, statusLabels } from "./constants/order.constants";
+import { amount, deliveryStatuses, statusLabels } from "./constants/order.constants";
 
 type OrderDetailProps = {
   order: Order;
   canEdit: boolean;
-  onClose: () => void;
 };
 
 type FieldProps = {
@@ -42,17 +41,11 @@ function Field({ label, name, value, onChange, disabled = false }: FieldProps) {
   );
 }
 
-export default function OrderDetail({ order, canEdit, onClose }: OrderDetailProps) {
+export default function OrderDetail({ order, canEdit }: OrderDetailProps) {
   const queryClient = useQueryClient();
   const [status, setStatus] = useState<OrderStatus>(order.status);
   const [paymentMethod, setPaymentMethod] = useState(order.payment?.method || "");
   const [shipment, setShipment] = useState<UpdateShipmentDto>({ ...order.shipment });
-
-  useEffect(() => {
-    setStatus(order.status);
-    setPaymentMethod(order.payment?.method || "");
-    setShipment({ ...order.shipment });
-  }, [order]);
 
   const invalidate = () => {
     queryClient.invalidateQueries({ queryKey: ["orders"] });
@@ -78,7 +71,6 @@ export default function OrderDetail({ order, canEdit, onClose }: OrderDetailProp
 
   return (
     <div className="grid gap-5">
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border pb-3"><div className="flex items-center gap-2"><button type="button" onClick={onClose} aria-label="Volver a la lista" title="Volver a la lista" className="rounded-md p-2 text-foreground hover:bg-surface-hover"><RiArrowLeftLine /></button><div><p className="text-sm text-foreground-muted">Detalle de orden</p><h2 className="text-xl font-bold text-foreground">#{order.id}</h2></div></div><span className={`rounded-full px-3 py-1 text-sm font-semibold ${statusClass(order.status)}`}>{statusLabels[order.status]}</span></div>
       <div className="grid gap-4 sm:grid-cols-3"><div><p className="text-xs text-foreground-muted">Creada</p><p className="font-medium text-foreground">{formatDate(order.createdAt)}</p></div><div><p className="text-xs text-foreground-muted">Última actualización</p><p className="font-medium text-foreground">{formatDate(order.updatedAt)}</p></div><div><p className="text-xs text-foreground-muted">Total</p><p className="text-xl font-bold text-foreground">{formatCurrency(amount(order.total))}</p></div></div>
       {canEdit && <section className="grid gap-2 rounded-md bg-surface-secondary p-4"><h3 className="font-bold text-foreground">Estado de la orden</h3><div className="flex flex-wrap items-end gap-2"><label className="grid min-w-52 gap-1 text-sm"><span className="font-semibold">Nuevo estado</span><select value={status} onChange={(event) => setStatus(event.target.value as OrderStatus)} className="rounded-md border border-border bg-input px-3 py-2">{ORDER_STATUSES.map((option) => <option key={option} value={option}>{statusLabels[option]}</option>)}</select></label><AlertDialog title="Confirmar cambio de estado" message={`La orden #${order.id} cambiará a ${statusLabels[status]}.`} confirmButtonProps={{ children: statusMutation.isPending ? "Actualizando..." : "Confirmar", disabled: statusMutation.isPending, variant: "primary" }}><Button disabled={statusMutation.isPending || status === order.status} onClick={() => statusMutation.mutate(status)}>{statusMutation.isPending ? "Guardando" : "Actualizar"}</Button></AlertDialog></div>{statusMutation.isError && <p className="text-sm text-danger">{statusMutation.error.message}</p>}</section>}
       <section className="grid gap-3"><h3 className="font-bold text-foreground">Productos ({order.items?.length || 0})</h3><div className="overflow-x-auto rounded-md border border-border"><table className="w-full min-w-130 border-collapse text-left text-sm"><thead className="bg-surface-secondary"><tr><th className="p-3">Producto</th><th className="p-3">Cantidad</th><th className="p-3">Precio</th><th className="p-3">Subtotal</th></tr></thead><tbody>{order.items?.map((item) => <tr key={`${item.item_id}-${item.name}`} className="border-t border-border"><td className="p-3 text-foreground">{item.name}</td><td className="p-3">{item.quantity}</td><td className="p-3">{formatCurrency(amount(item.price))}</td><td className="p-3 font-semibold text-foreground">{formatCurrency(amount(item.subtotal))}</td></tr>)}{!order.items?.length && <tr><td colSpan={4} className="p-4 text-center text-foreground-muted">Esta orden no tiene productos registrados.</td></tr>}</tbody></table></div><div className="flex justify-end gap-6 text-sm"><span>Subtotal: <strong className="text-foreground">{formatCurrency(amount(order.subtotal))}</strong></span><span>Total: <strong className="text-foreground">{formatCurrency(amount(order.total))}</strong></span></div></section>

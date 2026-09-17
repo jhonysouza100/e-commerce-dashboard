@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Alert from "@/ui/Alert";
 import Loading from "@/ui/Loading";
 import { useAuthContext } from "@/components/session/context/useAuthContext";
@@ -11,40 +10,19 @@ import type {
   Order,
 } from "@/components/order/interface/order.interface";
 import { amount, statusClass, statusLabels } from "./constants/order.constants";
-import { getOrderRequest, listOrdersRequest } from "./hooks/useOrdersRequests";
-import OrderDetail from "./OrderDetail";
+import { listOrdersRequest } from "./hooks/useOrdersRequests";
 import { getOrdersQuery } from "./utils/orderQuery";
 
 export default function ListOrders() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const { session } = useAuthContext();
-  const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
   const query = getOrdersQuery(searchParams);
-  const canEdit = session?.role === "ADMIN" || session?.role === "ROOT";
   const listQuery = useQuery({
     queryKey: ["orders", query],
     queryFn: () => listOrdersRequest(query),
     enabled: Boolean(session),
   });
-  const detailQuery = useQuery({
-    queryKey: ["order", selectedOrderId],
-    queryFn: () => getOrderRequest(selectedOrderId as number),
-    enabled: selectedOrderId !== null,
-  });
-
-  if (selectedOrderId !== null) {
-    if (detailQuery.isLoading) return <Loading message="orden..." />;
-    if (detailQuery.isError) return <Alert message={detailQuery.error.message} />;
-    if (detailQuery.data) {
-      return (
-        <OrderDetail
-          order={detailQuery.data}
-          canEdit={canEdit}
-          onClose={() => setSelectedOrderId(null)}
-        />
-      );
-    }
-  }
 
   const orders: Order[] = listQuery.data?.data || [];
 
@@ -75,9 +53,9 @@ export default function ListOrders() {
                 <tr
                   key={order.id}
                   tabIndex={0}
-                  onClick={() => setSelectedOrderId(order.id)}
+                  onClick={() => router.push(`/orders/${order.id}`)}
                   onKeyDown={(event) => {
-                    if (event.key === "Enter") setSelectedOrderId(order.id);
+                    if (event.key === "Enter") router.push(`/orders/${order.id}`);
                   }}
                   className="cursor-pointer hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-primary"
                 >
