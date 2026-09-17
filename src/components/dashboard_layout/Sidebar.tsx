@@ -3,6 +3,7 @@
 import {
   RiBarChartHorizontalFill,
   RiShoppingBag4Fill,
+  RiShoppingCart2Fill,
   RiLogoutCircleLine,
   RiArrowLeftWideLine,
 } from "@remixicon/react";
@@ -19,6 +20,7 @@ const menuItems = [
     items: [
       { icon: RiBarChartHorizontalFill, label: "Inicio", href: "/" },
       { icon: RiShoppingBag4Fill, label: "Productos", href: "/products" },
+      { icon: RiShoppingCart2Fill, label: "Órdenes", href: "/orders" },
     ],
   },
   // {
