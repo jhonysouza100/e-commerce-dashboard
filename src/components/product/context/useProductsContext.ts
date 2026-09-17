@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { CreateProductDto, ProductImageInterface } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
 import { ProductMediaFile } from "../interface/product.interface";
-import { PaginationInterface } from '../hooks/useProductsRequests';
+import { PaginationInterface } from '@/components/ui/Pagination';
 
 interface ProductsContextState {
   count: PaginationInterface;

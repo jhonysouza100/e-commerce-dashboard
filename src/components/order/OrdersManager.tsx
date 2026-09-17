@@ -14,7 +14,7 @@ import Alert from "@/ui/Alert";
 import AlertDialog from "@/components/ui/AlertDialog";
 import Button from "@/ui/Button";
 import Loading from "@/ui/Loading";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/ui/Pagination";
 import { useAuthContext } from "@/components/session/context/useAuthContext";
 import { formatCurrency, formatDate } from "@/utils/handleFormatPrice";
 import {

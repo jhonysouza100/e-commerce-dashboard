@@ -6,7 +6,7 @@ import { useProductsContext } from "@/components/product/context/useProductsCont
 import DeleteProductButton from "@/components/product/DeleteProductButton";
 import ListProductsTable from "@/components/product/ListProductsTable";
 import Button from "@/ui/Button";
-import Pagination from "@/components/ui/Pagination";
+import { Pagination } from "@/components/ui/Pagination";
 import MainContainer from "@/components/dashboard_layout/MainContainer";
 import DuplicateProductsButton from "@/components/product/DuplicateProductsButton";
 

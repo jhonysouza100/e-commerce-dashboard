@@ -6,6 +6,7 @@ import { ErrorResponse, handleAxiosErrorResponse, handleAxiosSuccessResponse, Ok
 import { CreateProductDto } from "../dtos/create-product.dto";
 import { UpdateProductDto } from "../dtos/update-product.dto";
 import { ProductMediaFile } from "../interface/product.interface";
+import { PaginationInterface } from "@/components/ui/Pagination";
 
 const productRequest = axios.create({
   baseURL: `${BACKEND_URL}/products`,
@@ -38,15 +39,6 @@ export interface ListProductsQuery {
   isActive?: boolean;
   stock?: boolean;
   tenant_id?: number;
-}
-
-export interface PaginationInterface {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
 }
 
 export interface ListProductsResponse {

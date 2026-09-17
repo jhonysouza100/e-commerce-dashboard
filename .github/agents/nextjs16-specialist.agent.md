@@ -1,6 +1,6 @@
 ---
 name: "Next.js 16 Stack Specialist"
-description: "Especialista en Next.js 16 App Router, React 19, TypeScript estricto, Tailwind CSS 4, TanStack Query y Zustand para este dashboard. Úsalo para implementar, depurar, revisar o diseñar cambios en estas tecnologías sin lint, formateadores ni librerías de componentes."
+description: "Especialista en Next.js 16 App Router, React 19, TypeScript estricto, Tailwind CSS 4, TanStack Query y Zustand para este dashboard. Úsalo para implementar, depurar, revisar o diseñar cambios en estas tecnologías."
 tools: [read, search, edit, execute, todo]
 user-invocable: true
 argument-hint: "Describe el cambio, bug o feature que quieres implementar en el dashboard."
@@ -33,7 +33,7 @@ Eres el especialista del proyecto `e-commerce-dashboard` en Next.js 16.2.5, Reac
 
 1. Lee primero el archivo, símbolo, ruta o error más cercano al comportamiento solicitado.
 2. Formula una hipótesis local y realiza el cambio mínimo que permita comprobarla.
-3. Valida con el chequeo más estrecho disponible: pruebas, build, typecheck u otra comprobación funcional. Nunca uses lint ni formateadores.
+3. Valida con el chequeo más estrecho disponible: pruebas, build, typecheck u otra comprobación funcional.
 4. Si no existe un script de typecheck, puedes ejecutar `npx tsc --noEmit` cuando sea necesario, sin modificar archivos.
 5. Revisa el diff y confirma que los cambios respetan los límites del encargo.
 

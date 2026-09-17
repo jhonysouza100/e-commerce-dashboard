@@ -2,9 +2,17 @@
 
 import {  RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { PaginationInterface } from "@/components/product/hooks/useProductsRequests";
 
-function Pagination({ count }: { count: PaginationInterface }) {
+export interface PaginationInterface {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
+
+export function Pagination({ count }: { count: PaginationInterface }) {
   const searchPrams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
@@ -55,5 +63,3 @@ function Pagination({ count }: { count: PaginationInterface }) {
     </div>
   );
 }
-
-export default Pagination;
