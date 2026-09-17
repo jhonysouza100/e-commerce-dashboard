@@ -1,41 +1,64 @@
+"use client";
+
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useSearchParams } from "next/navigation";
 import Alert from "@/ui/Alert";
 import Loading from "@/ui/Loading";
-import { Pagination } from "@/components/ui/Pagination";
+import { useAuthContext } from "@/components/session/context/useAuthContext";
 import { formatCurrency, formatDate } from "@/utils/handleFormatPrice";
 import type {
   Order,
-  OrdersPagination,
 } from "@/components/order/interface/order.interface";
 import { amount, statusClass, statusLabels } from "./constants/order.constants";
+import { getOrderRequest, listOrdersRequest } from "./hooks/useOrdersRequests";
+import OrderDetail from "./OrderDetail";
+import { getOrdersQuery } from "./utils/orderQuery";
 
-type ListOrdersProps = {
-  orders: Order[];
-  count: OrdersPagination;
-  isLoading: boolean;
-  isError: boolean;
-  errorMessage?: string;
-  onSelect: (orderId: number) => void;
-};
+export default function ListOrders() {
+  const searchParams = useSearchParams();
+  const { session } = useAuthContext();
+  const [selectedOrderId, setSelectedOrderId] = useState<number | null>(null);
+  const query = getOrdersQuery(searchParams);
+  const canEdit = session?.role === "ADMIN" || session?.role === "ROOT";
+  const listQuery = useQuery({
+    queryKey: ["orders", query],
+    queryFn: () => listOrdersRequest(query),
+    enabled: Boolean(session),
+  });
+  const detailQuery = useQuery({
+    queryKey: ["order", selectedOrderId],
+    queryFn: () => getOrderRequest(selectedOrderId as number),
+    enabled: selectedOrderId !== null,
+  });
 
-export default function ListOrders({
-  orders,
-  count,
-  isLoading,
-  isError,
-  errorMessage,
-  onSelect,
-}: ListOrdersProps) {
+  if (selectedOrderId !== null) {
+    if (detailQuery.isLoading) return <Loading message="orden..." />;
+    if (detailQuery.isError) return <Alert message={detailQuery.error.message} />;
+    if (detailQuery.data) {
+      return (
+        <OrderDetail
+          order={detailQuery.data}
+          canEdit={canEdit}
+          onClose={() => setSelectedOrderId(null)}
+        />
+      );
+    }
+  }
+
+  const orders: Order[] = listQuery.data?.data || [];
+
   return (
     <div className="rounded-md bg-background shadow-md">
-      {isLoading && <Loading message="órdenes..." />}
-      {isError && (
+      {listQuery.isLoading && <Loading message="órdenes..." />}
+      {listQuery.isError && (
         <div className="p-4">
           <Alert
-            message={errorMessage || "No se pudieron obtener las órdenes"}
+            message={listQuery.error.message || "No se pudieron obtener las órdenes"}
           />
         </div>
       )}
-      {!isLoading && !isError && (
+      {!listQuery.isLoading && !listQuery.isError && (
         <div className="overflow-x-auto">
           <table className="w-full min-w-170 border-collapse text-left">
             <thead className="text-sm">
@@ -52,9 +75,9 @@ export default function ListOrders({
                 <tr
                   key={order.id}
                   tabIndex={0}
-                  onClick={() => onSelect(order.id)}
+                  onClick={() => setSelectedOrderId(order.id)}
                   onKeyDown={(event) => {
-                    if (event.key === "Enter") onSelect(order.id);
+                    if (event.key === "Enter") setSelectedOrderId(order.id);
                   }}
                   className="cursor-pointer hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-primary"
                 >
