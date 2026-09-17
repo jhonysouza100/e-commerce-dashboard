@@ -13,7 +13,7 @@ const MainContainer: React.FC<MainContainerProps> = ({ headerContent, mainConten
           {/* Header content */}
           <>{headerContent}</>
         </section>
-        <section className="table_container grid py-3 px-4 rounded-md max-h-[calc(100vh_-_(var(--header-height)_+_8.75rem))] min-h-[calc(100vh_-_(var(--header-height)_+_8.75rem))] lg:max-h-[calc(100vh_-_(var(--header-height)_+_9.5rem))] lg:min-h-[calc(100vh_-_(var(--header-height)_+_9.5rem))] [overflow:auto_overlay]">
+        <section className="table_container grid py-3 mx-4 rounded-md max-h-[calc(100vh_-_(var(--header-height)_+_8.75rem))] min-h-[calc(100vh_-_(var(--header-height)_+_8.75rem))] lg:max-h-[calc(100vh_-_(var(--header-height)_+_9.5rem))] lg:min-h-[calc(100vh_-_(var(--header-height)_+_9.5rem))] [overflow:auto_overlay]">
 					{/* Main content */}
           <>{mainContent}</>
         </section>
