@@ -35,6 +35,8 @@ export interface CreateProductDto {
   
   alias?: string;
 
+  topic?: string;
+
   description: string;
   
   category: ProductCategoryEnum;

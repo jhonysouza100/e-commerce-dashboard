@@ -11,6 +11,7 @@ export interface Product {
   name: string;
   slug: string;
   alias?: string;
+  topic?: string;
   description: string;
   gallery: ProductImageInterface[];
   image: ProductImageInterface,
@@ -42,6 +43,7 @@ export const EMPTY_INITIAL_PRODUCT = {
   name: "",
   slug: "",
   alias: "",
+  topic: "",
   category: ProductCategoryEnum.OTHER,
   brand: "",
   model: "",

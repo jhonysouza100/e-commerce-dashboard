@@ -55,7 +55,8 @@ function SaveProductButton({ id }: { id: number }) {
   const updateProductMutation = useMutation({
     mutationFn: ({ id, product, gallery, image }: { id: number; product: UpdateProductDto, gallery: { data: File, tempUrl: string }[], image?: { data: File, tempUrl: string } }) =>
       updateProductRequest(id, product, { gallery, image }),
-    onMutate: () => {
+    onMutate: (data) => {
+      console.log("UPDATE_PRODUCT-MUTATION:", data?.product.topic)
       // Se ejecuta inmediatamente antes de que comience la mutación, es decir, antes de llamar a la API.
     },
     onSuccess: () => {

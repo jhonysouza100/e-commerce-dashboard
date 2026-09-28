@@ -4,9 +4,11 @@ import OrdersHeader from "@/components/order/OrdersHeader";
 
 export default function OrdersPage() {
 	return (
-		<MainContainer
-			headerContent={<OrdersHeader />}
-			mainContent={<ListOrders />}
-		/>
-	);
+		<>
+			<MainContainer 
+				headerContent={<><OrdersHeader /></>}
+				mainContent={<ListOrders />}
+			/>
+		</>
+	)
 }

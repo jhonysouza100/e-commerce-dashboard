@@ -185,10 +185,11 @@ export default function EditProductForm({ id }: { id?: number }) {
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {([
                 ['brand', 'Marca', 'Ingresa la marca', true, false, ""],
-                ['model', 'Modelo', 'Ingresa el modelo', true, false, ""]
+                ['model', 'Modelo', 'Ingresa el modelo', true, false, ""],
+                ['topic', 'Tópic', 'Ingresa el tópico', true, true, 'Indica si un item es "nuevo", "popular", etc."'],
               ] as const).map(([name, label, placeholder, optional, showInfoIcon, info]) => (
                 <div key={name}>
                   <FormLabel

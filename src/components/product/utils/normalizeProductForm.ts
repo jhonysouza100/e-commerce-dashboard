@@ -35,6 +35,7 @@ export function normalizeProductForm(form: ProductFormValues): CreateProductDto 
   const payload: CreateProductDto = {
     name: form.name.trim(),
     slug: form.slug.trim(),
+    topic: form.topic?.trim(),
     description: form.description.trim(),
     category: form.category,
     brand: form.brand.trim(),
