@@ -1,15 +1,13 @@
-export default function handleGoBackRoute(router: any) {
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
+export default function handleGoBackRoute(router: AppRouterInstance, fallback = "/") {
   if (typeof window !== "undefined") {
-    const currentPath = window.location.pathname;
-    const pathSegments = currentPath.split("/").filter(Boolean);
+    const returnTo = new URLSearchParams(window.location.search).get("returnTo");
+    if (returnTo?.startsWith("/")) {
+      router.replace(returnTo);
+      return;
+    }
 
-    // Removemos el último segmento
-    pathSegments.pop();
-
-    // Armamos la nueva ruta base
-    const parentPath = `/${pathSegments.join("/")}`;
-
-    // Si por alguna razón queda vacío, aseguramos que vaya a la raíz
-    router.push(parentPath || "/");
+    router.replace(fallback);
   }
 }

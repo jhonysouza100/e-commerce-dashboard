@@ -17,7 +17,10 @@ export function Pagination({ count }: { count: PaginationInterface }) {
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const page = count.page;
+  const requestedPage = Number(searchPrams.get("page"));
+  const page = Number.isInteger(requestedPage) && requestedPage > 0
+    ? requestedPage
+    : count.page;
 
   const params = new URLSearchParams(searchPrams);
 
@@ -31,7 +34,7 @@ export function Pagination({ count }: { count: PaginationInterface }) {
     } else {
       params.set("page", (page + 1).toString());
     }
-    replace(`${pathname}?${params}`);
+    replace(`${pathname}?${params.toString()}`);
   };
 
   const firstItem = count.total === 0 ? 0 : (page - 1) * count.limit + 1;

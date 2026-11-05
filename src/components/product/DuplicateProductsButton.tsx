@@ -10,6 +10,8 @@ import AlertDialog from "@/ui/AlertDialog";
 function DuplicateProductsButton({ id }: { id: number | number[] }) {
   const { setSelectedRows } = useProductsContext();
   const queryClient = useQueryClient();
+  const productIds = Array.isArray(id) ? id : [id];
+  const itemLabel = productIds.length === 1 ? "ítem seleccionado" : "ítems seleccionados";
 
   const duplicateProductsMutation = useMutation({
     mutationFn: duplicateProductsRequest,
@@ -19,17 +21,17 @@ function DuplicateProductsButton({ id }: { id: number | number[] }) {
   })
 
   const handleDuplicate = async () => {
-    duplicateProductsMutation.mutate(Array.isArray(id) ? id : [id]);
-    setSelectedRows(Array.isArray(id) ? id : [id]);
+    duplicateProductsMutation.mutate(productIds);
+    setSelectedRows(productIds);
   }
 
   return (
     <AlertDialog isAwait={true}
-      title="Duplicar item"
-      message="Vas a duplicar el item."
-      cancelButtonProps={{ children: "Volver", variant: "transparent", disabled: duplicateProductsMutation.isPending }}
+      title={`¿Duplicar ${itemLabel}?`}
+      message={`Se ${productIds.length === 1 ? "creará una copia independiente del ítem seleccionado" : "crearán copias independientes de los ítems seleccionados"}. Esta acción no se puede deshacer.`}
+      cancelButtonProps={{ children: "Cancelar", variant: "transparent", disabled: duplicateProductsMutation.isPending }}
       confirmButtonProps={{
-        children: duplicateProductsMutation.isPending ? "Duplicando..." : "Duplicar",
+        children: duplicateProductsMutation.isPending ? "Duplicando..." : `Duplicar ${productIds.length > 1 ? "ítems" : "ítem"}`,
         disabled: duplicateProductsMutation.isPending,
         variant: "primary"
       }}

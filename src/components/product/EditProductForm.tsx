@@ -296,7 +296,7 @@ export default function EditProductForm({ id }: { id?: number }) {
                         type="number"
                         id={name}
                         name={name}
-                        value={product?.[name] !== undefined && product?.[name] !== null ? (product?.[name] !== 0 ? product?.[name] : "") : ""}
+                        value={product?.[name] ?? ""}
                         onChange={handleInputChange}
                         min={0}
                         max={max}
@@ -363,8 +363,13 @@ export default function EditProductForm({ id }: { id?: number }) {
                       id={name}
                       name={name}
                       min={0}
-                      value={product?.dimensions?.[name] !== undefined && product?.dimensions?.[name] !== null ? (product?.dimensions?.[name] !== 0 ? product?.dimensions?.[name] : "") : ""}
-                      onChange={(event) => updateProduct({ dimensions: { ...(product?.dimensions ?? { weight: 0, height: 0, width: 0, length: 0 }), [name]: event.target.value === "" ? 0 : Number(event.target.value) } })}
+                      value={product?.dimensions?.[name] || ""}
+                      onChange={(event) => updateProduct({
+                        dimensions: {
+                          ...(product?.dimensions ?? {}),
+                          [name]: event.target.value === "" ? undefined : Number(event.target.value),
+                        },
+                      })}
                       className="rounded-md border border-border bg-input p-2 text-sm text-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-secondary/30"
                     />
                   </FormLabel>

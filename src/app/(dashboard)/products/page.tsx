@@ -9,9 +9,13 @@ import Button from "@/ui/Button";
 import { Pagination } from "@/components/ui/Pagination";
 import MainContainer from "@/components/dashboard_layout/MainContainer";
 import DuplicateProductsButton from "@/components/product/DuplicateProductsButton";
+import { useSearchParams } from "next/navigation";
 
 function ListProductsHeader() {
   const { selectedRows, count } = useProductsContext();
+  const searchParams = useSearchParams();
+  const returnTo = `/products?${searchParams.toString()}`;
+  const addParams = new URLSearchParams({ returnTo });
 
   return (
     <>
@@ -22,7 +26,7 @@ function ListProductsHeader() {
             <DeleteProductButton id={selectedRows} />
             <DuplicateProductsButton id={selectedRows} />
           </div>)}
-        <Link href="/products/add">
+        <Link href={`/products/add?${addParams.toString()}`}>
           <Button
             icon={<RiAddLargeLine size={18} />}
             size="small"

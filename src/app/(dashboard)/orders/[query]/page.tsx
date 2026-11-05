@@ -11,6 +11,7 @@ import { useAuthContext } from "@/components/session/context/useAuthContext";
 import Alert from "@/ui/Alert";
 import Button from "@/ui/Button";
 import Loading from "@/ui/Loading";
+import handleGoBackRoute from "@/utils/handleGoBaackRoute";
 
 export default function OrderPage({
 	params,
@@ -48,7 +49,7 @@ export default function OrderPage({
 			headerContent={
 				<Button
 					type="button"
-					onClick={() => router.back()}
+					onClick={() => handleGoBackRoute(router, "/orders")}
 					aria-label="Volver a las órdenes"
 					title="Volver a las órdenes"
 					icon={<RiArrowLeftLine size={18} />}

@@ -25,6 +25,7 @@ export default function ListOrders() {
   });
 
   const orders: Order[] = listQuery.data?.data || [];
+  const returnTo = `/orders?${searchParams.toString()}`;
 
   return (
     <div className="rounded-md bg-background shadow-md">
@@ -53,9 +54,9 @@ export default function ListOrders() {
                 <tr
                   key={order.id}
                   tabIndex={0}
-                  onClick={() => router.push(`/orders/${order.id}`)}
+                  onClick={() => router.push(`/orders/${order.id}?${new URLSearchParams({ returnTo }).toString()}`)}
                   onKeyDown={(event) => {
-                    if (event.key === "Enter") router.push(`/orders/${order.id}`);
+                    if (event.key === "Enter") router.push(`/orders/${order.id}?${new URLSearchParams({ returnTo }).toString()}`);
                   }}
                   className="cursor-pointer hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-primary"
                 >

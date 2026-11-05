@@ -28,7 +28,7 @@ function ListProductsTable() {
     tenant_id: session?.id,
   };
 
-  const { setCount, count, setSelectedRows, selectedRows } =
+  const { setCount, setSelectedRows, selectedRows } =
     useProductsContext();
   const { data, isLoading, isError, error } = useQuery<ListProductsResponse>({
     queryKey: ["products", query], // useQuery depende de los parámetros de búsqueda y paginación
@@ -59,6 +59,7 @@ function ListProductsTable() {
   });
 
   const visibleProductIds = data?.data.map((product) => product.id) ?? [];
+  const returnTo = `/products?${searchParams.toString()}`;
   const allVisibleSelected = visibleProductIds.length > 0 && visibleProductIds.every((id) => selectedRows.includes(id));
   const toggleAllVisible = () => {
     const idsToToggle = visibleProductIds.filter((id) =>
@@ -67,13 +68,11 @@ function ListProductsTable() {
     setSelectedRows(idsToToggle);
   };
 
-  // Actualizar el número total de products en Zustand
   useEffect(() => {
-    if (data && data.count.total !== count.total) {
-      // Comprobamos si el count realmente ha cambiado
+    if (data) {
       setCount(data.count); // Actualizamos la metadata de paginación en Zustand
     }
-  }, [data, setCount, count]); // Este useEffect se ejecuta cuando `data` cambia
+  }, [data, setCount]); // Este useEffect se ejecuta cuando `data` cambia
 
   if (isLoading) return <Loading message="items..." />;
   if (isError) return <Alert message={error.message} />;
@@ -97,8 +96,8 @@ function ListProductsTable() {
           data?.data.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
             <tr key={product.id} tabIndex={index}
-              onClick={() => router.push(`/products/${product.id}`)}
-              onKeyDown={(event) => { if (event.key === "Enter") router.push(`/products/${product.id}`); }}
+              onClick={() => router.push(`/products/${product.id}?${new URLSearchParams({ returnTo }).toString()}`)}
+              onKeyDown={(event) => { if (event.key === "Enter") router.push(`/products/${product.id}?${new URLSearchParams({ returnTo }).toString()}`); }}
               className={`cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-secondary ${selectedRows.includes(product.id) ? "!bg-surface-hover" : ""}`}
             >
               {/* CHECKBOX */}

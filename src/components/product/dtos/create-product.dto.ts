@@ -13,13 +13,13 @@ export interface ProductSpecificationsInterface {
 }
 
 export interface ProductDimensionsInterface {
-  weight: number;
+  weight?: number;
 
-  height: number;
+  height?: number;
   
-  width: number;
+  width?: number;
   
-  length: number;
+  length?: number;
 }
 
 export interface ProductColorInterface {
