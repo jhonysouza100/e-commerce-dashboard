@@ -13,7 +13,7 @@ import { EMPTY_INITIAL_PRODUCT, Product } from "./interface/product.interface"
 import { getProductRequest } from "./hooks/useProductsRequests"
 import { ProductCategoryEnum, ProductCategoryLabel } from "./enums/product-category.enum"
 import Loading from "@/ui/Loading"
-import Alert from "@/ui/Alert"
+import Message from "@/ui/Message"
 import FormLabel from "@/ui/FormLabel"
 
 function CleanButton({ name }: { name: string; }) {
@@ -70,7 +70,7 @@ export default function EditProductForm({ id }: { id?: number }) {
   }
 
   if (isLoading) return (<Loading message="item" />)
-  if (isError) return (<Alert message={error.message} />)
+  if (isError) return (<Message message={error.message} variant="danger" />)
 
   return (
     <div className="w-full max-w-7xl mx-auto">
@@ -79,7 +79,7 @@ export default function EditProductForm({ id }: { id?: number }) {
         {/* Columna #1 */}
         <div className="grid grid-cols-1 gap-3 grid-rows-[repeat(2,max-content)]">
           {/* Grupo A1 */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-1">
             {/* Product image */}
             <div className="justify-self-center">
               <FormLabel

@@ -24,26 +24,30 @@ function ListProductsHeader() {
         {selectedRows.length > 0 && (
           <div className="flex gap-2 items-center">
             <DeleteProductButton id={selectedRows} />
-            <DuplicateProductsButton id={selectedRows} />
-          </div>)}
-        <Link href={`/products/add?${addParams.toString()}`}>
-          <Button
-            icon={<RiAddLargeLine size={18} />}
-            size="small"
-            title="Crear nuevo item"
-            variant="gradient"
-          />
-        </Link>
+          </div>
+        )}
+        {selectedRows.length > 0 ? (
+          <DuplicateProductsButton id={selectedRows} />
+        ) : (
+          <Link href={`/products/add?${addParams.toString()}`}>
+            <Button
+              icon={<RiAddLargeLine size={18} />}
+              size="small"
+              title="Crear nuevo item"
+              variant="gradient"
+            />
+          </Link>
+        )}
       </div>
     </>
-  )
+  );
 }
 
 function ListProductsPage() {
   return (
     <>
       <MainContainer
-        headerContent={<ListProductsHeader /> }
+        headerContent={<ListProductsHeader />}
         mainContent={<ListProductsTable />}
       />
     </>

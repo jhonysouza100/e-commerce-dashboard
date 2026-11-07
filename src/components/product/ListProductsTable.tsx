@@ -1,17 +1,27 @@
-"use client"
+"use client";
 
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { RiProhibited2Line, RiStarFill, RiBox3Line, RiLineChartLine, RiShoppingBag4Line } from "@remixicon/react";
+import {
+  RiProhibited2Line,
+  RiStarFill,
+  RiBox3Line,
+  RiLineChartLine,
+  RiShoppingBag4Line,
+} from "@remixicon/react";
 import { useAuthContext } from "../session/context/useAuthContext";
 import { useProductsContext } from "./context/useProductsContext";
 import { Product } from "./interface/product.interface";
 import DeleteProductButton from "./DeleteProductButton";
-import { ListProductsQuery, ListProductsResponse, listProductsRequest } from "./hooks/useProductsRequests";
+import {
+  ListProductsQuery,
+  ListProductsResponse,
+  listProductsRequest,
+} from "./hooks/useProductsRequests";
 import Loading from "@/ui/Loading";
-import Alert from "@/ui/Alert";
+import Message from "@/ui/Message";
 import { useRouter } from "next/navigation";
 import { formatCompactNumber, formatCurrency } from "@/utils/handleFormatPrice";
 import DesactiveProductsButton from "./DesactiveProductsButton";
@@ -28,8 +38,7 @@ function ListProductsTable() {
     tenant_id: session?.id,
   };
 
-  const { setCount, setSelectedRows, selectedRows } =
-    useProductsContext();
+  const { setCount, setSelectedRows, selectedRows } = useProductsContext();
   const { data, isLoading, isError, error } = useQuery<ListProductsResponse>({
     queryKey: ["products", query], // useQuery depende de los parámetros de búsqueda y paginación
     queryFn: () => {
@@ -52,18 +61,20 @@ function ListProductsTable() {
       count,
       data: products
         ? products.sort((a: Product, b: Product) =>
-          a.name.localeCompare(b.name)
-        )
+            a.name.localeCompare(b.name),
+          )
         : [],
     }),
   });
 
   const visibleProductIds = data?.data.map((product) => product.id) ?? [];
   const returnTo = `/products?${searchParams.toString()}`;
-  const allVisibleSelected = visibleProductIds.length > 0 && visibleProductIds.every((id) => selectedRows.includes(id));
+  const allVisibleSelected =
+    visibleProductIds.length > 0 &&
+    visibleProductIds.every((id) => selectedRows.includes(id));
   const toggleAllVisible = () => {
-    const idsToToggle = visibleProductIds.filter((id) =>
-      allVisibleSelected === selectedRows.includes(id)
+    const idsToToggle = visibleProductIds.filter(
+      (id) => allVisibleSelected === selectedRows.includes(id),
     );
     setSelectedRows(idsToToggle);
   };
@@ -75,42 +86,91 @@ function ListProductsTable() {
   }, [data, setCount]); // Este useEffect se ejecuta cuando `data` cambia
 
   if (isLoading) return <Loading message="items..." />;
-  if (isError) return <Alert message={error.message} />;
+  if (isError) return <Message message={error.message} variant="danger" />;
+  if (data?.count.total === 0) return <Message message="No se encontraron items." variant="neutral" />;
 
   return (
     <table className="my_table w-full h-0 border-collapse text-left">
       <thead className="table_head bg-background">
         <tr className="table_row sticky top-0 left-0 z-10 bg-background">
           <th className="head_rows border-collapse text-center px-2 py-3">
-            <input aria-label="Seleccionar todos los items visibles" title="Seleccionar todos los items visibles" type="checkbox" checked={allVisibleSelected} onChange={toggleAllVisible} />
+            <input
+              aria-label="Seleccionar todos los items visibles"
+              title="Seleccionar todos los items visibles"
+              type="checkbox"
+              checked={allVisibleSelected}
+              onChange={toggleAllVisible}
+            />
           </th>
-          <th className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Producto</th>
-          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Estadísticas</td>
-          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Precio</td>
-          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Stock</td>
-          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">Acciones</td>
+          <th className="head_rows border-collapse px-2 py-3 text-start !min-w-4">
+            Producto
+          </th>
+          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">
+            Estadísticas
+          </td>
+          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">
+            Precio
+          </td>
+          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">
+            Stock
+          </td>
+          <td className="head_rows border-collapse px-2 py-3 text-start !min-w-4">
+            Acciones
+          </td>
         </tr>
       </thead>
       <tbody className="table_body">
+        {(!session || !data?.data.length || data.count.total === 0) && (
+          <tr>
+            <td
+              colSpan={6}
+              className="p-8 text-center text-foreground-muted"
+            >
+              No se encontraron items.
+            </td>
+          </tr>
+        )}
         {session &&
+          data?.count.total !== 0 &&
           data?.data.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
-            <tr key={product.id} tabIndex={index}
-              onClick={() => router.push(`/products/${product.id}?${new URLSearchParams({ returnTo }).toString()}`)}
-              onKeyDown={(event) => { if (event.key === "Enter") router.push(`/products/${product.id}?${new URLSearchParams({ returnTo }).toString()}`); }}
+            <tr
+              key={product.id}
+              tabIndex={index}
+              onClick={() =>
+                router.push(
+                  `/products/${product.id}?${new URLSearchParams({ returnTo }).toString()}`,
+                )
+              }
+              onKeyDown={(event) => {
+                if (event.key === "Enter")
+                  router.push(
+                    `/products/${product.id}?${new URLSearchParams({ returnTo }).toString()}`,
+                  );
+              }}
               className={`cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-secondary ${selectedRows.includes(product.id) ? "!bg-surface-hover" : ""}`}
             >
               {/* CHECKBOX */}
               <td className="table_row border-collapse p-2 md:p-3 text-center z-0">
-                <input aria-label={`Seleccionar ${product.name}`} type="checkbox" checked={selectedRows.includes(product.id)} onChange={() => setSelectedRows([product.id])} onClick={(e) => e.stopPropagation()} />
+                <input
+                  aria-label={`Seleccionar ${product.name}`}
+                  type="checkbox"
+                  checked={selectedRows.includes(product.id)}
+                  onChange={() => setSelectedRows([product.id])}
+                  onClick={(e) => e.stopPropagation()}
+                />
               </td>
               <td className="table_row border-collapse p-2 gap-2 md:p-3 text-center lg:text-left !min-w-4 z-0 !min-w-max flex items-center">
                 {/* IMAGEN DEL ITEM */}
                 <div className="relative">
                   <Image
-                    className={`table_img w-12 h-12 mr-2 text-xs rounded-md align-middle object-cover aspect-square ${!product.isActive ? "grayscale" : ""
-                      }`}
-                    src={product?.image?.secure_url || "https://agrimart.in/uploads/vendor_banner_image/default.jpg"}
+                    className={`table_img w-12 h-12 mr-2 text-xs rounded-md align-middle object-cover aspect-square ${
+                      !product.isActive ? "grayscale" : ""
+                    }`}
+                    src={
+                      product?.image?.secure_url ||
+                      "https://agrimart.in/uploads/vendor_banner_image/default.jpg"
+                    }
                     alt="product image"
                     width={50}
                     height={50}
@@ -121,11 +181,15 @@ function ListProductsTable() {
                 </div>
                 {/* NOMBRE DEL ITEM */}
                 <div className="min-w-0 max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
-                  <p className="truncate text-sm font-medium text-foreground">{product.name}</p>
+                  <p className="truncate text-sm font-medium text-foreground">
+                    {product.name}
+                  </p>
                   <div className="text-xs text-start space-x-1">
                     <span>Reseñas:</span>
                     <span className="inline-flex items-center gap-0.25 text-foreground">
-                      <span className="font-semibold">{product.performance?.rating || 5.0}</span>
+                      <span className="font-semibold">
+                        {product.performance?.rating || 5.0}
+                      </span>
                       <RiStarFill size={12} />
                     </span>
                   </div>
@@ -142,13 +206,17 @@ function ListProductsTable() {
                       <span>
                         <RiLineChartLine size={12} />
                       </span>
-                      <span className="text-foreground">{formatCompactNumber(product.performance?.sales || 0)}</span>
+                      <span className="text-foreground">
+                        {formatCompactNumber(product.performance?.sales || 0)}
+                      </span>
                     </div>
                     <div className="inline-flex items-center gap-0.25">
                       <span>
                         <RiShoppingBag4Line size={12} />
                       </span>
-                      <span className="text-foreground">{formatCompactNumber(product.performance?.sales || 0)}</span>
+                      <span className="text-foreground">
+                        {formatCompactNumber(product.performance?.sales || 0)}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -156,13 +224,19 @@ function ListProductsTable() {
               {/* PRECIOS DEL ITEM */}
               <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 !min-w-4">
                 <div className="min-w-0 max-w-20 md:max-w-40 overflow-hidden text-ellipsis whitespace-nowrap">
-                  <p className="truncate text-start text-sm font-medium text-foreground">{formatCurrency(product.price)}</p>
+                  <p className="truncate text-start text-sm font-medium text-foreground">
+                    {formatCurrency(product.price)}
+                  </p>
                   <div className="text-xs text-start space-x-1">
-                    <span className={`${product.discount > 0
-                        ? "text-green-500 font-semibold "
-                        : ""
-                      }`
-                    }>{product.discount}%</span>
+                    <span
+                      className={`${
+                        product.discount > 0
+                          ? "text-green-500 font-semibold "
+                          : ""
+                      }`}
+                    >
+                      {product.discount}%
+                    </span>
                     <span className="text-foreground-muted">OFF</span>
                   </div>
                 </div>
@@ -171,11 +245,13 @@ function ListProductsTable() {
               <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 !min-w-4">
                 <span className="inline-flex items-center gap-2 text-xs">
                   <RiBox3Line size={16} />
-                  <span className={`text-sm ${product.stock <= 1
-                      ? "text-red-500 font-medium"
-                      : product.stock <= 5
-                        ? "text-yellow-500 font-medium"
-                        : "text-foreground font-medium"
+                  <span
+                    className={`text-sm ${
+                      product.stock <= 1
+                        ? "text-red-500 font-medium"
+                        : product.stock <= 5
+                          ? "text-yellow-500 font-medium"
+                          : "text-foreground font-medium"
                     }`}
                   >
                     {product.stock}
@@ -183,10 +259,15 @@ function ListProductsTable() {
                 </span>
               </td>
               {/* ACCIONES PARA EL ITEM */}
-              <td className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 z-0 !min-w-4"
-                onClick={(e) => e.stopPropagation()}>
+              <td
+                className="table_row border-collapse p-2 md:p-3 text-center lg:text-left !min-w-4 z-0 !min-w-4"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <div className="flex gap-4 items-center justify-start">
-                  <DesactiveProductsButton id={product.id} status={product.isActive} />
+                  <DesactiveProductsButton
+                    id={product.id}
+                    status={product.isActive}
+                  />
                   <DeleteProductButton id={product.id} />
                 </div>
               </td>

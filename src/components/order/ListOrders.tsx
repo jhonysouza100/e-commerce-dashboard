@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useRouter, useSearchParams } from "next/navigation";
-import Alert from "@/ui/Alert";
+import Message from "@/ui/Message";
 import Loading from "@/ui/Loading";
 import { useAuthContext } from "@/components/session/context/useAuthContext";
 import { formatCurrency, formatDate } from "@/utils/handleFormatPrice";
@@ -25,6 +25,7 @@ export default function ListOrders() {
   });
 
   const orders: Order[] = listQuery.data?.data || [];
+  const totalOrders = listQuery.data?.count.total || 0;
   const returnTo = `/orders?${searchParams.toString()}`;
 
   return (
@@ -32,8 +33,9 @@ export default function ListOrders() {
       {listQuery.isLoading && <Loading message="órdenes..." />}
       {listQuery.isError && (
         <div className="p-4">
-          <Alert
+          <Message
             message={listQuery.error.message || "No se pudieron obtener las órdenes"}
+            variant="danger"
           />
         </div>
       )}
@@ -82,13 +84,13 @@ export default function ListOrders() {
                   <td className="p-3 text-sm">{formatDate(order.createdAt)}</td>
                 </tr>
               ))}
-              {!orders.length && (
+              {(!orders.length || totalOrders === 0) && (
                 <tr>
                   <td
                     colSpan={5}
                     className="p-8 text-center text-foreground-muted"
                   >
-                    No hay órdenes con estos filtros.
+                    No se encontraron órdenes con estos filtros.
                   </td>
                 </tr>
               )}

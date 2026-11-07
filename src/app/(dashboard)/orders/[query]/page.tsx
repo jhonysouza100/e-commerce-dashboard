@@ -8,7 +8,7 @@ import MainContainer from "@/components/dashboard_layout/MainContainer";
 import OrderDetail from "@/components/order/OrderDetail";
 import { getOrderRequest } from "@/components/order/hooks/useOrdersRequests";
 import { useAuthContext } from "@/components/session/context/useAuthContext";
-import Alert from "@/ui/Alert";
+import Message from "@/ui/Message";
 import Button from "@/ui/Button";
 import Loading from "@/ui/Loading";
 import handleGoBackRoute from "@/utils/handleGoBaackRoute";
@@ -31,9 +31,9 @@ export default function OrderPage({
 
 	let content: React.ReactNode = <Loading message="orden..." />;
 	if (!Number.isInteger(orderId) || orderId <= 0) {
-		content = <Alert message="La orden solicitada no es válida" />;
+		content = <Message message="La orden solicitada no es válida" variant="danger" />;
 	} else if (orderQuery.isError) {
-		content = <Alert message={orderQuery.error.message} />;
+		content = <Message message={orderQuery.error.message} variant="danger" />;
 	} else if (orderQuery.data) {
 		content = (
 			<OrderDetail

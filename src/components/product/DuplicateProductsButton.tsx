@@ -40,7 +40,7 @@ function DuplicateProductsButton({ id }: { id: number | number[] }) {
         onClick={handleDuplicate}
         icon={<RiFileCopyLine size={18} />}
         size="small"
-        variant="transparent"
+        variant="gradient"
         title="Duplicar item"
       />
     </AlertDialog>

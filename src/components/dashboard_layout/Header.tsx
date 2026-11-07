@@ -13,7 +13,7 @@ export default function Header() {
           <UserCard order="1" size="small" />
         </div>
 
-        <div className="w-[70%] sm:w-[50%]">
+        <div className="grow sm:grow-[initial] sm:w-[50%]">
           <SearchBar placeholder="Buscar..." />
         </div>
 

@@ -309,7 +309,7 @@ Extraído de `Header.tsx` y `Sidebar.tsx`:
 <header className="header fixed top-0 left-0 right-0 m-3 z-50 lg:m-4 lg:pl-sidebar">
   <div className="header_container px-4 w-full h-header ... sm:px-6 lg:h-[calc(var(--header-height)_+_2rem)] lg:px-8">
     <div className="hidden lg:block lg:order-1"><UserCard order="1" size="small" /></div>
-    <div className="w-[70%] sm:w-[50%]"><SearchBar placeholder="Buscar..." /></div>
+    <div className="grow sm:w-[50%]"><SearchBar placeholder="Buscar..." /></div>
     <button className="header_toggle ... lg:hidden" id="header-toggle"><RiMenuFill /></button>
   </div>
 </header>

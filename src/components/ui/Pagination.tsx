@@ -46,7 +46,7 @@ export function Pagination({ count }: { count: PaginationInterface }) {
         <span className="font-semibold">{`${firstItem}-${lastItem} de ${count.total}`}</span>
       </div>
       <button
-        className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-light/50"
+        className="bg-background rounded-full text-foreground disabled:bg-transparent cursor-pointer disabled:cursor-not-allowed disabled:text-foreground-light/50"
         disabled={!hasPrev}
         aria-label="Página anterior"
         onClick={() => handleChangePage("prev")}>
@@ -57,7 +57,7 @@ export function Pagination({ count }: { count: PaginationInterface }) {
         <span className="font-semibold">{` ${page} de ${count.totalPages}`}</span>
       </div>
       <button
-        className="bg-background rounded-full text-foreground disabled:bg-transparent disabled:cursor-not-allowed disabled:text-foreground-light/50"
+        className="bg-background rounded-full text-foreground disabled:bg-transparent cursor-pointer disabled:cursor-not-allowed disabled:text-foreground-light/50"
         disabled={!hasNext}
         aria-label="Página siguinte"
         onClick={() => handleChangePage("next")}>

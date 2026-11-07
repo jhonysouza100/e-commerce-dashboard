@@ -29,7 +29,7 @@ function DeleteProductButton({ id, className }: { id: number | number[], classNa
   return (
     <AlertDialog isAwait={true}
       title="Eliminar item"
-      message="Vas a eliminar el item premanentemente."
+      message="Vas a eliminar el item permanentemente."
       cancelButtonProps={{ children: "Volver", disabled: isPending }}
       confirmButtonProps={{
         children: isPending ? "Eliminando..." : "Eliminar",
