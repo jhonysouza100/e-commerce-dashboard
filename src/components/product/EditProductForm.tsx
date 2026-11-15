@@ -22,7 +22,7 @@ function CleanButton({ name }: { name: string; }) {
     <button
       type="button"
       onClick={() => updateProduct({ [name]: "" })}
-      className="absolute right-2 top-1/2 -translate-y-1/2 bg-background text-red-500 hover:text-red-700 rounded-full p-1 shadow"
+      className="absolute right-2 top-1/2 -translate-y-1/2 bg-background text-red-500 hover:text-red-700 rounded-full p-1"
     >
       <RiCloseLine size={14} />
     </button>
@@ -189,7 +189,7 @@ export default function EditProductForm({ id }: { id?: number }) {
               {([
                 ['brand', 'Marca', 'Ingresa la marca', true, false, ""],
                 ['model', 'Modelo', 'Ingresa el modelo', true, false, ""],
-                ['topic', 'Tópic', 'Ingresa el tópico', true, true, 'Indica si un item es "nuevo", "popular", etc."'],
+                ['topic', 'Tópic', 'Ingresa el tópico', true, true, 'Indica si un item es "nuevo", "popular", etc.'],
               ] as const).map(([name, label, placeholder, optional, showInfoIcon, info]) => (
                 <div key={name}>
                   <FormLabel

@@ -61,7 +61,7 @@ function LoginForm() {
             type="submit"
             variant="primary"
           >
-            {isLoading ? <RiLoader3Line className="justify-self-center animate-spin" /> : "LogIn"}
+            {isLoading ? <RiLoader3Line className="justify-self-center animate-spin aspect-square" /> : "LogIn"}
           </Button>
         </div>
       </form>

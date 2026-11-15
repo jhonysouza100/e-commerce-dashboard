@@ -134,7 +134,7 @@ function ListProductsTable() {
           data?.count.total !== 0 &&
           data?.data.map((product: Product, index: number) => (
             // Si la fila está seleccionada, se le aplica un fondo de color claro
-            <tr
+            <tr title={`Ver detalles de ${product.name}`}
               key={product.id}
               tabIndex={index}
               onClick={() =>

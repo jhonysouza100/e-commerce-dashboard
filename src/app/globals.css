@@ -15,13 +15,15 @@
   --secondary-color: hsl(214 32% 91%);
   --secondary-foreground-color: hsl(222 47% 11%);
   --foreground-color-muted: hsl(215 16% 42%);
-  --foreground-color-light: hsl(215 14% 52%);
+  --foreground-color-light: hsl(215 14% 52%); 
   --transparent-color-sm: hsl(0 0% 100% / 0.73);
   --transparent-color-md: hsl(0 0% 100% / 0.4);
   --transparent-color-row: hsl(210 20% 93%);
+  /* Shadow colors */
+  --shadow-color: hsl(215 25% 35% / 0.18);
   /* Message colors */
-  --error-color: #fef2f2;
-  --error-foreground-color: #dc2626;
+  --error-color: hsl(0 72% 51%);
+  --error-foreground-color: #fef2f2;
   --error-border-color: #fca5a5;
   --success-color: #f0fdf4;
   --success-foreground-color: #16a34a;
@@ -79,10 +81,12 @@
   --transparent-color-sm: rgb(10 10 10 / 0.88);
   --transparent-color-md: rgb(10 10 10 / 0.55);
   --transparent-color-row: #1a1a1a;
+  /* Shadow colors  */
+  --shadow-color: hsl(0 0% 0% / 0.55);
   /* Message colors */
-  --error-color: #2a0e0e;
-  --error-foreground-color: #f87171;
-  --error-border-color: #7f1d1d;
+  /* --error-color: #2a0e0e;
+  --error-foreground-color: #f87171; */
+  /* --error-border-color: #7f1d1d; */
   --success-color: #0b2113;
   --success-foreground-color: #4ade80;
   --success-border-color: #166534;
@@ -137,6 +141,15 @@
   --color-transparent: hsla(0, 0%, 100%, 0.2);
   --color-transparent-sm: var(--transparent-color-sm);
   --color-transparent-md: var(--transparent-color-md);
+  --shadow-sm:
+    0 1px 2px 0 var(--shadow-color),
+    0 1px 3px 0 var(--shadow-color);
+  --shadow-md:
+    0 4px 6px -1px var(--shadow-color),
+    0 2px 4px -2px var(--shadow-color);
+  --shadow-lg:
+    0 10px 15px -3px var(--shadow-color),
+    0 4px 6px -4px var(--shadow-color);
   --breakpoint-sm: 425px;
   --breakpoint-md: 620px;
   --breakpoint-lg: 968px;
@@ -170,6 +183,8 @@
 
   /* 3. Configuramos la duración por defecto para estas transiciones */
   --transition-duration: var(--animation-duration);
+
+  /* sombras */
 }
 
 html {
@@ -194,7 +209,7 @@ input[type="checkbox"] {
   aspect-ratio: 1 / 1;
   border: 2px solid var(--foreground-color-light);
   background-color: (var(--background-color));
-  border-radius: 4px;
+  border-radius: 50%;
   cursor: pointer;
   display: inline-grid;
   place-content: center;
@@ -488,15 +503,13 @@ tbody tr.hide td img {
 
 .sidebar-append {
   position: absolute;
-  right: 0;
+  right: 0px;
   top: 33%;
   background-color: var(--background-color);
   transform: translateX(99%);
   padding-block: 0.5rem;
   border-radius: 0 6px 6px 0;
-  box-shadow:
-    4px 4px 6px -1px var(--tw-shadow-color, rgba(0, 0, 0, 0.75)),
-    0 2px 4px -2px var(--tw-shadow-color, rgba(0, 0, 0, 0.75));
+  box-shadow: var(--shadow-sm);
 }
 
 /* persosonalize scroll bar */
