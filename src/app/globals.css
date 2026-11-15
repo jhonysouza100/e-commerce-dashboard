@@ -102,9 +102,9 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    /* El usuario debe seleccionar su preferencia */
-  }
+  /* :root {
+    El usuario debe seleccionar su preferencia
+  } */
 }
 
 @theme inline {
@@ -239,9 +239,9 @@ input[type="checkbox"]::before {
   margin-top: -2px;
 }
 /* 5. Mostrar la tilde cuando esté seleccionado */
-input[type="checkbox"]:checked::before {
-  /* transform: rotate(-45deg) scale(1); */
-}
+/* input[type="checkbox"]:checked::before {
+  transform: rotate(-45deg) scale(1);
+} */
 /* Quitar padding interno en WebKit */
 input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
