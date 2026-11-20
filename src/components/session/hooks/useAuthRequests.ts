@@ -40,7 +40,7 @@ export async function loginRequest(credentials: LoginDto): Promise<{ payload: Se
     
     const payload: SessionInterface = JSON.parse(jsonPayload);
     
-    handleAxiosSuccessResponse(`Hola de nuevo ${payload.name}`);
+    handleAxiosSuccessResponse(`Hola de nuevo ${payload.username}`);
 
     return { payload };
   } catch (error) {

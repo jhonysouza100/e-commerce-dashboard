@@ -25,9 +25,11 @@ import Message from "@/ui/Message";
 import { useRouter } from "next/navigation";
 import { formatCompactNumber, formatCurrency } from "@/utils/handleFormatPrice";
 import DesactiveProductsButton from "./DesactiveProductsButton";
+import { useCompaniesContext } from "@/components/company/context/useCompaniesContext";
 
 function ListProductsTable() {
   const { session } = useAuthContext();
+  const { activeCompany } = useCompaniesContext();
   const searchParams = useSearchParams(); // pasar estos parámetros a useQuery de manera reactiva.
   const router = useRouter();
 
@@ -35,12 +37,12 @@ function ListProductsTable() {
   const query: ListProductsQuery = {
     page,
     q: searchParams.get("q") || undefined,
-    tenant_id: session?.id,
+    tenant_id: activeCompany?.id,
   };
 
   const { setCount, setSelectedRows, selectedRows } = useProductsContext();
   const { data, isLoading, isError, error } = useQuery<ListProductsResponse>({
-    queryKey: ["products", query], // useQuery depende de los parámetros de búsqueda y paginación
+    queryKey: ["products", query, activeCompany?.id], // useQuery depende de los parámetros de búsqueda y paginación
     queryFn: () => {
       if (session) {
         return listProductsRequest(query);

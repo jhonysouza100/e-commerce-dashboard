@@ -4,6 +4,7 @@ import { LoginDto } from "@/components/session/dto/login.dto";
 import { SessionInterface } from "@/components/session/interfaces/session.interface";
 import { verifyRequest, loginRequest, logoutRequest } from "@/components/session/hooks/useAuthRequests";
 import { create } from "zustand";
+import { useCompaniesContext } from "@/components/company/context/useCompaniesContext";
 
 interface AuthContextType {
   session: SessionInterface | null;
@@ -26,6 +27,7 @@ export const useAuthContext = create<AuthContextType>((set) => ({
       const data = await loginRequest(credentials);
       if (!data)  return;
       set((state) => ({ ...state, session: data.payload }));
+      useCompaniesContext.getState().getCompanies();
     } catch (error) {
       set((state) => ({ ...state, session: null, errorMessage: (error as Error).message }));
       throw error;
@@ -37,6 +39,7 @@ export const useAuthContext = create<AuthContextType>((set) => ({
   logout: async () => {
     try {
       set((state) => ({ ...state, session: null, isLoading: true, errorMessage: null }));
+      useCompaniesContext.getState().clearCompanies();
       await logoutRequest();
     } catch (error) {
       set((state) => ({ ...state, errorMessage: (error as Error).message, }));
@@ -50,8 +53,10 @@ export const useAuthContext = create<AuthContextType>((set) => ({
     try {
       const userSession = await verifyRequest();
       set((state) => ({ ...state, session: userSession }));
+      const companiesStore = useCompaniesContext.getState();
     } catch (error) {
       set((state) => ({ ...state, session: null, errorMessage: (error as Error).message, }));
+      useCompaniesContext.getState().clearCompanies();
     } finally {
       set((state) => ({ ...state, isLoading: false }));
     }

@@ -15,7 +15,7 @@ function LoginForm() {
     
     const formData = new FormData(e.currentTarget);
     const credential: LoginDto = {
-      name: formData.get('name') as string,
+      username: formData.get('username') as string,
       password: formData.get('password') as string,
     };
 
@@ -41,7 +41,7 @@ function LoginForm() {
             <div className="absolute inset-y-0 left-0 pl-20 flex items-center pointer-events-none">
               <RiAdminLine className="h-5 w-5 text-foreground-light" />
             </div>
-          <input required type="text" name="name" placeholder="Nombre de usuario"
+          <input required type="text" name="username" placeholder="Nombre de usuario"
             className="block w-3/5 mx-auto pl-10 pr-3 py-2 border border-border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
         </div>
     

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { RiArrowGoBackFill, RiCheckLine, RiCloseLine } from "@remixicon/react";
+import { RiArrowLeftLine, RiCheckLine, RiCloseLine } from "@remixicon/react";
 import { useEffect, useMemo } from "react";
 import Button from "@/ui/Button";
 import { useProductsContext } from "./context/useProductsContext";
@@ -31,7 +31,7 @@ function SaveProductButton({ id }: { id: number }) {
     if (data) {
       // Excluir id, tenant_id, createdAt, modifiedAt
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id, tenant_id, createdAt, modifiedAt, ...filteredData } = data;
+      const { id, createdAt, modifiedAt, ...filteredData } = data;
       return filteredData;
     }
     return null;
@@ -101,7 +101,7 @@ function SaveProductButton({ id }: { id: number }) {
           clearMedia();
           handleGoBackRoute(router);
         }}
-        icon={<RiArrowGoBackFill size={18} />}
+        icon={<RiArrowLeftLine size={18} />}
         size="small"
         variant="transparent"
       />

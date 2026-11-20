@@ -26,7 +26,7 @@ const UserCard: React.FC<UserCardProps> = ({ order = "0", size="medium" }) => {
     large: 'h-16 w-16 min-h-16 min-w-16',
   };
 
-  const { session } = useAuthContext();
+  const { session } = useAuthContext();{}
 
   return (
     <>
@@ -43,13 +43,13 @@ const UserCard: React.FC<UserCardProps> = ({ order = "0", size="medium" }) => {
           </>
         ) : (
           <>
-            <Link href={"/profile"} title={`Abrir el perfil de ${session.role.toLowerCase()} para ${session.name}`}
+            <Link href={"/profile"} title={`Abrir el perfil de ${session.role.toLowerCase()} para ${session.username}`}
               className="sidebar_user cursor-pointer lg:w-60 flex items-center justify-center sm:gap-x-2 overflow-hidden lg:transition-card"
             >
               <Avatar
                 className={`sidebar_user-img relative bg-primary text-background ${orders[order]}`}
                 src={session?.picture}
-                alt={session?.name}
+                alt={session?.username}
                 size={size}
               >
                 {!session.picture && <i className="w-8 h-8">icon</i>}
@@ -58,12 +58,12 @@ const UserCard: React.FC<UserCardProps> = ({ order = "0", size="medium" }) => {
                   <h3
                     className="text-normal text-foreground font-bold hidden sm:block max-w-min truncate"
                   >
-                    {session?.name}
+                    {session?.username}
                   </h3>
                   <span
                     className="hidden text-smaller lg:block text-clip text-wrap truncate"
                   >
-                    {session?.company}
+                    {session?.email}
                   </span>
                 </div>
             </Link>

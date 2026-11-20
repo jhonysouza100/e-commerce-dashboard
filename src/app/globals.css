@@ -449,7 +449,7 @@ tbody tr.hide td img {
 }
 /*  ↑↑↑ STATUS COLORS ↑↑↑ ===================== */
 
-@media screen and (min-width: 425px) {
+@media screen and (min-width: 620px) {
   .show-sidebar.sidebar {
     width: 180px;
   }
@@ -469,6 +469,7 @@ tbody tr.hide td img {
   .show-sidebar #toggle-icon-desktop {
     transform: rotate(-180deg);
   }
+  /* UserCard.tsx */
   .show-sidebar .sidebar_user {
     column-gap: 0;
     box-shadow: none;
@@ -481,6 +482,7 @@ tbody tr.hide td img {
     pointer-events: none;
     width: 0;
   }
+  /* UserCard */
   .show-sidebar .sidebar_title {
     width: 90px;
   }

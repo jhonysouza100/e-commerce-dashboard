@@ -42,9 +42,9 @@ export default function EditProductForm({ id }: { id?: number }) {
   // Inicializamos el store cuando llega el producto de la query
   useEffect(() => {
     if (data) {
-      // Exclude id, tenant_id, createdAt, modifiedAt if not needed for update
+      // Exclude id, company_id, createdAt, modifiedAt if not needed for update
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { id, tenant_id, createdAt, modifiedAt, ...filteredData } = data;
+      const { id, createdAt, modifiedAt, ...filteredData } = data;
       setProduct(filteredData);
     }
     // Si no se provee id se trata como nuevo producto y se inicializa con valores por defecto

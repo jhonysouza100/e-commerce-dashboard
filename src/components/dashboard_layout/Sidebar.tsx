@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import LogoutButton from "../session/LogoutButton";
 import UserCard from "../session/UserCard";
 import ThemeButton from "@/ui/ThemeButton";
+import CompanyDropdown from "../company/CompanyDropdown";
 
 // Objeto con la configuración de los iconos y su información
 const menuItems = [
@@ -41,25 +42,26 @@ function Sidebar() {
     >
       <div className="sidebar_container flex flex-col gap-y-12 h-full overflow-hidden">
         {/* Sidebar User Profile */}
-        <div className="block mx-auto lg:hidden overflow-hidden">
-          <UserCard />
+        <div className="block mx-auto md:hidden overflow-hidden">
+          {/* <UserCard /> */}
+          <CompanyDropdown />
         </div>
         {/* Sidebar Navigation */}
         <nav className="sidebar_navigation flex flex-col gap-y-12 overflow-y-auto overflow-x-hidden">
           {menuItems.map((el, first) => (
             <div key={el.section}>
-              <h3 className="sidebar_title w-full sm:w-[150px] text-tiny text-center font-semibold mb-6 lg:transition-width">
+              <h3 className="sidebar_title w-full md:w-[150px] text-tiny text-center font-semibold mb-6 lg:transition-width">
                 {el.section}
               </h3>
-              <div className="sidebar_list justify-center grid gap-y-6 sm:justify-start">
+              <div className="sidebar_list justify-center grid gap-y-6 md:justify-start">
                 {el.items.map((item, index) => (
                   <Link
                     key={index}
                     href={`${item.href}`}
-                    className={`${pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/") ? "active-link" : first} sidebar_link relative grid-cols-[max-content] grid sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground`}
+                    className={`${pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/") ? "active-link" : first} sidebar_link relative grid-cols-[max-content] grid md:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground`}
                   >
                     <item.icon size={20} className="transition-theme" />
-                    <span className="font-semibold lg:transition-opacity hidden sm:block">
+                    <span className="text-sm font-semibold lg:transition-opacity hidden md:block">
                       {item.label}
                     </span>
                   </Link>
@@ -69,12 +71,12 @@ function Sidebar() {
           ))}
         </nav>
         {/* Sidebar Actions */}
-        <div className="sidebar_actions justify-center grid gap-y-6 mt-auto sm:justify-start">
+        <div className="sidebar_actions justify-center grid gap-y-6 mt-auto md:justify-start">
           {/* Theme button */}
           <ThemeButton />
           <LogoutButton
-            containerClass="sidebar_link relative grid grid-cols-[max-content] sm:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground transition-apacity"
-            contentClass="font-semibold text-normal lg:transition-opacity hidden sm:block"
+            containerClass="sidebar_link relative grid grid-cols-[max-content] md:grid-cols-max2 items-center pl-8 px-8 gap-x-4 cursor-pointer hover:text-foreground transition-apacity"
+            contentClass="font-semibold text-sm lg:transition-opacity hidden md:block"
             icon={<RiLogoutCircleLine size={20} className="transition-theme" />} 
             />
         </div>

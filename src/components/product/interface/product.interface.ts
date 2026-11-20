@@ -27,7 +27,7 @@ export interface Product {
   maxCount?: number;
   minCount?: number;
   isActive: boolean;
-  tenant_id: number;
+  company_id: number;
   performance?: {
     sales: number,
     rating: number
@@ -40,6 +40,7 @@ export interface Product {
 }
 
 export const EMPTY_INITIAL_PRODUCT = {
+  company_id: 0,
   name: "",
   slug: "",
   alias: "",

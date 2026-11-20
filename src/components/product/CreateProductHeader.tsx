@@ -1,6 +1,6 @@
 "use client";
 
-import { RiArrowGoBackFill, RiCheckLine, RiCloseLine } from "@remixicon/react";
+import { RiArrowLeftLine, RiCheckLine, RiCloseLine } from "@remixicon/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useProductsContext } from "./context/useProductsContext";
@@ -12,15 +12,17 @@ import AlertDialog from "../ui/AlertDialog";
 import { normalizeProductForm } from "./utils/normalizeProductForm";
 import { useRouter } from "next/navigation";
 import handleGoBackRoute from "@/utils/handleGoBaackRoute";
+import { useCompaniesContext } from "../company/context/useCompaniesContext";
 
 function CreateProductHeader() {
   const { product: data, setProduct, gallery, image, clearMedia } = useProductsContext();
+  const { activeCompany } = useCompaniesContext();
 
   const router = useRouter();
 
   const queryClient = useQueryClient();
 
-  const updateProductMutation = useMutation({
+  const createProductMutation = useMutation({
     mutationFn: ({ product, gallery, image }: { product: CreateProductDto, gallery: { data: File, tempUrl: string }[], image?: { data: File, tempUrl: string } }) => {
       return createProductRequest(product, { gallery, image });
     },
@@ -41,10 +43,13 @@ function CreateProductHeader() {
 
   function saveProduct() {
     if (data) {
-      updateProductMutation.mutate({
-        product: normalizeProductForm(data),
+      createProductMutation.mutate({
+        product: normalizeProductForm({
+          ...data,
+          company_id: activeCompany?.id,
+        }),
         gallery,
-        image
+        image,
       });
     } else {
       console.error("Product is null and cannot be updated.");
@@ -63,7 +68,7 @@ function CreateProductHeader() {
           clearMedia();
           handleGoBackRoute(router);
         }}
-        icon={<RiArrowGoBackFill size={18} />}
+        icon={<RiArrowLeftLine size={18} />}
         size="small"
         variant="transparent"
       />
@@ -72,8 +77,8 @@ function CreateProductHeader() {
           title="Confirmar la creación del nuevo ítem?"
           message="El ítem se guardará con los datos ingresados."
           confirmButtonProps={{
-            children: updateProductMutation.isPending ? "Creando..." : "Crear",
-            disabled: updateProductMutation.isPending,
+            children: createProductMutation.isPending ? "Creando..." : "Crear",
+            disabled: createProductMutation.isPending,
             variant: "primary"
           }}
           cancelButtonProps={{ children: "Volver" }}

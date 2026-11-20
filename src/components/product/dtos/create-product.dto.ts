@@ -29,6 +29,8 @@ export interface ProductColorInterface {
 }
 
 export interface CreateProductDto {
+  company_id?: number;
+  
   name: string;
   
   slug: string;
