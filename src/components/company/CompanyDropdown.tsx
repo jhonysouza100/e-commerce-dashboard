@@ -22,8 +22,7 @@ function CompanyDropdown() {
     setActiveCompany,
   } = useCompaniesContext();
 
-    const { session } = useAuthContext();{}
-
+  const { session, isLoading: isAuthLoading } = useAuthContext();{}
 
   useEffect(() => {
     if (!isOpen) return;
@@ -65,19 +64,18 @@ function CompanyDropdown() {
             ? `Empresa activa: ${activeCompany.name}`
             : "Seleccionar empresa"
         }
-        onClick={handleOpen}
-        className="inline-flex items-center gap-2 rounded-md bg-background px-3 cursor-pointer"
+        onClick={handleOpen}className="inline-flex items-center gap-2 rounded-md bg-background px-3 cursor-pointer"
       >
-        <span className="truncate min-w-48 hidden md:flex md:items-end flex-col gap-2 flex-1">
+        <span className="truncate hidden md:flex md:items-end flex-col flex-1">
           {isLoading ? (
-            <>
+            <div className="flex flex-col gap-2 items-end min-w-48">
               <div
                 className={`w-3/4 h-4 md:h-3 bg-surface-hover animate-pulse rounded`}
               ></div>
               <div
                 className={`w-1/2 h-3 md:h-2 bg-surface-hover animate-pulse rounded`}
               ></div>
-            </>
+            </div>
           ) : (
             <>
               <h3 className="text-sm text-foreground font-bold hidden sm:block max-w-min truncate">
@@ -101,7 +99,7 @@ function CompanyDropdown() {
               src={session?.picture}
               alt={session?.username}
               size="small"
-              isLoading={isLoading}
+              isLoading={isAuthLoading}
             />
           </div>
         </div>

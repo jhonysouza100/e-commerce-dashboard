@@ -84,7 +84,7 @@ function EditProductSpecs() {
           ) : (
             <div className="text-center py-4 border border-dashed border-gray-300 rounded">
               <p className="text-sm text-foreground-muted">
-                {`No hay especificaciones. Haga clic en "Agregar especificación" para añadir una.`}
+                {`No hay características. Haga clic en "Agregar característica" para añadir una.`}
               </p>
             </div>
           )}

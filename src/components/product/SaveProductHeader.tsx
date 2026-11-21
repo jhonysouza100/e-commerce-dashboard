@@ -126,7 +126,7 @@ function SaveProductButton({ id }: { id: number }) {
         </AlertDialog>
         <AlertDialog
           title="Descartar cambios sin guardar?"
-          message="Si salís ahora, perderás todas las modificaciones realizadas."
+          message="Si descartas los cambios, perderás todas las modificaciones realizadas."
           confirmButtonProps={{ children: "Descartar" }}
           cancelButtonProps={{ children: "Volver" }}
         >

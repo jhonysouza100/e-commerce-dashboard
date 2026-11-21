@@ -18,12 +18,12 @@ interface CompaniesContextState {
 export const useCompaniesContext = create<CompaniesContextState>((set, get) => ({
   companies: [],
   activeCompany: undefined,
-  isLoading: true,
+  isLoading: false,
   errorMessage: null,
 
   getCompanies: async (): Promise<void> => {
     try {
-      set((state) => ({ ...state, errorMessage: null }));
+      set((state) => ({ ...state, isLoading: true, errorMessage: null }));
       const companies = await listAdminCompaniesRequest();
       if(!companies) return;
 
@@ -34,6 +34,9 @@ export const useCompaniesContext = create<CompaniesContextState>((set, get) => (
         if (selectedCompany) {
           set((state) => ({ ...state, activeCompany: selectedCompany }));
         }
+      } else {
+        // If no company is selected, set the first company as activeCompany
+        set((state) => ({ ...state, activeCompany: companies[0] }));
       }
       set((state) => ({ ...state, companies }));
     } catch (error) {

@@ -53,7 +53,7 @@ export const useAuthContext = create<AuthContextType>((set) => ({
     try {
       const userSession = await verifyRequest();
       set((state) => ({ ...state, session: userSession }));
-      const companiesStore = useCompaniesContext.getState();
+      useCompaniesContext.getState().getCompanies();
     } catch (error) {
       set((state) => ({ ...state, session: null, errorMessage: (error as Error).message, }));
       useCompaniesContext.getState().clearCompanies();

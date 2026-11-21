@@ -93,7 +93,7 @@ function CreateProductHeader() {
         </AlertDialog>
         <AlertDialog
           title="Descartar nuevo ítem?"
-          message="Perderás todos los datos que ingresaste en el formulario."
+          message="Si descartas el ítem, perderás todos los datos ingresados."
           confirmButtonProps={{ children: "Descartar" }}
           cancelButtonProps={{ children: "Volver" }}
         >
