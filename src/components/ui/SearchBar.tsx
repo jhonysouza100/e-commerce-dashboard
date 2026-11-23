@@ -4,11 +4,11 @@ import { RiSearch2Line } from "@remixicon/react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
-interface AvatarProps {
+interface SearchBarProps {
   placeholder?: string,
 }
 
-const SearchBar: React.FC<AvatarProps> = ({ placeholder }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ placeholder }) => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();

@@ -92,7 +92,7 @@ function CompanyDropdown() {
             src={activeCompany?.picture}
             alt={activeCompany?.name}
             size="large"
-            isLoading={isLoading}
+            isLoading={!activeCompany || isLoading && true}
           />
           <div className="absolute bottom-0 left-0 rounded-full border-2 border-solid border-background">
             <Avatar
