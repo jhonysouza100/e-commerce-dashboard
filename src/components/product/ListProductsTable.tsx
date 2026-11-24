@@ -27,6 +27,24 @@ import { formatCompactNumber, formatCurrency } from "@/utils/handleFormatPrice";
 import DesactiveProductsButton from "./DesactiveProductsButton";
 import { useCompaniesContext } from "@/components/company/context/useCompaniesContext";
 
+const getPositiveInteger = (value: string | null) => {
+  if (!value || !/^\d+$/.test(value)) return undefined;
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : undefined;
+};
+
+const getNonNegativeNumber = (value: string | null) => {
+  if (value === null || value.trim() === "") return undefined;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : undefined;
+};
+
+const getBoolean = (value: string | null) => {
+  if (value === "true") return true;
+  if (value === "false") return false;
+  return undefined;
+};
+
 function ListProductsTable() {
   const { session } = useAuthContext();
   const { activeCompany } = useCompaniesContext();
@@ -37,6 +55,12 @@ function ListProductsTable() {
   const query: ListProductsQuery = {
     page,
     q: searchParams.get("q") || undefined,
+    id: getPositiveInteger(searchParams.get("id")),
+    topic: searchParams.get("topic") || undefined,
+    minPrice: getNonNegativeNumber(searchParams.get("minPrice")),
+    maxPrice: getNonNegativeNumber(searchParams.get("maxPrice")),
+    isActive: getBoolean(searchParams.get("isActive")),
+    stock: getBoolean(searchParams.get("stock")),
     tenant_id: activeCompany?.id,
   };
 

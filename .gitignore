@@ -2,6 +2,11 @@
 
 # developer files
 /backend
+!/backend/
+/backend/*
+!/backend/AUTHENTICATION.md
+!/backend/PRODUCTS.md
+!/backend/ORDERS.md
 
 # dependencies
 /node_modules

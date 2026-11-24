@@ -47,15 +47,25 @@ export default function OrderPage({
 	return (
 		<MainContainer
 			headerContent={
-				<Button
-					type="button"
-					onClick={() => handleGoBackRoute(router, "/orders")}
-					aria-label="Volver a las órdenes"
-					title="Volver a las órdenes"
-					icon={<RiArrowLeftLine size={18} />}
-					size="small"
-					variant="secondary"
-				/>
+				<div className="flex w-full items-center gap-3">
+					<Button
+						type="button"
+						onClick={() => handleGoBackRoute(router, "/orders")}
+						aria-label="Volver a las órdenes"
+						title="Volver a las órdenes"
+						icon={<RiArrowLeftLine size={18} />}
+						size="small"
+						variant="secondary"
+					>
+						Volver
+					</Button>
+					<div>
+						<p className="text-sm font-semibold text-foreground">Detalle de orden</p>
+						<p className="text-xs text-foreground-muted">
+							{Number.isInteger(orderId) && orderId > 0 ? `Orden #${orderId}` : "ID inválido"}
+						</p>
+					</div>
+				</div>
 			}
 			mainContent={content}
 		/>

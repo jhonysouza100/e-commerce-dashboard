@@ -4,12 +4,14 @@ import Sidebar from "@/components/dashboard_layout/Sidebar";
 
 export default function DashboardLayout({
   children,
+  header,
 }: Readonly<{
   children: React.ReactNode;
+  header: React.ReactNode;
 }>) {
   return (
     <div id="dashboard-layout" className="dashboard_layout fixed left-4 right-4 pt-[calc(var(--header-height)_+_1rem)] h-[calc(100vh_-_var(--header-height))] lg:pt-[calc(var(--header-height)_+_3.5rem)] lg:pl-sidebar lg:transition-padding">
-      <Header />
+      <Header>{header}</Header>
       <Sidebar />
       <DashboardDOMHydratation />
       <main className="main my-2">

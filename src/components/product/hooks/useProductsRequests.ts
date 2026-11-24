@@ -31,11 +31,11 @@ export interface ListProductsQuery {
   id?: number;
   q?: string;
   name?: string;
+  topic?: string;
   page?: number;
   limit?: number;
   minPrice?: number;
   maxPrice?: number;
-  status?: boolean;
   isActive?: boolean;
   stock?: boolean;
   tenant_id?: number;

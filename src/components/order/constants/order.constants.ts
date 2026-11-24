@@ -21,6 +21,19 @@ export const deliveryStatuses = [
   "cancelled",
 ];
 
+export const deliveryStatusLabels: Record<string, string> = {
+  pending: "Pendiente",
+  preparing: "En preparación",
+  ready_pickup: "Listo para despacho",
+  shipped: "Despachado",
+  in_transit: "En tránsito",
+  out_delivery: "En reparto",
+  delivered: "Entregado",
+  failed_attempt: "Visita fallida",
+  returned: "Devuelto",
+  cancelled: "Cancelado",
+};
+
 export function amount(value: number | string | undefined): number {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : 0;

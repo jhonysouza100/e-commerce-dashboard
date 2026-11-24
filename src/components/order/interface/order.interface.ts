@@ -40,6 +40,7 @@ export interface OrderShipment {
   provinceName?: string;
   provinceCode?: string;
   postalCodeDestination?: string;
+  postalCodeOrigin?: string;
   deliveryStatus?: string;
   shipment_url?: string;
   shipment_cost?: number | string;
@@ -98,6 +99,7 @@ export interface UpdateShipmentDto {
   provinceName?: string;
   provinceCode?: string;
   postalCodeDestination?: string;
+  postalCodeOrigin?: string;
 }
 
 export interface UpdatePaymentDto {
